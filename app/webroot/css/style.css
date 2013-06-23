@@ -1,0 +1,10 @@
+body {
+	background: url("../img/body_bg.jpg") repeat scroll 0 0 #222222;
+    color: black;
+	height:695px;
+	font-family: Oxygen;
+	padding-bottom:50px;
+}
+
+.header {
+}
