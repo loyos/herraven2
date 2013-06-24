@@ -8,3 +8,33 @@ body {
 
 .header {
 }
+
+.wrap {
+	background:white;
+	width:800px;
+	margin:auto;
+	border-radius:5px;
+	box-shadow: 3px 6px 13px #888888;
+	padding:20px;
+}
+
+label {
+	width:300px;
+}
+
+table.tabla_index th {
+	border-bottom: 2px solid black;
+	padding: 5px;
+}
+
+table.tabla_index td {
+	padding: 5px;
+}
+
+table.tabla_ver td {
+	padding:10px;
+}
+
+table.tabla_ver td, table.tabla_ver th{
+	border-bottom: 1px solid black;
+}
