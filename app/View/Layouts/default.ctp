@@ -29,7 +29,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<?php
 	echo $this->Html->meta('icon');
 	echo $this->Html->css('style');
-	echo $this->Html->script('jquery-1.9.1.min');
+	echo $this->Html->script('jquery-2.0.2.min');
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
@@ -37,6 +37,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 </head>
 <body>
 	<div class="header">
+		<?php echo $this->element('menu'); ?>
 	</div>
 	
 	<div id="container">

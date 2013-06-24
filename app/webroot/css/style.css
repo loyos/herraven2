@@ -4,6 +4,8 @@ body {
 	height:695px;
 	font-family: Oxygen;
 	padding-bottom:50px;
+	margin: 0px;
+	padding: 0px;
 }
 
 .header {
@@ -37,4 +39,57 @@ table.tabla_ver td {
 
 table.tabla_ver td, table.tabla_ver th{
 	border-bottom: 1px solid black;
+}
+
+.header{
+	width: 100%;
+	color: white;
+	height: 100px;
+	background-image: linear-gradient(bottom, rgb(69,68,65) 44%, rgb(43,43,43) 72%, rgb(0,0,0) 86%);
+	background-image: -o-linear-gradient(bottom, rgb(69,68,65) 44%, rgb(43,43,43) 72%, rgb(0,0,0) 86%);
+	background-image: -moz-linear-gradient(bottom, rgb(69,68,65) 44%, rgb(43,43,43) 72%, rgb(0,0,0) 86%);
+	background-image: -webkit-linear-gradient(bottom, rgb(69,68,65) 44%, rgb(43,43,43) 72%, rgb(0,0,0) 86%);
+	background-image: -ms-linear-gradient(bottom, rgb(69,68,65) 44%, rgb(43,43,43) 72%, rgb(0,0,0) 86%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.44, rgb(69,68,65)),
+		color-stop(0.72, rgb(43,43,43)),
+		color-stop(0.86, rgb(0,0,0))
+	);
+}
+
+.menu{
+	height: 100px;
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 5px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.menu li{
+	float: left;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.menu ul{
+	display: block;
+	list-style: none;
+}
+
+.menu li ul{
+	float: left;
+	position: absolute;
+	left: 0px;
+	display: none;
+	width: 600px;
+	margin-top: 10px;
+	margin-left: 50%;
+	left: -350px;
+	font-size: 16px;
 }
