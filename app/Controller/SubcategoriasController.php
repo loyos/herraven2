@@ -11,14 +11,7 @@ class SubcategoriasController extends AppController {
 		));
 		foreach ($subcategorias as $cat) {
 			if (!empty($cat['Articulo'])){
-					$articulos = $this->Articulo->find('all',array(
-						'conditions' => array('Articulo.subcategoria_id' => $cat['Subcategoria']['id'])
-					));
-					if (!empty($articulos)) {
-						$eliminar_cat[$cat['Subcategoria']['id']] = 1;
-					} else {
-						$eliminar_cat[$cat['Subcategoria']['id']] = 0;
-					}
+				$eliminar_cat[$cat['Subcategoria']['id']] = 1;
 			} else {
 				$eliminar_cat[$cat['Subcategoria']['id']] = 0;
 			}
