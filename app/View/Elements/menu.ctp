@@ -1,11 +1,11 @@
 <div class = "menu">
 <ul>
 	<li>
-		Menu 1
+		Clientes y usuarios
 		<ul>
-			<li>Sub menu 1</li>
-			<li>Sub menu 2</li>
-			<li>Sub menu 3</li>
+			<li><?php echo $this->Html->link('Cliente',array('controller' => 'clientes', 'action' => 'index')); ?></li>
+			<li><?php echo $this->Html->link('Usuario',array('controller' => 'users', 'action' => 'index')); ?></li>
+			
 		</ul>
 	</li>
 	<li>

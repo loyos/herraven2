@@ -1,6 +1,6 @@
 <?php
-class Usuario extends AppModel {
-    var $name = 'Usuario';
+class User extends AppModel {
+    var $name = 'User';
 	
 	public $belongsTo = array(
         'Cliente' => array(
@@ -8,6 +8,11 @@ class Usuario extends AppModel {
             'foreignKey'   => 'cliente_id'
         ),
     );
+	
+	public static $roles = array(
+		'cliente' => 'Cliente',
+		'admin' => 'Administrador'
+	);
 }
 
 

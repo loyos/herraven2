@@ -14,8 +14,8 @@ class Cliente extends AppModel {
 			'className'  => 'Pedido',
 			'foreignKey'    => 'cliente_id',
 		),
-		'Usuario' => array(
-			'className'  => 'Usuario',
+		'User' => array(
+			'className'  => 'User',
 			'foreignKey'    => 'cliente_id',
 		),
     );

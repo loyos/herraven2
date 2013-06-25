@@ -93,3 +93,8 @@ table.tabla_ver td, table.tabla_ver th{
 	left: -350px;
 	font-size: 16px;
 }
+
+.menu a {
+	color: white;
+	text-decoration: none;
+}
