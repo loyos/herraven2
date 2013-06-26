@@ -9,11 +9,11 @@
 		</ul>
 	</li>
 	<li>
-		Menu 2
+		Categorias
 		<ul>
-			<li>Sub menu 2.1</li>
-			<li>Sub menu 2.2</li>
-			<li>Sub menu 2.3</li>
+			<li><?php echo $this->Html->link('Categorias',array('controller' => 'categorias', 'action' => 'index')); ?></li>
+			<li><?php echo $this->Html->link('Subcategorias',array('controller' => 'subcategorias', 'action' => 'index')); ?></li>
+			<li><?php echo $this->Html->link('Acabados',array('controller' => 'acabados', 'action' => 'index')); ?></li>
 		</ul>
 	</li>
 	<li>Menu 3</li>
