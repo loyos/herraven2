@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-06-2013 a las 19:25:50
+-- Tiempo de generación: 26-06-2013 a las 03:51:30
 -- Versión del servidor: 5.1.53
 -- Versión de PHP: 5.3.4
 
@@ -27,15 +27,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `acabados` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(255) NOT NULL,
+  `descripcion` text NOT NULL,
   `oculto` int(11) NOT NULL DEFAULT '0',
+  `acabado` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcar la base de datos para la tabla `acabados`
 --
 
+INSERT INTO `acabados` (`id`, `descripcion`, `oculto`, `acabado`) VALUES
+(2, 'descripcion cualquiera', 0, 'acabado_uno');
 
 -- --------------------------------------------------------
 
@@ -51,12 +54,14 @@ CREATE TABLE IF NOT EXISTS `articulos` (
   `imagen` varchar(255) NOT NULL,
   `subcategoria_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcar la base de datos para la tabla `articulos`
 --
 
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `cantidad_por_caja`, `imagen`, `subcategoria_id`) VALUES
+(3, '', 'articulo_uno', 0, '', 1);
 
 -- --------------------------------------------------------
 
@@ -123,12 +128,14 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `descripcion` varchar(255) NOT NULL,
   `oculto` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcar la base de datos para la tabla `categorias`
 --
 
+INSERT INTO `categorias` (`id`, `descripcion`, `oculto`) VALUES
+(1, 'Categoria uno', 1);
 
 -- --------------------------------------------------------
 
@@ -275,7 +282,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `cantidad_cajas` int(11) NOT NULL,
   `acabado_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Volcar la base de datos para la tabla `pedidos`
@@ -310,20 +317,22 @@ CREATE TABLE IF NOT EXISTS `subcategorias` (
   `categoria_id` int(11) NOT NULL,
   `oculto` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcar la base de datos para la tabla `subcategorias`
 --
 
+INSERT INTO `subcategorias` (`id`, `descripcion`, `categoria_id`, `oculto`) VALUES
+(1, 'subcategoria 1', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -332,22 +341,24 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `apellido` varchar(255) NOT NULL,
   `rol` varchar(255) NOT NULL,
   `cliente_id` int(11) NOT NULL,
-  `admin_usuario` int(11) NOT NULL DEFAULT '0',
-  `admin_catalogo` int(11) NOT NULL DEFAULT '0',
-  `admin_materia_prima` int(11) NOT NULL DEFAULT '0',
-  `admin_almacen` int(11) NOT NULL DEFAULT '0',
-  `admin_pedidos` int(11) NOT NULL DEFAULT '0',
-  `admin_despachos` int(11) NOT NULL DEFAULT '0',
-  `admin_cuentas` int(11) NOT NULL DEFAULT '0',
-  `admin_almacenes_clientes` int(11) NOT NULL DEFAULT '0',
-  `admin_reportes` int(11) NOT NULL DEFAULT '0',
-  `cliente_perfil` int(11) NOT NULL DEFAULT '0',
-  `cliente_almacen` int(11) NOT NULL DEFAULT '0',
-  `cliente_catalogo` int(11) NOT NULL DEFAULT '0',
+  `admin_usuario` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_catalogo` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_materia_prima` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_almacen` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_pedidos` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_despachos` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_cuentas` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_almacenes_clientes` tinyint(11) NOT NULL DEFAULT '0',
+  `admin_reportes` tinyint(11) NOT NULL DEFAULT '0',
+  `cliente_perfil` tinyint(11) NOT NULL DEFAULT '0',
+  `cliente_almacen` tinyint(11) NOT NULL DEFAULT '0',
+  `cliente_catalogo` tinyint(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcar la base de datos para la tabla `usuarios`
+-- Volcar la base de datos para la tabla `users`
 --
 
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `nombre`, `apellido`, `rol`, `cliente_id`, `admin_usuario`, `admin_catalogo`, `admin_materia_prima`, `admin_almacen`, `admin_pedidos`, `admin_despachos`, `admin_cuentas`, `admin_almacenes_clientes`, `admin_reportes`, `cliente_perfil`, `cliente_almacen`, `cliente_catalogo`) VALUES
+(1, 'Paola', '096842', 'ppaola1409@gmail.com', 'Paola', 'Pinero', 'admin', 3, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0);
