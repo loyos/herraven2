@@ -87,7 +87,7 @@ table.tabla_ver td, table.tabla_ver th{
 	position: absolute;
 	left: 0px;
 	display: none;
-	width: 600px;
+	min-width: 120px;
 	margin-top: 10px;
 	margin-left: 50%;
 	left: -350px;
@@ -97,4 +97,16 @@ table.tabla_ver td, table.tabla_ver th{
 .menu a {
 	color: white;
 	text-decoration: none;
+}
+
+.option:hover {
+	color: grey;
+}
+
+.selected {
+	color: grey;
+}
+
+.children a:hover{
+	color: grey;
 }
