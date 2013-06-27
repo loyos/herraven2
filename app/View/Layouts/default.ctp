@@ -37,6 +37,12 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 </head>
 <body>
 	<div class="header">
+		<div class = "title">
+			Herraven
+		</div>
+	</div>
+	
+	<div class = "menu_container">
 		<?php echo $this->element('menu'); ?>
 	</div>
 	
