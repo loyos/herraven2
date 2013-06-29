@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-06-2013 a las 03:51:30
+-- Tiempo de generación: 29-06-2013 a las 16:45:46
 -- Versión del servidor: 5.1.53
 -- Versión de PHP: 5.3.4
 
@@ -53,15 +53,19 @@ CREATE TABLE IF NOT EXISTS `articulos` (
   `cantidad_por_caja` int(11) NOT NULL,
   `imagen` varchar(255) NOT NULL,
   `subcategoria_id` int(11) NOT NULL,
+  `oculto` tinyint(4) NOT NULL,
+  `costo_produccion` int(11) NOT NULL,
+  `margen_ganancia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `articulos`
 --
 
-INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `cantidad_por_caja`, `imagen`, `subcategoria_id`) VALUES
-(3, '', 'articulo_uno', 0, '', 1);
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `cantidad_por_caja`, `imagen`, `subcategoria_id`, `oculto`, `costo_produccion`, `margen_ganancia`) VALUES
+(3, '1234', 'articulo_uno', 150, 'Tulips.jpg', 1, 0, 30, 10),
+(5, '147147', 'articulo_2', 20, 'Lighthouse.jpg', 1, 0, 20, NULL);
 
 -- --------------------------------------------------------
 
@@ -75,12 +79,17 @@ CREATE TABLE IF NOT EXISTS `articulos_materiasprimas` (
   `materiasprima_id` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Volcar la base de datos para la tabla `articulos_materiasprimas`
 --
 
+INSERT INTO `articulos_materiasprimas` (`id`, `articulo_id`, `materiasprima_id`, `cantidad`) VALUES
+(48, 5, 2, 10),
+(47, 5, 1, 10),
+(46, 3, 2, 250),
+(45, 3, 1, 200);
 
 -- --------------------------------------------------------
 
@@ -170,6 +179,25 @@ INSERT INTO `clientes` (`id`, `denominacion_legal`, `rif`, `representante`, `ciu
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `configs`
+--
+
+CREATE TABLE IF NOT EXISTS `configs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `costo_produccion` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcar la base de datos para la tabla `configs`
+--
+
+INSERT INTO `configs` (`id`, `costo_produccion`) VALUES
+(1, 20);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `cuentas`
 --
 
@@ -240,12 +268,15 @@ CREATE TABLE IF NOT EXISTS `materiasprimas` (
   `descripcion` varchar(255) NOT NULL,
   `unidad` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcar la base de datos para la tabla `materiasprimas`
 --
 
+INSERT INTO `materiasprimas` (`id`, `descripcion`, `unidad`) VALUES
+(1, 'materia_unp', 'Kg'),
+(2, 'materia_dos', 'Litros');
 
 -- --------------------------------------------------------
 
