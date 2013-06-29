@@ -19,6 +19,7 @@
 	<li class = "option">Artículos
 		<ul>
 			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'index')); ?></li>
 		</ul></li>
 	<li class = "option">Menu 4</li>
 </ul>

@@ -5,7 +5,7 @@ class Precio extends AppModel {
 	public $hasMany = array(
 		'Cliente' => array(
 			'className'  => 'Cliente',
-			'foreignKey'    => 'pedido_id',
+			'foreignKey'    => 'precio_id',
 		)
     );
 	
