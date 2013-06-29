@@ -1,90 +1,103 @@
 <div class="wrap">
 <?php
 echo $this->Html->link('Regresar',array('action' => 'index'));
+$materias = array();
 ?>
-<h1>Nuevo Cliente</h1>
+<h1><?php echo $titulo?></h1>
 <?php 
-	echo $this->Form->create('Cliente');
+	echo $this->Form->create('Articulo', array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>Denom. legal</td>';
+	echo '<td>Subcategoria</td>';
 	echo '<td>';
-	echo $this->Form->input('denominacion_legal',array(
+	echo $this->Form->input('subcategoria_id',array(
 		'label' => false
 	));
 	echo '</td>';
-	echo '<td>Dirección de despacho</td>';
+	echo '<td>Código</td>';
 	echo '<td>';
-	echo $this->Form->input('direccion_despacho',array(
-		'label' => false
-	));
-	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
-	echo '<td>Rif</td>';
-	echo '<td>';
-	echo $this->Form->input('rif',array(
-		'label' => false
-	));
-	echo '</td>';
-	echo '<td>Teléfono</td>';
-	echo '<td>';
-	echo $this->Form->input('telefono_uno',array(
+	echo $this->Form->input('codigo',array(
 		'label' => false
 	));
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Representante</td>';
+	echo '<td>Descripción</td>';
 	echo '<td>';
-	echo $this->Form->input('representante',array(
+	echo $this->Form->input('descripcion',array(
 		'label' => false
 	));
 	echo '</td>';
-	echo '<td>Telefono</td>';
+	echo '<td>Cantidad por cajas</td>';
 	echo '<td>';
-	echo $this->Form->input('telefono_dos',array(
-		'label' => false
-	));
-	echo '</td>';
-	echo '</tr>';
-	echo '<tr><td>Ciudad</td>';
-	echo '<td>';
-	echo $this->Form->input('ciudad',array(
-		'label' => false
-	));
-	echo '</td>';
-	echo '<td>Fax</td>';
-	echo '<td>';
-	echo $this->Form->input('fax',array(
-		'label' => false
+	echo $this->Form->input('cantidad_por_caja',array(
+		'label' => false,
 	));
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Direccion</td>';
+	echo '<td>Imagen</td>';
 	echo '<td>';
-	echo $this->Form->input('direccion',array(
+	echo $this->Form->file('Foto',array(
 		'label' => false
 	));
 	echo '</td>';
-	echo '<td>Email de representate</td>';
+	echo '<td>Oculto</td>';
 	echo '<td>';
-	echo $this->Form->input('email_representante',array(
-		'label' => false
+	echo $this->Form->input('oculto',array(
+		'label' => false,
+		'type' => 'checkbox'
 	));
 	echo '</td>';
 	echo '</tr>';
+	echo '</table>';
+	echo '<h2>Materia prima</h2>';
+	echo '<table>';
+	for ($i=0;$i<=9;$i++){
+		if (!empty($valor_mp[$i])){
+			$value_m = $valor_mp[$i];
+		} else {
+			$value_m = null;
+		}
+		if (!empty($valor_cant[$i])){
+			$value_c = $valor_cant[$i];
+		} else {
+			$value_c = null;
+		}
+		echo '<tr>';
+		echo '<td>';
+		echo $this->Form->input('materiasprima_id',array(
+			'name' => 'materias[]',
+			'value' => $value_m
+		));
+		echo '</td>';
+		echo '<td>';
+		echo $this->Form->input('cantidad',array(
+			'name' => 'cantidad[]',
+			'value' => $value_c
+		));
+		echo '</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+	echo '<h2>Ganancia</h2>';
+	echo '<table>';
 	echo '<tr>';
-	echo '<td>Lista de precio</td>';
+	echo '<td>Costo de producción (en %)</td>';
 	echo '<td>';
-	echo $this->Form->input('precio_id',array(
-		'label' => false
+	if (empty($this->data['Articulo']['costo_produccion'])) {
+		$value_cp = $costo_produccion;
+	} else {
+		$value_cp = $this->data['Articulo']['costo_produccion'];
+	}
+	echo $this->Form->input('costo_produccion',array(
+		'label' => false,
+		'value' => $value_cp
 	));
 	echo '</td>';
-	echo '<td>Sitio Web</td>';
-	echo '<td>';	
-	echo $this->Form->input('sitio_web',array(
+	echo '<td>Margen de ganancia</td>';
+	echo '<td>';
+	echo $this->Form->input('margen_ganancia',array(
 		'label' => false
 	));
 	echo '</td>';

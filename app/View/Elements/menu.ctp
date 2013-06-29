@@ -16,7 +16,10 @@
 			<li class = "children"><?php echo $this->Html->link('Acabados',array('controller' => 'acabados', 'action' => 'index')); ?></li>
 		</ul>
 	</li>
-	<li class = "option">Menu 3</li>
+	<li class = "option">Artículos
+		<ul>
+			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'index')); ?></li>
+		</ul></li>
 	<li class = "option">Menu 4</li>
 </ul>
 </div>

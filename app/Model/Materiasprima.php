@@ -11,7 +11,7 @@ class Materiasprima extends AppModel {
         ),
 		'Precio' =>
             array('className'            => 'Precio',
-                 'joinTable'              => 'materiasprimas_precio',
+                 'joinTable'              => 'materiasprimas_precios',
                  'foreignKey'             => 'materiasprima_id',
                  'associationForeignKey'  => 'precio_id',
         ),
