@@ -15,7 +15,7 @@ class MateriasprimasController extends AppController {
 				$borrar[$m['Materiasprima']['id']] = 0;
 			}
 			foreach($m['Precio'] as $p){
-				if ($p['id'] == 0){
+				if ($p['id'] == 1){
 					$precios[$m['Materiasprima']['id']] = $p['MateriasprimasPrecio']['precio'];
 				}
 			}
@@ -55,7 +55,7 @@ class MateriasprimasController extends AppController {
 			$precio_b = $this->MateriasprimasPrecio->find('first',array(
 				'conditions' => array(
 					'materiasprima_id' => $id,
-					'precio_id' => '0'
+					'precio_id' => '1'
 				)
 			));
 			$precio_b = $precio_b['MateriasprimasPrecio']['precio'];
