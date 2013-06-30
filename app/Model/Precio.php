@@ -9,14 +9,14 @@ class Precio extends AppModel {
 		)
     );
 	
-	var $hasAndBelongsToMany = array(
-        'Materiasprima' =>
-            array('className'            => 'Materiasprima',
-                 'joinTable'              => 'materiasprimas_precios',
-                 'foreignKey'             => 'precio_id',
-                 'associationForeignKey'  => 'materiasprima_id',
-            )
-    );
+	// var $hasAndBelongsToMany = array(
+        // 'Materiasprima' =>
+            // array('className'            => 'Materiasprima',
+                 // 'joinTable'              => 'materiasprimas_precios',
+                 // 'foreignKey'             => 'precio_id',
+                 // 'associationForeignKey'  => 'materiasprima_id',
+            // )
+    // );
 }
 
 

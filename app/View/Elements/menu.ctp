@@ -21,7 +21,11 @@
 			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'index')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'index')); ?></li>
 		</ul></li>
-	<li class = "option">Menu 4</li>
+	<li class = "option">Lista de precios
+		<ul>
+			<li class = "children"><?php echo $this->Html->link('Lista de precios',array('controller' => 'precios', 'action' => 'index')); ?></li>
+		</ul>
+	</li>
 </ul>
 </div>
 <script>

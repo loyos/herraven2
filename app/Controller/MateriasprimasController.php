@@ -29,41 +29,41 @@ class MateriasprimasController extends AppController {
 			$data = $this->data;
 			$i = 0;
 			$this->Materiasprima->save($data);
-			$id = $this->Materiasprima->id;
-			$precios = $this->Precio->find('all');
-			$this->MateriasprimasPrecio->deleteAll(array(
-				'materiasprima_id' => $id
-			));
-			foreach ($precios as $lista) {
-				if (empty($lista['Precio']['ganancia'])){
-					$p = $this->data['Materiasprima']['precio'];
-				} else {
-					$p = $this->data['Materiasprima']['precio'] + ($this->data['Materiasprima']['precio']*($lista['Precio']['ganancia']/100));
-				}
+			// $id = $this->Materiasprima->id;
+			// $precios = $this->Precio->find('all');
+			// $this->MateriasprimasPrecio->deleteAll(array(
+				// 'materiasprima_id' => $id
+			// ));
+			// foreach ($precios as $lista) {
+				// if (empty($lista['Precio']['ganancia'])){
+					// $p = $this->data['Materiasprima']['precio'];
+				// } else {
+					// $p = $this->data['Materiasprima']['precio'] + ($this->data['Materiasprima']['precio']*($lista['Precio']['ganancia']/100));
+				// }
 				
-				$data_p = array(
-					'precio_id' => $lista['Precio']['id'],
-					'materiasprima_id' => $id,
-					'precio' => $p
-				);
-				$this->MateriasprimasPrecio->saveAll($data_p);
-			}
+				// $data_p = array(
+					// 'precio_id' => $lista['Precio']['id'],
+					// 'materiasprima_id' => $id,
+					// 'precio' => $p
+				// );
+				// $this->MateriasprimasPrecio->saveAll($data_p);
+			// }
 			$this->redirect(array('action' => 'index'));
 		} elseif (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Materiasprima->findById($id);
-			$precio_b = $this->MateriasprimasPrecio->find('first',array(
-				'conditions' => array(
-					'materiasprima_id' => $id,
-					'precio_id' => '1'
-				)
-			));
-			$precio_b = $precio_b['MateriasprimasPrecio']['precio'];
+			// $precio_b = $this->MateriasprimasPrecio->find('first',array(
+				// 'conditions' => array(
+					// 'materiasprima_id' => $id,
+					// 'precio_id' => '1'
+				// )
+			// ));
+			// $precio_b = $precio_b['MateriasprimasPrecio']['precio'];
 		} else {
 			$titulo = "Agregar";
 		}
 		
-		$this->set(compact('id','titulo','precio_b'));
+		$this->set(compact('id','titulo'));
 	}
 	
 	function eliminar($id) {
