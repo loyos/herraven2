@@ -24,7 +24,7 @@ class PreciosController extends AppController {
 	}
 	
 	function eliminar($id) {
-		$this->Cliente->delete($id);
+		$this->Precio->delete($id);
 		$this->redirect(array('action' => 'index'));
 	}
 	

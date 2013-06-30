@@ -5,6 +5,29 @@ class UsersController extends AppController {
 	public $helpers = array ('Html','Form');
 	var $uses = array('User','Cliente');
 	
+	 public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('editar','login'); // Letting users register themselves
+	}
+	
+	public function login() {
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+				$this->redirect(array(
+						'controller' => 'users',
+						'action' => 'index'
+					));
+			} else {
+				$this->Session->setFlash(__('El o nombre de usuario o contraseña son invalidos, vuelve a intentarlo'));
+			}
+		}
+	}
+	
+	public function logout() {
+		$this->Auth->logout();
+		$this->redirect(array('controller' => 'index', 'action'=>'index'));
+	}
+	
     function index() {
 		$usuarios = $this->User->find('all');
 		$this->set(compact('usuarios'));

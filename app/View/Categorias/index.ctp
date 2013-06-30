@@ -29,7 +29,6 @@ echo $this->Html->link('Agregar',array('action' => 'editar'));
 			if ($eliminar_cat[$c['Categoria']['id']] == 0){
 				echo $this->Html->link('Eliminar',array('action' => 'eliminar',$c['Categoria']['id'])).'<br>';
 			}
-			echo $this->Html->link('Ver',array('action' => 'ver',$c['Categoria']['id'])).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';

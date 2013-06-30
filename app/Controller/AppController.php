@@ -32,4 +32,25 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+	public $components = array(
+        'Session',
+        'Auth' => array(
+            'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
+            'logoutRedirect' => array('controller' => 'index', 'action' => 'index'),
+			'authorize' => array('controller'),
+        )
+		
+    );
+	function beforeFilter() { 	
+		//var_dump($this->Auth->logoutRedirect); debug.die("dfdf");
+		$this->Auth->authorize = 'controller'; 
+		$user_id = $this->Auth->user('id');
+		$role = $this->Auth->user('role');
+		Security::setHash('md5');
+		$this->Auth->allow('*');
+	}
+	public function isAuthorized($user=null) {
+
+		return true;
+	}
 }
