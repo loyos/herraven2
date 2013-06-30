@@ -5,15 +5,15 @@ class PreciosController extends AppController {
 	public $helpers = array ('Html','Form');
 	public $uses = array('Materiasprima','MateriasprimasPrecio','Precio');
 	
-    function index() {
+    function admin_index() {
 		$precios = $this->Precio->find('all');
 		$this->set(compact('precios'));
     }
 	
-	function editar($id = null) {
+	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$this->Precio->save($this->data);
-			$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$this->data = $this->Precio->findById($id);
 			$titulo = 'Editar';
@@ -23,12 +23,12 @@ class PreciosController extends AppController {
 		$this->set(compact('id','titulo'));
 	}
 	
-	function eliminar($id) {
+	function admin_eliminar($id) {
 		$this->Precio->delete($id);
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	function ver($id) {
+	function admin_ver($id) {
 		$materias = $this->Materiasprima->find('all');
 		$precio = $this->Precio->findById($id);
 		if ($id == 1) {

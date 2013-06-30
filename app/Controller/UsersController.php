@@ -14,7 +14,7 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->redirect(array(
-						'controller' => 'users',
+						'controller' => 'index',
 						'action' => 'index'
 					));
 			} else {
@@ -28,15 +28,15 @@ class UsersController extends AppController {
 		$this->redirect(array('controller' => 'index', 'action'=>'index'));
 	}
 	
-    function index() {
+    function admin_index() {
 		$usuarios = $this->User->find('all');
 		$this->set(compact('usuarios'));
     }
 	
-	function editar($id = null) {
+	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$this->User->save($this->data);
-			$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$this->data = $this->User->findById($id);
 			$titulo = 'Editar Usuario';
@@ -54,12 +54,12 @@ class UsersController extends AppController {
 		$this->set(compact('id','titulo','clientes','roles'));
 	}
 	
-	function eliminar($id) {
+	function admin_eliminar($id) {
 		$this->User->delete($id);
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	function ver($id) {
+	function admin_ver($id) {
 		$usuario = $this->User->findById($id);
 		$funciones = '';
 		if ($usuario['User']['rol'] == 'admin') {

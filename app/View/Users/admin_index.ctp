@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
 <h1>Usuarios</h1>
 <?php 
@@ -24,8 +24,8 @@ echo $this->Html->link('Agregar',array('action' => 'editar'));
 			echo '<td>'.$u['User']['rol'].'</td>';
 			echo '<td>'.$u['Cliente']['denominacion_legal'].'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'editar',$u['User']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'eliminar',$u['User']['id'])).'<br>'.
-				$this->Html->link('Ver',array('action' => 'ver',$u['User']['id'])).'</td>';
+				'action' => 'admin_editar',$u['User']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$u['User']['id'])).'<br>'.
+				$this->Html->link('Ver',array('action' => 'admin_ver',$u['User']['id'])).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';

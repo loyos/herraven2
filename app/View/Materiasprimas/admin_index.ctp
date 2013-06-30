@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
 <h1>Materias prima</h1>
 <?php 
@@ -19,9 +19,9 @@ echo $this->Html->link('Agregar',array('action' => 'editar'));
 			echo '<td>'.$m['Materiasprima']['unidad'].'</td>';
 			echo '<td>'.$m['Materiasprima']['precio'].'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'editar',$m['Materiasprima']['id'])).'<br>';
+				'action' => 'admin_editar',$m['Materiasprima']['id'])).'<br>';
 			if($borrar[$m['Materiasprima']['id']]==1){
-				echo $this->Html->link('Eliminar',array('action' => 'eliminar',$m['Materiasprima']['id']));
+				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$m['Materiasprima']['id']));
 			}
 			echo '</td>';
 			echo '</tr>';

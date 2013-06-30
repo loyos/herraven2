@@ -1,13 +1,13 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'index'));
+echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
-	echo $this->Form->create('Subcategoria');
+	echo $this->Form->create('Materiasprima');
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>SubCategoria</td>';
+	echo '<td>Materia prima</td>';
 	echo '<td>';
 	echo $this->Form->input('descripcion',array(
 		'label' => false
@@ -15,23 +15,22 @@ echo $this->Html->link('Regresar',array('action' => 'index'));
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Oculto</td>';
+	echo '<td>Unidad</td>';
 	echo '<td>';
-	echo $this->Form->input('oculto',array(
-		'label' => false,
-		'type' => 'select',
-		'options' => array(
-			'0' => 'No',
-			'1' => 'Si'
-		),
+	echo $this->Form->input('unidad',array(
+		'label' => false
 	));
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Categoria</td>';
+	echo '<td>Precio en lista base</td>';
 	echo '<td>';
-	echo $this->Form->input('categoria_id',array(
+	if (empty($precio_b)) {
+		$precio_b = null;
+	}
+	echo $this->Form->input('precio',array(
 		'label' => false,
+		'value' => $precio_b
 	));
 	echo '</td>';
 	echo '</tr>';

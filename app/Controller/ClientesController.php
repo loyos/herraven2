@@ -5,15 +5,15 @@ class ClientesController extends AppController {
 	public $helpers = array ('Html','Form');
 	var $uses = array('Cliente','Precio');
 	
-    function index() {
+    function admin_index() {
 		$clientes = $this->Cliente->find('all');
 		$this->set(compact('clientes'));
     }
 	
-	function editar($id = null) {
+	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$this->Cliente->save($this->data);
-			$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$this->data = $this->Cliente->findById($id);
 			$titulo = 'Editar';
@@ -26,12 +26,12 @@ class ClientesController extends AppController {
 		$this->set(compact('id','titulo','precios'));
 	}
 	
-	function eliminar($id) {
+	function admin_eliminar($id) {
 		$this->Cliente->delete($id);
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	function ver($id) {
+	function admin_ver($id) {
 		$cliente = $this->Cliente->findById($id);
 		$this->set(compact('cliente'));
 	}

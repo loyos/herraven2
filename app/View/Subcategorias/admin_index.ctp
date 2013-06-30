@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
 <h1>Subcategorias (Nota: en las imágenes sale "Categorias" pero me parece mas lógico que diga subcategorias, aqui también esta acabado, lo estoy colocando en otra vista distinta para tener mas orden, pero cualquier cosa se pasa para aca y ya)</h1>
 <?php 
@@ -27,9 +27,9 @@ echo $this->Html->link('Agregar',array('action' => 'editar'));
 			echo '<td>'.$c['Categoria']['descripcion'].'</td>';
 			echo '<td>'.$c['Subcategoria']['descripcion'].'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'editar',$c['Subcategoria']['id'])).'<br>';
+				'action' => 'admin_editar',$c['Subcategoria']['id'])).'<br>';
 			if ($eliminar_cat[$c['Subcategoria']['id']] == 0){
-				echo $this->Html->link('Eliminar',array('action' => 'eliminar',$c['Subcategoria']['id'])).'<br>';
+				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Subcategoria']['id'])).'<br>';
 			}
 			echo '</td>';
 			echo '</tr>';

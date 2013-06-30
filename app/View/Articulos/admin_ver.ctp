@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'index'));
+echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 ?>
 <h1>Artículo</h1>
 <?php 

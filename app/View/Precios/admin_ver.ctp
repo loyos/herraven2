@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'index'));
+echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 ?>
 <h1>Lista de precio: <?php echo $precio['Precio']['descripcion']?></h1>
 <?php 

@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
 <h1>Clientes</h1>
 <?php 
@@ -21,7 +21,7 @@ echo $this->Html->link('Agregar',array('action' => 'editar'));
 			echo '<td>'.$c['Cliente']['representante'].'</td>';
 			echo '<td>'.$c['Cliente']['telefono_uno'].'</td>';
 			echo '<td>'.$c['Cliente']['email_representante'].'</td>';
-			echo '<td>'.$this->Html->link('Editar',array('action' => 'editar',$c['Cliente']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'eliminar',$c['Cliente']['id'])).'<br>'.$this->Html->link('Ver',array('action' => 'ver',$c['Cliente']['id'])).'</td>';
+			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$c['Cliente']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Cliente']['id'])).'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Cliente']['id'])).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';

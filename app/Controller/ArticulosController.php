@@ -6,14 +6,14 @@ class ArticulosController extends AppController {
 	public $components = array('Session','JqImgcrop');
 	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config');
 	
-    function index() {
+    function admin_index() {
 		$articulos = $this->Articulo->find('all',array(
 			'recursive' => 2
 		));
 		$this->set(compact('articulos'));
     }
 	
-	function editar($id = null) {
+	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$data = $this->data;
 			if (!empty($this->data['Articulo']['Foto']['name'])) {
@@ -48,7 +48,7 @@ class ArticulosController extends AppController {
 			}
 			
 			//die("sd");
-			$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Articulo->findById($id);
@@ -76,15 +76,15 @@ class ArticulosController extends AppController {
 		$this->set(compact('id','subcategorias','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion'));
 	}
 	
-	function eliminar($id) {
+	function admin_eliminar($id) {
 		$this->Articulo->delete($id);
 		$this->ArticulosMateriasprima->deleteAll(array(
 			'articulo_id' => $id
 		));
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	function ver($id) {
+	function admin_ver($id) {
 		$articulo = $this->Articulo->findById($id);
 		$this->set(compact('articulo'));
 	}

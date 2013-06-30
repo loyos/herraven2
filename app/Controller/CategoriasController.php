@@ -5,7 +5,7 @@ class CategoriasController extends AppController {
 	public $helpers = array ('Html','Form');
 	var $uses = array('Categoria','Subcategoria','Articulo');
 	
-    function index() {
+    function admin_index() {
 		$categorias = $this->Categoria->find('all',array(
 			'contain' => array('Subcategoria')
 		));
@@ -30,10 +30,10 @@ class CategoriasController extends AppController {
 		$this->set(compact('categorias','eliminar_cat'));
     }
 	
-	function editar($id = null) {
+	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$this->Categoria->save($this->data);
-			$this->redirect(array('action' => 'index'));
+			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$this->data = $this->Categoria->findById($id);
 			$titulo = 'Editar Categoria';
@@ -43,9 +43,9 @@ class CategoriasController extends AppController {
 		$this->set(compact('id','titulo'));
 	}
 	
-	function eliminar($id) {
+	function admin_eliminar($id) {
 		$this->Categoria->delete($id);
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'admin_index'));
 	}
 
 }
