@@ -50,7 +50,14 @@ class AppController extends Controller {
 		$this->Auth->allow('*');
 	}
 	public function isAuthorized($user=null) {
-
-		return true;
+		if (strpos($this->action,'admin') === false) {
+				return true;
+		} else {
+			if (isset($user['rol']) && $user['rol'] === 'admin') {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 }
