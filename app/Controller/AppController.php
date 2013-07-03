@@ -43,7 +43,7 @@ class AppController extends Controller {
     );
 	function beforeFilter() { 	
 		//var_dump($this->Auth->logoutRedirect); debug.die("dfdf");
-		$this->Auth->authorize = 'controller'; 
+		$this->Auth->authorize = 'Controller'; 
 		$user_id = $this->Auth->user('id');
 		$role = $this->Auth->user('role');
 		Security::setHash('md5');
