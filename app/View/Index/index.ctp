@@ -1,3 +1,3 @@
 <div class="wrap">
-<h1>Aqui ir� el login, por ahora como no hay menu hay que meterese en las funciones por url (hice el clients/index)</h1>
+<h2>Esta es la vista que se mostrará una vez iniciada la sesión! hay que definir que va aquí</h2>
 </div>
