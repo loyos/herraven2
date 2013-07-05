@@ -1,5 +1,6 @@
 <div class = "menu">
 <ul>
+	<?php if ($admin_usuario){ ?>
 	<li class = "option">
 		Clientes y usuarios
 		<ul>
@@ -8,6 +9,8 @@
 			
 		</ul>
 	</li>
+	<?php } ?>
+	<?php if ($admin_catalogo){ ?>
 	<li class = "option">
 		Categorias
 		<ul>
@@ -16,16 +19,23 @@
 			<li class = "children"><?php echo $this->Html->link('Acabados',array('controller' => 'acabados', 'action' => 'admin_index')); ?></li>
 		</ul>
 	</li>
+	<?php } ?>
+	<?php if ($admin_catalogo){ ?>
 	<li class = "option">Artículos
 		<ul>
 			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'admin_index')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'admin_index')); ?></li>
-		</ul></li>
+			<li class = "children"><?php echo $this->Html->link('Inventario Materia prima',array('controller' => 'inventariomaterials', 'action' => 'admin_index')); ?></li>
+		</ul>
+	</li>
+	<?php } ?>
+	<?php if ($admin_catalogo){ ?>
 	<li class = "option">Lista de precios
 		<ul>
 			<li class = "children"><?php echo $this->Html->link('Lista de precios',array('controller' => 'precios', 'action' => 'admin_index')); ?></li>
 		</ul>
 	</li>
+	<?php } ?>
 </ul>
 </div>
 <script>

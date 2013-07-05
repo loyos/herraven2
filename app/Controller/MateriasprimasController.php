@@ -74,6 +74,7 @@ class MateriasprimasController extends AppController {
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
+	
 }
 
 ?>

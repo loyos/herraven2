@@ -42,12 +42,63 @@ class AppController extends Controller {
 		
     );
 	function beforeFilter() { 	
-		//var_dump($this->Auth->logoutRedirect); debug.die("dfdf");
 		$this->Auth->authorize = 'controller'; 
 		$user_id = $this->Auth->user('id');
 		$role = $this->Auth->user('role');
 		Security::setHash('md5');
 		$this->Auth->allow('*');
+		
+		$admin_usuario = false;
+		$admin_catalogo = false;
+		$admin_materia_prima = false;
+		$admin_almacen = false;
+		$admin_pedidos = false;
+		$admin_despachos = false;
+		$admin_cuentas = false;
+		$admin_almacenes_clientes = false;
+		$admin_reportes = false;
+		$cliente_perfil = false;
+		$cliente_almacen = false;
+		$cliente_catalogo = false;
+		
+		if ($this->Auth->user('admin_usuario') == 1) {
+			$admin_usuario = true;
+		} 
+		if ($this->Auth->user('admin_catalogo') == 1) {
+			$admin_catalogo = true;
+		} 
+		if ($this->Auth->user('admin_materia_prima') == 1) {
+			$admin_materia_prima = true;
+		} 
+		if ($this->Auth->user('admin_almacen') == 1) {
+			$admin_almacen = true;
+		} 
+		if ($this->Auth->user('admin_pedidos') == 1) {
+			$admin_pedidos = true;
+		} 
+		if ($this->Auth->user('admin_despachos') == 1) {
+			$admin_despachos = true;
+		} 
+		if ($this->Auth->user('admin_cuentas') == 1) {
+			$admin_cuentas = true;
+		} 
+		if ($this->Auth->user('admin_almacenes_clientes') == 1) {
+			$admin_almacenes_clientes = true;
+		} 
+		if ($this->Auth->user('admin_reportes') == 1) {
+			$admin_reportes = true;
+		} 
+		if ($this->Auth->user('cliente_perfil') == 1) {
+			$cliente_perfil = true;
+		} 
+		if ($this->Auth->user('cliente_almacen') == 1) {
+			$cliente_almacen = true;
+		} 
+		if ($this->Auth->user('cliente_catalogo') == 1) {
+			$cliente_catalogo = true;
+		} 
+		$this->set(compact('admin_usuario','admin_catalogo','admin_materia_prima','admin_almacen','admin_pedidos','admin_despachos','admin_cuentas','admin_almacenes_clientes','admin_reportes','cliente_perfil','cliente_almacen','cliente_catalogo'));
+		
 	}
 	public function isAuthorized($user=null) {
 		if (strpos($this->action,'admin') === false) {
