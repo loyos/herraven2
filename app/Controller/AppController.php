@@ -42,7 +42,7 @@ class AppController extends Controller {
 		
     );
 	function beforeFilter() { 	
-		$this->Auth->authorize = 'controller'; 
+		$this->Auth->authorize = 'Controller'; 
 		$user_id = $this->Auth->user('id');
 		$role = $this->Auth->user('role');
 		Security::setHash('md5');
