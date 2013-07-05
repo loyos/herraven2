@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 01-07-2013 a las 00:43:58
--- Versión del servidor: 5.1.53
--- Versión de PHP: 5.3.4
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 05-07-2013 a las 19:51:34
+-- Versión del servidor: 5.5.27
+-- Versión de PHP: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -34,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `acabados` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Volcar la base de datos para la tabla `acabados`
+-- Volcado de datos para la tabla `acabados`
 --
 
 INSERT INTO `acabados` (`id`, `descripcion`, `oculto`, `acabado`) VALUES
@@ -60,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `articulos` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Volcar la base de datos para la tabla `articulos`
+-- Volcado de datos para la tabla `articulos`
 --
 
 INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `cantidad_por_caja`, `imagen`, `subcategoria_id`, `oculto`, `costo_produccion`, `margen_ganancia`) VALUES
@@ -82,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `articulos_materiasprimas` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
 
 --
--- Volcar la base de datos para la tabla `articulos_materiasprimas`
+-- Volcado de datos para la tabla `articulos_materiasprimas`
 --
 
 INSERT INTO `articulos_materiasprimas` (`id`, `articulo_id`, `materiasprima_id`, `cantidad`) VALUES
@@ -103,11 +104,6 @@ CREATE TABLE IF NOT EXISTS `cajas` (
   `codigo` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Volcar la base de datos para la tabla `cajas`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -120,11 +116,6 @@ CREATE TABLE IF NOT EXISTS `cajas_pedidos` (
   `pedido_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `cajas_pedidos`
---
-
 
 -- --------------------------------------------------------
 
@@ -140,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Volcar la base de datos para la tabla `categorias`
+-- Volcado de datos para la tabla `categorias`
 --
 
 INSERT INTO `categorias` (`id`, `descripcion`, `oculto`) VALUES
@@ -171,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcar la base de datos para la tabla `clientes`
+-- Volcado de datos para la tabla `clientes`
 --
 
 INSERT INTO `clientes` (`id`, `denominacion_legal`, `rif`, `representante`, `ciudad`, `direccion`, `direccion_despacho`, `telefono_uno`, `telefono_dos`, `fax`, `email_representante`, `sitio_web`, `precio_id`) VALUES
@@ -191,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Volcar la base de datos para la tabla `configs`
+-- Volcado de datos para la tabla `configs`
 --
 
 INSERT INTO `configs` (`id`, `costo_produccion`) VALUES
@@ -212,11 +203,6 @@ CREATE TABLE IF NOT EXISTS `cuentas` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `cuentas`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -234,11 +220,6 @@ CREATE TABLE IF NOT EXISTS `inventarioalmacens` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `inventarioalmacens`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -248,16 +229,26 @@ CREATE TABLE IF NOT EXISTS `inventarioalmacens` (
 CREATE TABLE IF NOT EXISTS `inventariomaterials` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cantidad` int(11) NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `materiasprima_id` int(11) NOT NULL,
   `tipo` varchar(255) NOT NULL,
+  `trimestre` int(11) NOT NULL,
+  `ano` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Volcar la base de datos para la tabla `inventariomaterials`
+-- Volcado de datos para la tabla `inventariomaterials`
 --
 
+INSERT INTO `inventariomaterials` (`id`, `cantidad`, `materiasprima_id`, `tipo`, `trimestre`, `ano`) VALUES
+(5, 100, 3, 'entrada', 3, 2013),
+(2, 100, 2, 'entrada', 3, 2013),
+(3, 60, 2, 'salida', 3, 2013),
+(4, 500, 2, 'entrada', 3, 2013),
+(6, 50, 3, 'salida', 3, 2013),
+(7, 50, 3, 'entrada', 2, 2013),
+(8, 20, 3, 'entrada', 3, 2012),
+(9, 200, 5, 'entrada', 3, 2013);
 
 -- --------------------------------------------------------
 
@@ -274,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `materiasprimas` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcar la base de datos para la tabla `materiasprimas`
+-- Volcado de datos para la tabla `materiasprimas`
 --
 
 INSERT INTO `materiasprimas` (`id`, `descripcion`, `unidad`, `precio`) VALUES
@@ -297,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `materiasprimas_precios` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
--- Volcar la base de datos para la tabla `materiasprimas_precios`
+-- Volcado de datos para la tabla `materiasprimas_precios`
 --
 
 INSERT INTO `materiasprimas_precios` (`id`, `precio`, `precio_id`, `materiasprima_id`) VALUES
@@ -322,11 +313,6 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
---
--- Volcar la base de datos para la tabla `pedidos`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -341,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `precios` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Volcar la base de datos para la tabla `precios`
+-- Volcado de datos para la tabla `precios`
 --
 
 INSERT INTO `precios` (`id`, `descripcion`, `ganancia`) VALUES
@@ -363,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `subcategorias` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcar la base de datos para la tabla `subcategorias`
+-- Volcado de datos para la tabla `subcategorias`
 --
 
 INSERT INTO `subcategorias` (`id`, `descripcion`, `categoria_id`, `oculto`) VALUES
@@ -401,9 +387,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcar la base de datos para la tabla `users`
+-- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `nombre`, `apellido`, `rol`, `cliente_id`, `admin_usuario`, `admin_catalogo`, `admin_materia_prima`, `admin_almacen`, `admin_pedidos`, `admin_despachos`, `admin_cuentas`, `admin_almacenes_clientes`, `admin_reportes`, `cliente_perfil`, `cliente_almacen`, `cliente_catalogo`) VALUES
 (3, 'paolap', '77b6b96a3df9d5703e27f9142733f4ee', 'ppaola1409@gmail.com', 'paola', 'Pinero', 'cliente', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1),
 (5, 'admin', '77b6b96a3df9d5703e27f9142733f4ee', 'admin@gmail.com', 'admin', 'admin', 'admin', 4, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
