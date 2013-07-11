@@ -26,6 +26,7 @@
 			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'admin_index')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'admin_index')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Inventario Materia prima',array('controller' => 'inventariomaterials', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Forecast',array('controller' => 'articulos', 'action' => 'admin_forecast')); ?></li>
 		</ul>
 	</li>
 	<?php } ?>

@@ -88,6 +88,34 @@ class ArticulosController extends AppController {
 		$articulo = $this->Articulo->findById($id);
 		$this->set(compact('articulo'));
 	}
+	
+	function admin_forecast(){
+		if (!empty($this->data)) {
+			$data = $this->data;
+			foreach ($data['cantidad'] as $key => $value){
+				if ($value == 1){
+					$cajas = $data['cajas'][$key];
+					$articulo = $this->Articulo->findById($key);
+					foreach ($articulo['Materiasprima'] as $mp){
+						$datos = array (
+							'Articulo' => $articulo['Articulo']['descripcion'],
+							'Materiasprima' => $mp['descripcion'],
+							'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
+							'cajas' => $cajas
+						);
+						$articulos_mp[$key][]= $datos;
+					}
+				}
+			}
+			$this->set(compact('articulos_mp'));
+		} else {
+			$articulos = $this->Articulo->find('all',array(
+				'link' => array('Subcategoria' => 'Categoria'),
+				'recursive' => 2
+			));
+			$this->set(compact('articulos'));
+		}
+	}
 }
 
 ?>
