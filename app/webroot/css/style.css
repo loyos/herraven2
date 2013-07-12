@@ -137,3 +137,11 @@ table.tabla_ver td, table.tabla_ver th{
 .children a:hover{
 	color: #d7e4e8;
 }
+
+.articulos_almacen {
+	float:left;
+}
+
+.imagen_articulo {
+	float:left;
+}

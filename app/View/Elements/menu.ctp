@@ -37,6 +37,14 @@
 		</ul>
 	</li>
 	<?php } ?>
+	<?php if ($admin_almacen){ ?>
+	<li class = "option">Almacén
+		<ul>
+			<li class = "children"><?php echo $this->Html->link('Ingreso',array('controller' => 'inventarioalmacens', 'action' => 'admin_agregar')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Egresos',array('controller' => 'pedidos', 'action' => 'admin_index')); ?></li>
+		</ul>
+	</li>
+	<?php } ?>
 </ul>
 </div>
 <script>
