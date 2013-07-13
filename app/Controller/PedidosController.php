@@ -4,7 +4,7 @@ class PedidosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Pedido');
+	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen');
 	
     function admin_index() {
 		$pedidos = $this->Pedido->find('all',array(
@@ -16,7 +16,7 @@ class PedidosController extends AppController {
 			foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
 				if ($ia['tipo'] == 'entrada') {
 					$entradas = $entradas + $ia['cajas'];
-				} elseif ($a['tipo'] == 'salida') {
+				} elseif ($ia['tipo'] == 'salida') {
 					$salidas = $salidas + $ia['cajas'];
 				}
 			}
@@ -135,6 +135,33 @@ class PedidosController extends AppController {
 			));
 			$this->set(compact('articulos'));
 		}
+	}
+	
+	function admin_ejecutar_pedido($id) {
+		if (!empty($this->data)) {
+			$pedido = $this->Pedido->findById($this->data['Pedido']['id']);
+			//var_dump($this);die();
+			$data = array(
+				'Inventarioalmacen' => array(
+					'tipo' => 'salida',
+					'articulo_id'=> $pedido['Articulo']['id'],
+					'cajas' => $pedido['Pedido']['cantidad_cajas'],
+					'acabado_id' => $pedido['Pedido']['acabado_id'],
+					'pedido_id' => $this->data['Pedido']['id']
+				)
+			);
+			$this->Inventarioalmacen->save($data);
+			$update_pedido = array(
+				'Pedido' => array(
+					'id' => $this->data['Pedido']['id'],
+					'status' => 'Ejecutado'
+				)
+			);
+			$this->Pedido->save($update_pedido);
+			$this->redirect(array('action' => 'admin_index'));	
+		}
+		$pedido = $this->Pedido->findById($id);
+		$this->set(compact('pedido','id'));
 	}
 }
 

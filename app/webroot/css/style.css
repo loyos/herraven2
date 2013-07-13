@@ -16,6 +16,7 @@ body {
 	box-shadow: 3px 6px 13px #888888;
 	padding:20px;
 	margin-top: 40px;
+	overflow: hidden;
 }
 
 label {
@@ -144,4 +145,23 @@ table.tabla_ver td, table.tabla_ver th{
 
 .imagen_articulo {
 	float:left;
+}
+
+.egreso_izquierda {
+	float:left;
+	border:1px solid black;
+	width:570px;
+	padding:10px;
+}
+
+.egreso_derecha {
+	padding:15px;
+	border:1px solid black;
+	height:130px;
+	float:right;
+}
+
+.boton_egreso {
+	float: right;
+	margin-top: -4px;
 }
