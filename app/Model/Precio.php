@@ -17,6 +17,16 @@ class Precio extends AppModel {
                  // 'associationForeignKey'  => 'materiasprima_id',
             // )
     // );
+	var $validate = array( 
+		'ganancia' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'descripcion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		)
+    ); 
 }
 
 

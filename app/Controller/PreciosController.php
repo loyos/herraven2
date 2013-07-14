@@ -11,9 +11,11 @@ class PreciosController extends AppController {
     }
 	
 	function admin_editar($id = null) {
+		$titulo = "";
 		if (!empty($this->data)) {
-			$this->Precio->save($this->data);
-			$this->redirect(array('action' => 'admin_index'));
+			if ($this->Precio->save($this->data)) {
+				$this->redirect(array('action' => 'admin_index'));
+			}
 		} elseif (!empty($id)) {
 			$this->data = $this->Precio->findById($id);
 			$titulo = 'Editar';
