@@ -19,6 +19,45 @@ class Cliente extends AppModel {
 			'foreignKey'    => 'cliente_id',
 		),
     );
+	
+	 var $validate = array(
+        'denominacion_legal' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'rif' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'representante' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'ciudad' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'direccion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'direccion_despacho' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'telefono_uno' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'email_representante' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'precio_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		)
+    );
 }
 
 

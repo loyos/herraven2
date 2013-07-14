@@ -12,8 +12,9 @@ class ClientesController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
-			$this->Cliente->save($this->data);
-			$this->redirect(array('action' => 'admin_index'));
+			if ($this->Cliente->save($this->data)) {
+				$this->redirect(array('action' => 'admin_index'));
+			}
 		} elseif (!empty($id)) {
 			$this->data = $this->Cliente->findById($id);
 			$titulo = 'Editar';

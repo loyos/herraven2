@@ -20,6 +20,43 @@ class User extends AppModel {
 		}
 		return true;
 	}
+	
+	var $validate = array(
+        'username' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Este campo no puede quedar vacío.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'Este nombre de usuario ya ha sido asignado.'
+			)
+		),
+		'password' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'email' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'nombre' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'apellido' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'rol' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'cliente_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+    );
 }
 
 
