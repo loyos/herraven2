@@ -14,14 +14,16 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	));
 	echo '</td>';
 	echo '</tr>';
-	echo '<tr>';
-	echo '<td>Contraseña</td>';
-	echo '<td>';
-	echo $this->Form->input('password',array(
-		'label' => false
-	));
-	echo '</td>';
-	echo '</tr>';
+	if (empty($id)) {
+		echo '<tr>';
+		echo '<td>Contraseña</td>';
+		echo '<td>';
+		echo $this->Form->input('password',array(
+			'label' => false
+		));
+		echo '</td>';
+		echo '</tr>';
+	}
 	echo '<tr>';
 	echo '<td>Email</td>';
 	echo '<td>';
