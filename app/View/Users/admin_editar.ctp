@@ -194,9 +194,24 @@ function funciones_rol() {
 	if (rol == 'admin') {
 		$('#div_rol_cliente').css('display','none');
 		$('#div_rol_admin').css('display','block');
+		inputs = $('#div_rol_cliente input');
+		$.each( inputs, function( key, value ) {
+			$(this).val(0);
+			$(this).attr('checked',false);
+		});
 	} else if (rol == 'cliente') {
 		$('#div_rol_admin').css('display','none');
 		$('#div_rol_cliente').css('display','block');
+		inputs = $('#div_rol_admin input');
+		$.each( inputs, function( key, value ) {
+			$(this).val(0);
+			$(this).attr('checked',false);
+		});
 	}
 }
+
+$( "input[type=checkbox]" ).on( "click",function(){
+	$(this).val(1);
+	$(this).attr('checked',true);
+});
 </script>
