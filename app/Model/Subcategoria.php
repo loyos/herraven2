@@ -14,6 +14,17 @@ class Subcategoria extends AppModel {
 			'foreignKey'    => 'subcategoria_id',
         )
     );
+	
+	var $validate = array(
+        'descripcion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'categoria_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+    );
 }
 
 

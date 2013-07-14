@@ -21,8 +21,11 @@ class SubcategoriasController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
-			$this->Subcategoria->save($this->data);
-			$this->redirect(array('action' => 'admin_index'));
+			if ($this->Subcategoria->save($this->data)) {
+				$this->redirect(array('action' => 'admin_index'));
+			} else {
+				$titulo = "";
+			}
 		} elseif (!empty($id)) {
 			$this->data = $this->Subcategoria->findById($id);
 			$titulo = 'Editar';
@@ -32,7 +35,6 @@ class SubcategoriasController extends AppController {
 		$categorias = $this->Categoria->find('list',array(
 			'fields' => array('id','descripcion')
 		));
-		$categorias[0] = '';
 		$this->set(compact('id','titulo','categorias'));
 	}
 	

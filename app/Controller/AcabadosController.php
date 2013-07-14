@@ -21,8 +21,11 @@ class AcabadosController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
-			$this->Acabado->save($this->data);
-			$this->redirect(array('action' => 'admin_index'));
+			if ($this->Acabado->save($this->data)) {
+				$this->redirect(array('action' => 'admin_index'));
+			} else {
+				$titulo = "";
+			}
 		} elseif (!empty($id)) {
 			$this->data = $this->Acabado->findById($id);
 			$titulo = 'Editar';

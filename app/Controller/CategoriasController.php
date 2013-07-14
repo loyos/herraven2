@@ -32,8 +32,11 @@ class CategoriasController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
-			$this->Categoria->save($this->data);
-			$this->redirect(array('action' => 'admin_index'));
+			if ($this->Categoria->save($this->data)) {
+				$this->redirect(array('action' => 'admin_index'));
+			} else {
+				$titulo = "";
+			}
 		} elseif (!empty($id)) {
 			$this->data = $this->Categoria->findById($id);
 			$titulo = 'Editar Categoria';

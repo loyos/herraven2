@@ -8,6 +8,12 @@ class Categoria extends AppModel {
 			'foreignKey'    => 'categoria_id',
         )
     );
+	var $validate = array(
+		'descripcion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+    );
 }
 
 

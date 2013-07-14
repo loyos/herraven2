@@ -12,5 +12,15 @@ class Acabado extends AppModel {
 			'foreignKey'    => 'acabado_id',
 		)
     );
+	var $validate = array(
+        'acabado' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'descripcion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+    );
 }
 ?>
