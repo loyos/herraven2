@@ -14,7 +14,9 @@ class ArticulosController extends AppController {
     }
 	
 	function admin_editar($id = null) {
+		$titulo = "";
 		if (!empty($this->data)) {
+			$guardo = true;
 			$data = $this->data;
 			if (!empty($this->data['Articulo']['Foto']['name'])) {
 				if ($this->JqImgcrop->uploadImage($this->data['Articulo']['Foto'], 'img\articulos', '')) {
@@ -22,33 +24,51 @@ class ArticulosController extends AppController {
 				}
 			}
 			$i = 0;
-			$this->Articulo->save($data);
-			$id = $this->Articulo->id;
-			$this->ArticulosMateriasprima->deleteAll(array(
-				'articulo_id' => $id
-			));
+			$a = 0;
 			foreach($this->data['materias'] as $m){
-				if (!empty($m)){
-					$existe = $this->ArticulosMateriasprima->find('first',array(
-						'conditions' => array(
-							'articulo_id' => $id,
-							'materiasprima_id' => $m
-						)
-					));
-					if (empty($existe)) {
-						$data_m = array(
-							'articulo_id' => $id,
-							'materiasprima_id' => $m,
-							'cantidad' => $this->data['cantidad'][$i]
-						);
-						$this->ArticulosMateriasprima->saveAll($data_m);
-					}
-					$i++;
+				if (!empty($m) && !empty($this->data['cantidad'][$a])){
+					$hay_materias[] = 'si';
 				}
+				$a++;
 			}
-			
-			//die("sd");
-			$this->redirect(array('action' => 'admin_index'));
+			if (!empty($hay_materias)){
+				if ($this->Articulo->save($data)) {
+					$id = $this->Articulo->id;
+					$this->ArticulosMateriasprima->deleteAll(array(
+						'articulo_id' => $id
+					));
+					foreach($this->data['materias'] as $m){
+						if (!empty($m)){
+							$existe = $this->ArticulosMateriasprima->find('first',array(
+								'conditions' => array(
+									'articulo_id' => $id,
+									'materiasprima_id' => $m
+								)
+							));
+							if (empty($existe)) {
+								$data_m = array(
+									'articulo_id' => $id,
+									'materiasprima_id' => $m,
+									'cantidad' => $this->data['cantidad'][$i]
+								);
+								if ($this->ArticulosMateriasprima->saveAll($data_m)) {
+									$guardo = true;
+								} else {
+									$guardo = false;
+								}
+							}
+							$i++;
+							
+						} 
+					}
+					//die("sd");
+					if ($guardo){
+					$this->redirect(array('action' => 'admin_index'));
+					}
+				} 
+			} else {
+				$this->Session->setFlash("El articulo debe tener por lo menos una materia prima asociada");
+			}
 		} elseif (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Articulo->findById($id);

@@ -165,3 +165,12 @@ table.tabla_ver td, table.tabla_ver th{
 	float: right;
 	margin-top: -4px;
 }
+
+.message {
+	background: #00abd7;
+	width: 235px;
+	padding: 10px;
+	border-radius: 10px;
+	margin: auto;
+	margin-top: 20px;
+}
