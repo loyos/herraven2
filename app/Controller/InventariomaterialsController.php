@@ -54,8 +54,9 @@ class InventariomaterialsController extends AppController {
 			$data['Inventariomaterial']['trimestre'] = $this->Config->obtenerTrimestre($hoy);
 			$data['Inventariomaterial']['ano'] = $this->Config->obtenerAno($hoy);
 			$data['Inventariomaterial']['tipo'] = 'entrada';
-			$this->Inventariomaterial->save($data);
+			if ($this->Inventariomaterial->save($data)) {
 			$this->redirect(array('action' => 'admin_index'));
+			}
 		} 
 		
 		$materiasprimas = $this->Materiasprima->find('list',array(

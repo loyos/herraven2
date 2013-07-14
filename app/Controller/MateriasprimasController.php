@@ -25,10 +25,12 @@ class MateriasprimasController extends AppController {
     }
 	
 	function admin_editar($id = null) {
+		$titulo = "";
 		if (!empty($this->data)) {
 			$data = $this->data;
 			$i = 0;
-			$this->Materiasprima->save($data);
+			
+			if ($this->Materiasprima->save($data)) {
 			// $id = $this->Materiasprima->id;
 			// $precios = $this->Precio->find('all');
 			// $this->MateriasprimasPrecio->deleteAll(array(
@@ -48,7 +50,8 @@ class MateriasprimasController extends AppController {
 				// );
 				// $this->MateriasprimasPrecio->saveAll($data_p);
 			// }
-			$this->redirect(array('action' => 'admin_index'));
+				$this->redirect(array('action' => 'admin_index'));
+			}
 		} elseif (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Materiasprima->findById($id);

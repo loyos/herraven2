@@ -23,5 +23,20 @@ class Materiasprima extends AppModel {
 			'foreignKey'    => 'materiasprima_id',
         )
     );
+	
+	var $validate = array( 
+		'unidad' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'descripcion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+		'precio' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
+    ); 
 }
 ?>
