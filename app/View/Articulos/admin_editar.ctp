@@ -8,40 +8,50 @@ $materias = array();
 	echo $this->Form->create('Articulo', array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
+	echo '<td>Categoria</td>';
+	echo '<td>';
+	echo $this->Form->input('categoria_id',array(
+			'label' => false,
+			'id' => 'categoria'
+		));
+	echo '</td>';
 	echo '<td>Subcategoria</td>';
 	echo '<td>';
 	echo $this->Form->input('subcategoria_id',array(
-		'label' => false
+		'label' => false,
+		'id' => 'subcategoria'
 	));
 	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
 	echo '<td>Código</td>';
 	echo '<td>';
 	echo $this->Form->input('codigo',array(
 		'label' => false
 	));
 	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
 	echo '<td>Descripción</td>';
 	echo '<td>';
 	echo $this->Form->input('descripcion',array(
 		'label' => false
 	));
 	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
 	echo '<td>Cantidad por cajas</td>';
 	echo '<td>';
 	echo $this->Form->input('cantidad_por_caja',array(
 		'label' => false,
 	));
 	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
 	echo '<td>Imagen</td>';
 	echo '<td>';
 	echo $this->Form->file('Foto',array(
 		'label' => false
 	));
 	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
 	echo '<td>Oculto</td>';
 	echo '<td>';
 	echo $this->Form->input('oculto',array(
@@ -110,3 +120,27 @@ $materias = array();
 	echo $this->Form->end;
 ?>
 </div>
+<script>
+$(document).ready(function() {
+	buscar_subcat();
+})
+$('#categoria').change(function(){
+	buscar_subcat();
+});
+function buscar_subcat() {
+	var cat_id = $('#categoria').val();
+	$.ajax({
+		type: "POST",
+		url: "buscar_subcat.json",
+		data: { cat_id: cat_id },
+		dataType: "json"
+	}).done(function( msg ) {
+		// alert( "Data Saved: " + msg[1].Genero.nombre);
+		$('#subcategoria option').remove();
+		$('#subcategoria').append($("<option></option>").attr("value", '').text('Selecciona una subcategoria'));
+		$.each(msg, function(i,a){	
+			$('#subcategoria').append($("<option selected=selected ></option>").attr("value", a.Subcategoria.id).text(a.Subcategoria.descripcion)); 
+		});
+	});
+}
+</script>

@@ -76,7 +76,7 @@ function buscar_subcat() {
 	}).done(function( msg ) {
 		// alert( "Data Saved: " + msg[1].Genero.nombre);
 		$('#subcategoria option').remove();
-		$('#subcategoria').append($("<option></option>").attr("value", '').text('Selecciona un Género'));
+		$('#subcategoria').append($("<option></option>").attr("value", '').text('Selecciona una subcategoria'));
 		$.each(msg, function(i,a){	
 			$('#subcategoria').append($("<option selected=selected ></option>").attr("value", a.Subcategoria.id).text(a.Subcategoria.descripcion)); 
 		});

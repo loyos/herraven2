@@ -3,8 +3,8 @@
 class ArticulosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop');
-	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config');
+	public $components = array('Session','JqImgcrop','RequestHandler');
+	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria');
 	
     function admin_index() {
 		$articulos = $this->Articulo->find('all',array(
@@ -86,14 +86,27 @@ class ArticulosController extends AppController {
 		}
 		$costo_produccion = $this->Config->find('first');
 		$costo_produccion = $costo_produccion['Config']['costo_produccion'];
-		$subcategorias = $this->Subcategoria->find('list',array(
+		$categorias = $this->Categoria->find('list',array(
 			'fields' => array('id','descripcion')
 		));
 		$materiasprimas[0] = '';
-		$materiasprimas= $materiasprimas + $this->Materiasprima->find('list',array(
-			'fields' => array('id','descripcion')
+		$materiasprimas_busqueda= $this->Materiasprima->find('all',array(
+			'fields' => array('id','descripcion','unidad')
 		));
-		$this->set(compact('id','subcategorias','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion'));
+		foreach ($materiasprimas_busqueda as $mp) {
+			$materiasprimas[$mp['Materiasprima']['id']] =  $mp['Materiasprima']['descripcion'].' ('.$mp['Materiasprima']['unidad'].')';
+		}
+		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias'));
+	}
+	
+	function buscar_subcat() {
+		$this->loadModel('Subcategoria');
+		$subcat = $this->Subcategoria->find('all', array(
+			'conditions' => array('Subcategoria.categoria_id' => $_POST['cat_id'])
+		));
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode($subcat);
 	}
 	
 	function admin_eliminar($id) {
