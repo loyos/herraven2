@@ -10,13 +10,8 @@ class InventarioalmacensController extends AppController {
 	function admin_agregar(){
 		if (!empty($this->data)){
 			$data = $this->data;
-			
-			$articulos = $this->Articulo->find('all',array(
-				'conditions' => array('Articulo.subcategoria_id' => $data['Materiasprima']['subcategoria_id'])
-			));
-			// var_dump($data['Materiasprima']['subcategoria_id']);
-			// var_dump($articulos);die("sd");
-			$this->set(compact('articulos'));
+			$subcategoria_id = $data['Materiasprima']['subcategoria_id'];
+			$this->redirect(array('action' => 'admin_articulos',$subcategoria_id));
 		} else {
 			$categorias = $this->Categoria->find('list',array(
 				'fields' => array('id','descripcion')
@@ -63,8 +58,9 @@ class InventarioalmacensController extends AppController {
 					'acabado_id' => $data['Inventarioalmacen']['acabado_id'],
 				)
 			);
-			$this->Inventarioalmacen->save($inventario_almacen);
-			$this->redirect(array('action' => 'admin_agregar'));
+			if ($this->Inventarioalmacen->save($inventario_almacen)) {
+				$this->redirect(array('action' => 'admin_agregar'));
+			}
 		}
 		$acabados = $this->Acabado->find('list',array(
 			'fields' => array('Acabado.id','Acabado.acabado')
@@ -74,6 +70,15 @@ class InventarioalmacensController extends AppController {
 	
 	function admin_index(){
 		
+	}
+	
+	function admin_articulos($sub_id) {
+		$articulos = $this->Articulo->find('all',array(
+				'conditions' => array('Articulo.subcategoria_id' => $sub_id)
+			));
+			// var_dump($data['Materiasprima']['subcategoria_id']);
+			// var_dump($articulos);die("sd");
+			$this->set(compact('articulos'));
 	}
 	
 }

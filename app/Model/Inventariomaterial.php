@@ -11,12 +11,15 @@ class Inventariomaterial extends AppModel {
 	
 	var $validate = array( 
 		'cantidad' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'not_Empty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Este campo no puede quedar vacío.'
+			),
+			'mayor_cero' => array(
+				'rule' => array('comparison', '>', 0),
+				'message' => 'Este campo no puede tener valores negativos.'
+			),
 		),
     ); 
 }
-
-
-
 ?>
