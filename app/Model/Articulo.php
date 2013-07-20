@@ -46,12 +46,33 @@ class Articulo extends AppModel {
 			'rule' => 'notEmpty',
 			'message' => 'Este campo no puede quedar vacío.'
 		),
-    ); 
+    );
+	
+	function calcular_precio($id){
+	
+		$precio_materias = 0;
+		$costo_produccion = 0;
+		$costo_total = 0;
+		$margen_ganancia = 0;
+		$precio_total = 0;
+		
+		$articulo = $this->find('first', array(
+			'conditions' => array(
+				'Articulo.id' => $id
+			)
+		));
+		
+		foreach($articulo['Materiasprima'] as $art){
+			$precio_materias = $precio_materias + $art['precio']*$art['ArticulosMateriasprima']['cantidad'];
+		}
+		$costo_produccion = $precio_materias * ($articulo['Articulo']['costo_produccion']/100);
+		$costo_total = $precio_materias + $costo_produccion;
+		$margen_ganancia = $costo_total * ($articulo['Articulo']['margen_ganancia']/100);
+		$precio_total = $costo_total + $margen_ganancia;
+		
+		return(round($precio_total));
+		
+	}	
 }
-
-function multiple_materia(){
-	var_dump($this->data);die();
-}
-
 
 ?>

@@ -15,14 +15,17 @@ foreach ($info_articulos as $a) { ?>
 	<div class="info_catalogo">
 		<table>
 			<tr>
-				<td>
+				<td>				
 					Bs. <?php echo $a['precio'] ?>
 					<br>
 					Precio unitario
 				</td>
 				<td></td>
 				<td>
-					<?php echo $this->Form->input('cantidad',array(
+					<?php
+					echo '<b>' .$a['articulo']. '</b><br>';					
+					
+					echo $this->Form->input('cantidad',array(
 						'type' => 'select',
 						'options' => array(
 							'1' => '1',

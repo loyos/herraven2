@@ -58,10 +58,15 @@ class ArticulosController extends AppController {
 								}
 							}
 							$i++;
-							
 						} 
 					}
 					//die("sd");
+					$precio = $this->Articulo->calcular_precio($this->data['Articulo']['id']);
+					$precio_arreglo = array('Articulo' => array(
+						'precio' => $precio
+					));
+					$this->Articulo->id = $this->data['Articulo']['id'];
+					$this->Articulo->save($precio_arreglo);
 					if ($guardo){
 					$this->redirect(array('action' => 'admin_index'));
 					}
@@ -204,10 +209,7 @@ class ArticulosController extends AppController {
 				$despacho['Acabado']['descripcion'] = "";
 			}
 			//var_dump($despacho);
-			foreach ($a['Materiasprima'] as $mpa){
-				$precio_m = $mpa['precio']+($mpa['precio']*$ganancia);
-				$acum_precio = $acum_precio + ($precio_m*$mpa['ArticulosMateriasprima']['cantidad']);
-			}
+			$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id']); // llamamos a la funcion del modelo para calcular el precio
 			$info_articulos[] = array (
 				'articulo' => $a['Articulo']['descripcion'],
 				'precio' => $acum_precio,
