@@ -4,7 +4,7 @@ class ArticulosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado');
+	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado','AcabadosMateriasprima');
 	
     function admin_index() {
 		$articulos = $this->Articulo->find('all',array(
@@ -61,7 +61,33 @@ class ArticulosController extends AppController {
 							
 						} 
 					}
-					//die("sd");
+					//Guardando los acabados
+					foreach ($this->data as $k => $d) {
+						if (strpos($k,'materia_acabado_') === false) {
+						
+						}else {
+							$id_acabado = explode('_',$k);
+							$id_acabado = $id_acabado[2];
+							$count = 0;
+							foreach($d as $a) {
+								if ($a != 0) {
+									$data_n = array(
+										'articulo_id' => $id,
+										'acabado_id' => $id_acabado,
+										'cantidad' => $this->data['cantidad_acabado_'.$id_acabado][$count],
+										'materiasprima_id' => $a
+									);
+									if ($this->AcabadosMateriasprima->saveAll($data_n)) {
+										$guardo = true;
+									} else {
+										$guardo = false;
+									}
+								}
+								$count++;
+							}
+						}
+					}
+					
 					if ($guardo){
 					$this->redirect(array('action' => 'admin_index'));
 					}
@@ -96,7 +122,8 @@ class ArticulosController extends AppController {
 		foreach ($materiasprimas_busqueda as $mp) {
 			$materiasprimas[$mp['Materiasprima']['id']] =  $mp['Materiasprima']['descripcion'].' ('.$mp['Materiasprima']['unidad'].')';
 		}
-		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias'));
+		$acabados = $this->Acabado->find('all');
+		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados'));
 	}
 	
 	function buscar_subcat() {

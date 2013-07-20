@@ -9,6 +9,12 @@ class Materiasprima extends AppModel {
                  'foreignKey'             => 'materiasprima_id',
                  'associationForeignKey'  => 'articulo_id',
         ),
+		'Acabado' =>
+            array('className'            => 'Acabado',
+                 'joinTable'              => 'acabados_materiasprimas',
+                 'foreignKey'             => 'materiasprima_id',
+                 'associationForeignKey'  => 'acabado_id',
+        ),
 		// 'Precio' =>
             // array('className'            => 'Precio',
                  // 'joinTable'              => 'materiasprimas_precios',
