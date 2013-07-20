@@ -63,9 +63,9 @@ class ArticulosController extends AppController {
 
 					$precio = $this->Articulo->calcular_precio($this->data['Articulo']['id']);
 					$precio_arreglo = array('Articulo' => array(
-						'precio' => $precio
+						'precio' => $precio,
+						'id' => $id
 					));
-					$this->Articulo->id = $this->data['Articulo']['id'];
 					$this->Articulo->save($precio_arreglo);
 
 					//Guardando los acabados
