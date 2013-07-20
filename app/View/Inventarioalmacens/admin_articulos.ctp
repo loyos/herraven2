@@ -31,6 +31,10 @@
 			$i++;
 		}
 		echo '</table>';
+	} else {
+		echo '<div class="mensaje_vacio">';
+		echo 'No hay articulos asociados a esta subcategoria';
+		echo '</div>';
 	}
 	?>
 </div>
