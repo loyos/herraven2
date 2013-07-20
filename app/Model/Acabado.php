@@ -12,6 +12,14 @@ class Acabado extends AppModel {
 			'foreignKey'    => 'acabado_id',
 		)
     );
+	var $hasAndBelongsToMany = array(
+		'MateriasPrima' =>
+            array('className'            => 'MateriasPrima',
+                 'joinTable'              => 'acabados_materiasprimas',
+                 'foreignKey'             => 'acabado_id',
+                 'associationForeignKey'  => 'materiasprima_id',
+        ),
+    );
 	var $validate = array(
         'acabado' => array(
 			'rule' => 'notEmpty',
@@ -22,5 +30,6 @@ class Acabado extends AppModel {
 			'message' => 'Este campo no puede quedar vacío.'
 		),
     );
+	
 }
 ?>

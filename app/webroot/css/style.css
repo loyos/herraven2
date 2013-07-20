@@ -230,3 +230,8 @@ table.tabla_ver td, table.tabla_ver th{
 	text-align:center;
 	font-size:20px;
 }
+
+td.titulo_tabla {
+	font-weight:bold;
+	font-size:18px;
+}

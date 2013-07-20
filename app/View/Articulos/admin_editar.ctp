@@ -90,6 +90,48 @@ $materias = array();
 		echo '</tr>';
 	}
 	echo '</table>';
+	echo '<h2>Acabados</h2>';
+	echo '<table>';
+	echo '<tr>';
+	foreach ($acabados as $acabado) {
+		echo '<td>';
+		echo $this->Form->input($acabado['Acabado']['descripcion'],array(
+			'type' => 'checkbox',
+			'id' => $acabado['Acabado']['id'],
+			'class' => 'check_acabado',
+			'desc' => $acabado['Acabado']['descripcion']
+		));
+		echo '</td>';
+	}
+	echo '</tr>';
+	echo '</table>';
+	echo '<div id="acabados_articulo">';
+	echo '<table id ="tabla_materias_acabado" style="display:none">';
+	echo '<tr>';
+	echo '<td class="titulo_tabla">';
+	echo '</td>';
+	echo '</tr>';
+	// echo $this->Form->input('id_acabados',array(
+		// 'name' => 'id_acabados',
+		// 'id' => 'id_acabado',
+		// 'type' => 'hidden'
+	// ));
+	for ($i=0;$i<=3;$i++){
+		echo '<tr>';
+		echo '<td>';
+		echo $this->Form->input('materiasprima_id',array(
+			'name' => 'materia_acabado',
+		));
+		echo '</td>';
+		echo '<td>';
+		echo $this->Form->input('cantidad',array(
+			'name' => 'cantidad_acabado',
+		));
+		echo '</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+	echo '</div>';
 	echo '<h2>Ganancia</h2>';
 	echo '<table>';
 	echo '<tr>';
@@ -123,6 +165,7 @@ $materias = array();
 <script>
 $(document).ready(function() {
 	buscar_subcat();
+	buscar_acabados();
 })
 $('#categoria').change(function(){
 	buscar_subcat();
@@ -142,5 +185,43 @@ function buscar_subcat() {
 			$('#subcategoria').append($("<option selected=selected ></option>").attr("value", a.Subcategoria.id).text(a.Subcategoria.descripcion)); 
 		});
 	});
+}
+
+$(".check_acabado").change(function() {
+	agregar_acabado(this)
+});
+
+function buscar_acabados(){
+	$.each($('.check_acabado'), function(index, value) {
+		if ($(value).is(':checked')){
+			agregar_acabado(value);
+		}
+	});
+}
+
+function agregar_acabado(el){
+		if ($(el).is(':checked')) {
+		titulo = $(el).attr('desc');
+		$('#tabla_materias_acabado .titulo_tabla').html(titulo);
+		nuevo = $('#tabla_materias_acabado').clone().appendTo('#acabados_articulo').css('display','block');
+		id_check = $(el).attr('id');
+		nuevo.attr('id','tabla_'+id_check);
+		selects = $('#tabla_'+id_check).find('select');
+		//$('#id_acabado').val($('#id_acabado').val()+','+id_check);
+		$.each(selects, function(index, value) {
+			if ($(value).attr('name') == 'materia_acabado') {
+				$(value).attr('name','materia_acabado_'+id_check+'[]');
+			}
+		});
+		inputs = $('#tabla_'+id_check).find('input');
+		$.each(inputs, function(index, value) {
+			if ($(value).attr('name') == 'cantidad_acabado') {
+				$(value).attr('name','cantidad_acabado_'+id_check+'[]');
+			}
+		});
+	} else {
+		id_check = $(el).attr('id');
+		$('#tabla_'+id_check).remove();
+	}
 }
 </script>
