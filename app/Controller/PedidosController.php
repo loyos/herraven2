@@ -4,7 +4,7 @@ class PedidosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen');
+	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja');
 	
     function admin_index() {
 		$pedidos = $this->Pedido->find('all',array(
@@ -14,9 +14,9 @@ class PedidosController extends AppController {
 			$entradas = 0;
 			$salidas = 0;
 			foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
-				if ($ia['tipo'] == 'entrada') {
+				if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
 					$entradas = $entradas + $ia['cajas'];
-				} elseif ($ia['tipo'] == 'salida') {
+				} elseif ($ia['tipo'] == 'salida' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
 					$salidas = $salidas + $ia['cajas'];
 				}
 			}
@@ -30,7 +30,6 @@ class PedidosController extends AppController {
 			}
 		}
 		$this->set(compact('status','pedidos'));
-		//var_dump($status);die();
     }
 	
 	function admin_editar($id = null) {
@@ -154,14 +153,63 @@ class PedidosController extends AppController {
 			$update_pedido = array(
 				'Pedido' => array(
 					'id' => $this->data['Pedido']['id'],
-					'status' => 'Ejecutado'
+					'status' => 'Preparado'
 				)
 			);
 			$this->Pedido->save($update_pedido);
-			$this->redirect(array('action' => 'admin_index'));	
+			$pedido_id = $this->Pedido->id;
+			$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));	
 		}
 		$pedido = $this->Pedido->findById($id);
 		$this->set(compact('pedido','id'));
+	}
+	
+	function admin_asignar_cajas($pedido_id) {
+		$cantidad = $this->Pedido->findById($pedido_id);
+		$cantidad = $cantidad['Pedido']['cantidad_cajas'];
+		if (!empty($this->data)) {
+			$data = $this->data;
+			foreach ($data['codigo'] as $c) {
+				$caja = $this->Caja->find('first',array(
+					'conditions' => array('Caja.codigo'=>$c)
+				));
+				if (empty($caja)) {
+					$this->Session->setFlash("No existe una caja con el código ".$c);
+					$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+				} else {
+					$existe_codigo = $this->CajasPedido->find('first',array(
+						'conditions' => array('CajasPedido.caja_id' => $caja['Caja']['id'])
+					));
+					if (!empty($existe_codigo)){
+						$this->Session->setFlash("El código ".$c.' ya ha sido asignado');
+						$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+					} else {
+						$buscar_en_inventario = $this->Inventarioalmacen->find('first',array(
+							'conditions' => array(
+								'Inventarioalmacen.id' => $caja['Caja']['inventarioalmacen_id']
+							)
+						));
+						$articulo_id = $buscar_en_inventario['Inventarioalmacen']['articulo_id'];
+						$acabado_id = $buscar_en_inventario['Inventarioalmacen']['acabado_id'];
+						$pedido  = $this->Pedido->findById($pedido_id);
+						if ($articulo_id != $pedido['Pedido']['articulo_id'] || $acabado_id != $pedido['Pedido']['acabado_id']) {
+							$this->Session->setFlash("El código ".$c.' no contiene los articulos relacionados con este pedido');
+							$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+						}
+						$cajas_pedidos[] = array(
+							'caja_id' => $caja['Caja']['id'],
+							'pedido_id' => $pedido_id,
+						);
+					}
+				}
+			}
+			if($this->CajasPedido->saveAll($cajas_pedidos)){
+				$this->Session->setFlash('Pedido agregado con existo');
+				$this->redirect(array('action' => 'admin_index'));
+			}
+			//var_dump($this->data); die();
+		}
+		$this->set(compact('cantidad'));
 	}
 }
 

@@ -17,7 +17,17 @@ class Caja extends AppModel {
                  'associationForeignKey'  => 'pedido_id',
             )
     );
+	
+	function generar_codigo() {
+	$codigo = '';
+		for ($i=1; $i<=8; $i++) {
+			$numero_aleatorio = rand(1,9);
+			$codigo = $codigo.$numero_aleatorio;
+		}
+		return($codigo);
+	}
 }
+
 
 
 

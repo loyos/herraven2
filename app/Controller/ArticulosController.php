@@ -4,7 +4,7 @@ class ArticulosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria');
+	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado');
 	
     function admin_index() {
 		$articulos = $this->Articulo->find('all',array(
@@ -148,6 +148,81 @@ class ArticulosController extends AppController {
 			));
 			$this->set(compact('articulos'));
 		}
+	}
+	
+	function subcategoria_catalogo(){
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias'));
+	}
+	
+	function catalogo($sub_id) {
+		if (!empty($this->data)){
+			$data = $this->data;
+			foreach ($data['activo'] as $key => $d) {
+				if ($d == '1'){
+					$articulo_id = $key;
+				}
+			}
+			$cantidad = $data['cantidad'][$articulo_id];
+			$acabado = $data['acabado'][$articulo_id]; 
+			$cliente_id = $this->Auth->User('Cliente.id');
+			$nuevo_pedido = array('Pedido' => array(
+				'cliente_id' => $cliente_id,
+				'status' => 'pendiente',
+				'articulo_id' => $articulo_id,
+				'cantidad_cajas' => $cantidad,
+				'acabado_id' => $acabado,
+			));
+			$this->Pedido->save($nuevo_pedido);
+			//var_dump($nuevo_pedido);die();
+			$this->Session->setFlash('El pedido esta siendo procesado');
+		}
+		$subcategoria = $this->Subcategoria->find('first',array(
+			'conditions' => array('Subcategoria.id' => $sub_id),
+			'contain' => array('Articulo')
+		));
+		$precio_id = $this->Auth->User('Cliente.precio_id');
+		$precio = $this->Precio->findById($precio_id);
+		$ganancia = $precio['Precio']['ganancia']/100;
+		$articulos = $this->Articulo->find('all',array(
+			'conditions' => array('Articulo.subcategoria_id' => $sub_id)
+		));
+		foreach ($articulos as $a) {
+			$acum_precio = 0;
+			$despacho = $this->Pedido->find('first',array(
+				'conditions' => array(
+					'Pedido.articulo_id' => $a['Articulo']['id'],
+					'Pedido.status' => 'Despachado'
+				),
+				'order' => 'Pedido.fecha_despacho DESC'
+			));
+			if (empty($despacho)) {
+				$despacho['Pedido']['fecha_despacho'] = "No registrado";
+				$despacho['Pedido']['cantidad_cajas'] = "";
+				$despacho['Acabado']['descripcion'] = "";
+			}
+			//var_dump($despacho);
+			foreach ($a['Materiasprima'] as $mpa){
+				$precio_m = $mpa['precio']+($mpa['precio']*$ganancia);
+				$acum_precio = $acum_precio + ($precio_m*$mpa['ArticulosMateriasprima']['cantidad']);
+			}
+			$info_articulos[] = array (
+				'articulo' => $a['Articulo']['descripcion'],
+				'precio' => $acum_precio,
+				'id' => $a['Articulo']['id'],
+				'imagen' =>	$a['Articulo']['imagen'],			
+				'cantidad_por_caja' => $a['Articulo']['cantidad_por_caja'],
+				'fecha_despacho' => $despacho['Pedido']['fecha_despacho'],
+				'cantidad_despacho' => $despacho['Pedido']['cantidad_cajas'],
+				'acabado_despacho' => $despacho['Acabado']['descripcion'],
+			);
+		};
+		$acabados = $this->Acabado->find('list',array(
+			'fields' => array('id','descripcion')
+		));
+		$this->set(compact('info_articulos','subcategoria','acabados'));
 	}
 }
 
