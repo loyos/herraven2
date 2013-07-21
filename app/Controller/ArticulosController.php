@@ -74,10 +74,6 @@ class ArticulosController extends AppController {
 						'articulo_id' => $id
 					));
 					foreach ($this->data as $k => $d) {
-						// var_dump($this->data);
-						// var_dump($k);
-						// var_dump($d);
-					//	die();
 						if (strpos($k,'materia_acabado_') === false) {
 						
 						}else {
