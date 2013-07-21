@@ -217,9 +217,7 @@ class ArticulosController extends AppController {
 			'conditions' => array('Subcategoria.id' => $sub_id),
 			'contain' => array('Articulo')
 		));
-		$precio_id = $this->Auth->User('Cliente.precio_id');
-		$precio = $this->Precio->findById($precio_id);
-		$ganancia = $precio['Precio']['ganancia']/100;
+		
 		$articulos = $this->Articulo->find('all',array(
 			'conditions' => array('Articulo.subcategoria_id' => $sub_id)
 		));
@@ -238,7 +236,11 @@ class ArticulosController extends AppController {
 				$despacho['Acabado']['descripcion'] = "";
 			}
 			//var_dump($despacho);
-			$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id']); // llamamos a la funcion del modelo para calcular el precio
+			
+			$precio_id = $this->Auth->User('Cliente.precio_id');
+			$precio = $this->Precio->findById($precio_id);
+			$ganancia = $precio['Precio']['ganancia'];
+			$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id'], $ganancia); // llamamos a la funcion del modelo para calcular el precio
 			$info_articulos[] = array (
 				'articulo' => $a['Articulo']['descripcion'],
 				'precio' => $acum_precio,

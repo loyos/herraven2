@@ -48,7 +48,7 @@ class Articulo extends AppModel {
 		),
     );
 	
-	function calcular_precio($id){
+	function calcular_precio($id, $ganancia = null){
 	
 		$precio_materias = 0;
 		$costo_produccion = 0;
@@ -62,13 +62,22 @@ class Articulo extends AppModel {
 			)
 		));
 		
-		foreach($articulo['Materiasprima'] as $art){
-			$precio_materias = $precio_materias + $art['precio']*$art['ArticulosMateriasprima']['cantidad'];
+		if(empty($ganancia)){
+			foreach($articulo['Materiasprima'] as $art){
+				$precio_materias = $precio_materias + $art['precio']*$art['ArticulosMateriasprima']['cantidad'];
+			}
+		}else{
+			foreach($articulo['Materiasprima'] as $art){
+				$precio_materias = $precio_materias + ($art['precio']+$art['precio']*($ganancia/100))*$art['ArticulosMateriasprima']['cantidad'];
+			}
 		}
 		$costo_produccion = $precio_materias * ($articulo['Articulo']['costo_produccion']/100);
 		$costo_total = $precio_materias + $costo_produccion;
 		$margen_ganancia = $costo_total * ($articulo['Articulo']['margen_ganancia']/100);
 		$precio_total = $costo_total + $margen_ganancia;
+		
+		// debug($precio_total);
+		// die();
 		
 		return(round($precio_total));
 		

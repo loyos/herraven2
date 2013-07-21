@@ -16,7 +16,7 @@ foreach ($info_articulos as $a) { ?>
 		<table>
 			<tr>
 				<td>				
-					Bs. <?php echo $a['precio'] ?>
+					Bs. <?php echo number_format($a['precio'], 0, ',', '.') ?>
 					<br>
 					Precio unitario
 				</td>
@@ -45,7 +45,7 @@ foreach ($info_articulos as $a) { ?>
 			</tr>
 			<tr>
 				<td>
-					<?php echo 'Bs '.$a['precio']*$a['cantidad_por_caja'];
+					<?php echo 'Bs. '. number_format($a['precio']*$a['cantidad_por_caja'], 0, ',', '.');
 					echo '<br>';
 					echo 'Precio de caja';
 					?>

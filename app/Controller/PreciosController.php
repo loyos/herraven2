@@ -33,6 +33,7 @@ class PreciosController extends AppController {
 	function admin_ver($id) {
 		$materias = $this->Materiasprima->find('all');
 		$precio = $this->Precio->findById($id);
+		$ganancia = $precio['Precio']['ganancia'];
 		$articulos = $this->Articulo->find('all');
 		if ($id == 1) {
 			foreach ($materias as $m){
@@ -42,10 +43,7 @@ class PreciosController extends AppController {
 				);
 			};
 			foreach ($articulos as $a) {
-				$acum_precio = 0;
-				foreach ($a['Materiasprima'] as $mpa){
-					$acum_precio = $acum_precio + ($mpa['precio']*$mpa['ArticulosMateriasprima']['cantidad']);
-				}
+				$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id']);
 				$precio_articulo[] = array (
 					'articulo' => $a['Articulo']['descripcion'],
 					'precio' => $acum_precio
@@ -61,12 +59,9 @@ class PreciosController extends AppController {
 					'precio' => $precio_m
 				);
 			}
+			$ganancia = $precio['Precio']['ganancia'];
 			foreach ($articulos as $a) {
-				$acum_precio = 0;
-				foreach ($a['Materiasprima'] as $mpa){
-					$precio_m = $mpa['precio']+($mpa['precio']*$ganancia);
-					$acum_precio = $acum_precio + ($precio_m*$mpa['ArticulosMateriasprima']['cantidad']);
-				}
+				$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id'], $ganancia);
 				$precio_articulo[] = array (
 					'articulo' => $a['Articulo']['descripcion'],
 					'precio' => $acum_precio
