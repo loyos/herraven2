@@ -94,14 +94,25 @@ $materias = array();
 	echo '<table>';
 	echo '<tr>';
 	foreach ($acabados as $acabado) {
+		if(!empty($array_acabados)) {
+			if (in_array($acabado['Acabado']['id'],$array_acabados)){
+				$checked = true;
+			} else {
+				$checked = false;
+			}
+		} else {
+			$checked = false;
+		}
 		echo '<td>';
 		echo $this->Form->input($acabado['Acabado']['descripcion'],array(
 			'type' => 'checkbox',
 			'id' => $acabado['Acabado']['id'],
 			'class' => 'check_acabado',
-			'desc' => $acabado['Acabado']['descripcion']
+			'desc' => $acabado['Acabado']['descripcion'],
+			'checked' => $checked
 		));
 		echo '</td>';
+		
 	}
 	echo '</tr>';
 	echo '</table>';
@@ -131,6 +142,45 @@ $materias = array();
 		echo '</tr>';
 	}
 	echo '</table>';
+	if (!empty($valores)) {
+		$aux = 0;
+		foreach ($valores['materia_acabado'] as $key => $m_a) {
+			echo '<table id ="tabla_'.$key.'">';
+			echo '<tr>';
+			echo '<td class="titulo_tabla">';
+			echo $m_a['acabado'][0];
+			echo '</td>';
+			echo '</tr>';
+			for ($i=0;$i<=3;$i++){
+				if (!empty($m_a['id'][$i])) {
+					$valor_m = $m_a['id'][$i];
+				} else {
+					$valor_m = null;
+				}
+				if (!empty($valores['cantidad_acabado'][$key][$i])) {
+					$valor_c = $valores['cantidad_acabado'][$key][$i];
+				} else {
+					$valor_c = null;
+				}
+				echo '<tr>';
+				echo '<td>';
+				echo $this->Form->input('materiasprima_id',array(
+					'name' => 'materia_acabado_'.$key.'[]',
+					'value' => $valor_m
+				));
+				echo '</td>';
+				echo '<td>';
+				echo $this->Form->input('cantidad',array(
+					'name' => 'cantidad_acabado_'.$key.'[]',
+					'value' => $valor_c
+				));
+				echo '</td>';
+				echo '</tr>';
+			}
+			echo '</table>';
+			$aux++;
+		}
+	}
 	echo '</div>';
 	echo '<h2>Ganancia</h2>';
 	echo '<table>';
@@ -200,28 +250,35 @@ function buscar_acabados(){
 }
 
 function agregar_acabado(el){
-		if ($(el).is(':checked')) {
-		titulo = $(el).attr('desc');
-		$('#tabla_materias_acabado .titulo_tabla').html(titulo);
-		nuevo = $('#tabla_materias_acabado').clone().appendTo('#acabados_articulo').css('display','block');
 		id_check = $(el).attr('id');
-		nuevo.attr('id','tabla_'+id_check);
-		selects = $('#tabla_'+id_check).find('select');
-		//$('#id_acabado').val($('#id_acabado').val()+','+id_check);
-		$.each(selects, function(index, value) {
-			if ($(value).attr('name') == 'materia_acabado') {
-				$(value).attr('name','materia_acabado_'+id_check+'[]');
+		if ($('#tabla_'+id_check).length) { 
+			if ($(el).is(':checked')) {
+			}else{
+				$('#tabla_'+id_check).remove();
 			}
-		});
-		inputs = $('#tabla_'+id_check).find('input');
-		$.each(inputs, function(index, value) {
-			if ($(value).attr('name') == 'cantidad_acabado') {
-				$(value).attr('name','cantidad_acabado_'+id_check+'[]');
+		} else {
+			if ($(el).is(':checked')) {
+			titulo = $(el).attr('desc');
+			$('#tabla_materias_acabado .titulo_tabla').html(titulo);
+			nuevo = $('#tabla_materias_acabado').clone().appendTo('#acabados_articulo').css('display','block');
+			nuevo.attr('id','tabla_'+id_check);
+			selects = $('#tabla_'+id_check).find('select');
+			//$('#id_acabado').val($('#id_acabado').val()+','+id_check);
+			$.each(selects, function(index, value) {
+				if ($(value).attr('name') == 'materia_acabado') {
+					$(value).attr('name','materia_acabado_'+id_check+'[]');
+				}
+			});
+			inputs = $('#tabla_'+id_check).find('input');
+			$.each(inputs, function(index, value) {
+				if ($(value).attr('name') == 'cantidad_acabado') {
+					$(value).attr('name','cantidad_acabado_'+id_check+'[]');
+				}
+			});
+			} else {
+				id_check = $(el).attr('id');
+				$('#tabla_'+id_check).remove();
 			}
-		});
-	} else {
-		id_check = $(el).attr('id');
-		$('#tabla_'+id_check).remove();
-	}
+		}
 }
 </script>

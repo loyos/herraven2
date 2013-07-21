@@ -70,7 +70,14 @@ class ArticulosController extends AppController {
 					$this->Articulo->save($precio_arreglo);
 
 					//Guardando los acabados
+					$this->AcabadosMateriasprima->deleteAll(array(
+						'articulo_id' => $id
+					));
 					foreach ($this->data as $k => $d) {
+						// var_dump($this->data);
+						// var_dump($k);
+						// var_dump($d);
+					//	die();
 						if (strpos($k,'materia_acabado_') === false) {
 						
 						}else {
@@ -85,6 +92,7 @@ class ArticulosController extends AppController {
 										'cantidad' => $this->data['cantidad_acabado_'.$id_acabado][$count],
 										'materiasprima_id' => $a
 									);
+									$this->AcabadosMateriasprima->create();
 									if ($this->AcabadosMateriasprima->saveAll($data_n)) {
 										$guardo = true;
 									} else {
@@ -116,6 +124,35 @@ class ArticulosController extends AppController {
 				$valor_mp[] = $mat['ArticulosMateriasprima']['materiasprima_id'];
 				$valor_cant[] = $mat['ArticulosMateriasprima']['cantidad'];
 			}
+			
+			//Editar de acabado
+			$acabados_asociados = $this->AcabadosMateriasprima->find('all',array(
+				'fields' => array('DISTINCT acabado_id'),
+				'conditions' => array('AcabadosMateriasprima.articulo_id' => $id)
+			));
+			if (!empty($acabados_asociados)) {
+				foreach ($acabados_asociados as $as) {	
+					$array_acabados[] = $as['AcabadosMateriasprima']['acabado_id'];
+				} 
+				foreach ($array_acabados as $id_a) {
+				$materias_asociadas = $this->AcabadosMateriasprima->find('all',array(
+					'conditions' => array(
+						'AcabadosMateriasprima.articulo_id' => $id,
+						'AcabadosMateriasprima.acabado_id' =>$id_a
+					),
+				));
+				//var_dump($materias_asociadas);
+				foreach ($materias_asociadas as $m_a) {
+					$nombre_acabado = $this->Acabado->findById($m_a['AcabadosMateriasprima']['acabado_id']);
+					$valores['materia_acabado'][$id_a]['acabado'][] = $nombre_acabado['Acabado']['descripcion'];
+					$valores['materia_acabado'][$id_a]['id'][] = $m_a['AcabadosMateriasprima']['materiasprima_id'];
+					$valores['cantidad_acabado'][$id_a][] = $m_a['AcabadosMateriasprima']['cantidad'];
+				}
+			}
+			}
+			
+			//var_dump($valores); die();
+			
 		} else {
 			$titulo = "Agregar";
 		}
@@ -132,7 +169,7 @@ class ArticulosController extends AppController {
 			$materiasprimas[$mp['Materiasprima']['id']] =  $mp['Materiasprima']['descripcion'].' ('.$mp['Materiasprima']['unidad'].')';
 		}
 		$acabados = $this->Acabado->find('all');
-		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados'));
+		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores'));
 	}
 	
 	function buscar_subcat() {
