@@ -8,7 +8,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo '<table  class="tabla_ver">';
 	foreach ($precio_articulo as $a){
 		echo '<tr>';
-		echo '<th>'.$a['articulo'].'</th>';
+		echo '<th>'.$a['articulo'].' ('.$a['codigo'].')</th>';
 		echo '<td>';
 		echo 'Bs. '.number_format($a['precio'], 0, ',', '.');
 		echo '</td>';
