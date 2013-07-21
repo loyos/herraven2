@@ -12,6 +12,7 @@
 			<th>Categoria</th>
 			<th>Subcategoria</th>
 			<th>Cajas</th>
+			<th>Acabado</th>
 			</tr>
 		<?php
 		foreach ($articulos as $a){
@@ -31,6 +32,19 @@
 						'label' => false,
 					));?> 
 				</td>
+				<td><?php 
+					if (!empty($acabados[$a['Articulo']['id']])){
+						echo $this->Form->input('acabado_id',array(
+							'name' => 'acabados['.$a['Articulo']['id'].']',
+							'type' => 'select',
+							'label' => false,
+							'options' => $acabados[$a['Articulo']['id']]
+						));
+					} else {
+						echo 'No hay acabados asociados';
+					}
+					?> 
+				</td>
 			</tr>
 			<?php
 		}
@@ -38,7 +52,7 @@
 		echo $this->Html->link('Regresar',array('action' => 'admin_forecast'));
 		foreach ($articulos_mp as $a_mp) {
 			?>
-			<h2><?php echo $a_mp[0]['Articulo'].' Num de cajas'.$a_mp[0]['cajas'];?></h2>
+			<h2><?php echo $a_mp[0]['Articulo'].' Num de cajas: '.$a_mp[0]['cajas'];?></h2>
 			<table>
 			<tr>
 				<th>Materia prima</th>

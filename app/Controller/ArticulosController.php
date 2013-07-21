@@ -61,7 +61,6 @@ class ArticulosController extends AppController {
 							$i++;
 						} 
 					}
-
 					$precio = $this->Articulo->calcular_precio($id);
 					$precio_arreglo = array('Articulo' => array(
 						'precio' => $precio,
@@ -207,6 +206,24 @@ class ArticulosController extends AppController {
 						);
 						$articulos_mp[$key][]= $datos;
 					}
+					if (!empty($data['acabados'][$key])) {
+						$materias_acabado = $this->AcabadosMateriasprima->find('all',array(
+							'conditions' => array(
+								'AcabadosMateriasprima.acabado_id' => $data['acabados'][$key],
+								'AcabadosMateriasprima.articulo_id' => $key
+							)
+						));
+						foreach ($materias_acabado as $ma){
+							$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
+							$datos = array (
+								'Articulo' => $articulo['Articulo']['descripcion'],
+								'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
+								'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
+								'cajas' => $cajas
+							);
+							$articulos_mp[$key][]= $datos;
+						}
+					}
 				}
 			}
 			$this->set(compact('articulos_mp'));
@@ -215,7 +232,24 @@ class ArticulosController extends AppController {
 				'link' => array('Subcategoria' => 'Categoria'),
 				'recursive' => 2
 			));
-			$this->set(compact('articulos'));
+			$articulos_con_acabado = $this->AcabadosMateriasprima->find('all',array(
+				'group' => array('AcabadosMateriasprima.articulo_id')
+			));
+			foreach ($articulos_con_acabado as $a_c_a) {
+				$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
+					'conditions' => array('AcabadosMateriasprima.articulo_id' => $a_c_a['AcabadosMateriasprima']['articulo_id']),
+					'group' => array('AcabadosMateriasprima.acabado_id')
+				));
+				foreach($busca_acabados as $a) {
+					$acabados_array[] = $a['AcabadosMateriasprima']['acabado_id'];
+					//$arreglo_acabados[$a['AcabadosMateriasprima']['articulo_id']]
+				}
+				$acabados[$a_c_a['AcabadosMateriasprima']['articulo_id']] = $this->Acabado->find('list', array(
+					'fields' => array('id','descripcion'),
+					'conditions' => array('Acabado.id' => $acabados_array)
+				));
+			}
+			$this->set(compact('articulos','acabados'));
 		}
 	}
 	
