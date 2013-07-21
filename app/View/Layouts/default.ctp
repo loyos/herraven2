@@ -60,8 +60,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 </html>
 <script>
 $(document).ready(function() {
-	$('#flashMessage').fadeOut(2500);
-	
+	$('#flashMessage').delay(2000).fadeOut(2000);
  });
 	
 </script>

@@ -168,11 +168,15 @@ table.tabla_ver td, table.tabla_ver th{
 
 .message {
 	background: #00abd7;
-	width: 235px;
-	padding: 10px;
+	color: white;
+	position: absolute;
+	width: auto;
+	padding: 20px;
 	border-radius: 10px;
 	margin: auto;
-	margin-top: 20px;
+	margin-top: -20px;
+	margin-left: 35%;
+	font-size: 20px;
 }
 
 .listado_categoria {

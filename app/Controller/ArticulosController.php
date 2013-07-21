@@ -25,13 +25,14 @@ class ArticulosController extends AppController {
 			}
 			$i = 0;
 			$a = 0;
+			$hay_materias = 0;
 			foreach($this->data['materias'] as $m){
 				if (!empty($m) && !empty($this->data['cantidad'][$a])){
-					$hay_materias[] = 'si';
+					$hay_materias = $hay_materias + 1;
 				}
 				$a++;
 			}
-			if (!empty($hay_materias)){
+			if ( $hay_materias > 0 ){
 				if ($this->Articulo->save($data)) {
 					$id = $this->Articulo->id;
 					$this->ArticulosMateriasprima->deleteAll(array(
@@ -96,6 +97,7 @@ class ArticulosController extends AppController {
 					}
 					
 					if ($guardo){
+					$this->Session->setFlash("El articulo ha sido guardado exitósamente");
 					$this->redirect(array('action' => 'admin_index'));
 					}
 				} 
