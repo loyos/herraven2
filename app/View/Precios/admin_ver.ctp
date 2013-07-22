@@ -18,17 +18,17 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo '</table>';
 ?>
 <?php 
-	echo '<h2>Precios de materias prima</h2>';
-	echo '<table  class="tabla_ver">';
-	foreach ($precio_materia as $mp){
-		echo '<tr>';
-		echo '<th>'.$mp['materia'].'</th>';
-		echo '<td>';
-		echo 'Bs. '.number_format($mp['precio'],'0', ',', '.');
-		echo '</td>';
-		echo '</tr>';
-		echo '<tr>';
-	}
-	echo '</table>';
+	// echo '<h2>Precios de materias prima</h2>';
+	// echo '<table  class="tabla_ver">';
+	// foreach ($precio_materia as $mp){
+		// echo '<tr>';
+		// echo '<th>'.$mp['materia'].'</th>';
+		// echo '<td>';
+		// echo 'Bs. '.number_format($mp['precio'],'0', ',', '.');
+		// echo '</td>';
+		// echo '</tr>';
+		// echo '<tr>';
+	// }
+	// echo '</table>';
 ?>
 </div>
