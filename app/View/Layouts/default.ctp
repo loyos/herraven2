@@ -40,6 +40,16 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		<div class = "title">
 			Herraven
 		</div>
+		<div class="logout">
+		<?php 
+		if (!empty($user_id)) {
+			echo $this->Html->link('Cerrar sesión',array(
+				'controller' => 'users',
+				'action' => 'logout'
+			)); 
+		}
+		?>
+		</div>
 	</div>
 	
 	<div class = "menu_container">

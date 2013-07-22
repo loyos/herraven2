@@ -7,7 +7,7 @@ class UsersController extends AppController {
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('editar','login'); // Letting users register themselves
+		$this->Auth->allow('editar','login','logout'); // Letting users register themselves
 	}
 	
 	public function login() {
@@ -31,7 +31,7 @@ class UsersController extends AppController {
 	
 	public function logout() {
 		$this->Auth->logout();
-		$this->redirect(array('controller' => 'index', 'action'=>'index'));
+		$this->redirect(array('controller' => 'users', 'action'=>'login'));
 	}
 	
     function admin_index() {

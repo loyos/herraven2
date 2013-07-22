@@ -36,7 +36,7 @@ class AppController extends Controller {
         'Session',
         'Auth' => array(
             'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
-            'logoutRedirect' => array('controller' => 'index', 'action' => 'index'),
+            'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
 			'authorize' => array('controller'),
         )
 		
@@ -97,7 +97,7 @@ class AppController extends Controller {
 		if ($this->Auth->user('cliente_catalogo') == 1) {
 			$cliente_catalogo = true;
 		} 
-		$this->set(compact('admin_usuario','admin_catalogo','admin_materia_prima','admin_almacen','admin_pedidos','admin_despachos','admin_cuentas','admin_almacenes_clientes','admin_reportes','cliente_perfil','cliente_almacen','cliente_catalogo'));
+		$this->set(compact('admin_usuario','admin_catalogo','admin_materia_prima','admin_almacen','admin_pedidos','admin_despachos','admin_cuentas','admin_almacenes_clientes','admin_reportes','cliente_perfil','cliente_almacen','cliente_catalogo','user_id'));
 		
 	}
 	public function isAuthorized($user=null) {

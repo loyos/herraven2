@@ -239,3 +239,12 @@ td.titulo_tabla {
 	font-weight:bold;
 	font-size:18px;
 }
+
+.logout {
+	color:white;
+	margin-left:74%;
+}
+
+.logout a {
+	color:white;
+}
