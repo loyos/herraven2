@@ -31,20 +31,34 @@ class Articulo extends AppModel {
 	
 	var $validate = array( 
 		'cantidad_por_caja' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÌo.'
+			'no_vacio' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Este campo no puede quedar vac√≠o.'
+			),
+			'mayor_a_cero' => array(
+				'rule' => array('comparison', '>', 0),
+				'message' => 'El n√∫mero de cajas debe ser positivo'
+			)
 		),
 		'descripcion' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÌo.'
+			'message' => 'Este campo no puede quedar vac√≠o.'
+		),
+		'margen_ganancia' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vac√≠o.'
+		),
+		'costo_produccion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vac√≠o.'
 		),
 		'imagen' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÌo.'
+			'message' => 'Este campo no puede quedar vac√≠o.'
 		),
 		'codigo' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÌo.'
+			'message' => 'Este campo no puede quedar vac√≠o.'
 		),
     );
 	

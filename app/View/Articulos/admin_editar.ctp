@@ -5,6 +5,11 @@ $materias = array();
 ?>
 <h1><?php echo $titulo?></h1>
 <?php 
+	if (!empty($this->data['Articulo']['subcategoria_id'])) {
+		$subcategoria_id = $this->data['Articulo']['subcategoria_id'];
+	} else {
+		$subcategoria_id = 0;
+	}
 	echo $this->Form->create('Articulo', array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
@@ -221,18 +226,21 @@ $('#categoria').change(function(){
 	buscar_subcat();
 });
 function buscar_subcat() {
-	var cat_id = $('#categoria').val();
+	var cate_id = $('#categoria').val();
 	$.ajax({
 		type: "POST",
-		url: "buscar_subcat.json",
-		data: { cat_id: cat_id },
+		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_subcat.json' ?>',
+		data: { cat_id: cate_id },
 		dataType: "json"
 	}).done(function( msg ) {
 		// alert( "Data Saved: " + msg[1].Genero.nombre);
 		$('#subcategoria option').remove();
 		$('#subcategoria').append($("<option></option>").attr("value", '').text('Selecciona una subcategoria'));
 		$.each(msg, function(i,a){	
-			$('#subcategoria').append($("<option selected=selected ></option>").attr("value", a.Subcategoria.id).text(a.Subcategoria.descripcion)); 
+			if (<?php echo $subcategoria_id?> == a.Subcategoria.id) {
+				$('#subcategoria').append($("<option selected=selected ></option>").attr("value", a.Subcategoria.id).text(a.Subcategoria.descripcion)); 
+			}
+			$('#subcategoria').append($("<option ></option>").attr("value", a.Subcategoria.id).text(a.Subcategoria.descripcion)); 
 		});
 	});
 }

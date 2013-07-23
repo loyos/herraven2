@@ -26,11 +26,13 @@ class ArticulosController extends AppController {
 			$i = 0;
 			$a = 0;
 			$hay_materias = 0;
+			if (!empty($this->data['materias'])){
 			foreach($this->data['materias'] as $m){
 				if (!empty($m) && !empty($this->data['cantidad'][$a])){
 					$hay_materias = $hay_materias + 1;
 				}
 				$a++;
+			}
 			}
 			if ( $hay_materias > 0 ){
 				if ($this->Articulo->save($data)) {
@@ -100,6 +102,7 @@ class ArticulosController extends AppController {
 					}
 					
 					if ($guardo){
+					
 					$this->Session->setFlash("El articulo ha sido guardado exitósamente");
 					$this->redirect(array('action' => 'admin_index'));
 					}
@@ -107,7 +110,8 @@ class ArticulosController extends AppController {
 			} else {
 				$this->Session->setFlash("El articulo debe tener por lo menos una materia prima asociada");
 			}
-		} elseif (!empty($id)) {
+		} 
+		if (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Articulo->findById($id);
 			$materiales = $this->ArticulosMateriasprima->find('all',array(
