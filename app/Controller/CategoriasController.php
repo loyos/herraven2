@@ -40,9 +40,9 @@ class CategoriasController extends AppController {
 			}
 		} elseif (!empty($id)) {
 			$this->data = $this->Categoria->findById($id);
-			$titulo = 'Editar Categoria';
+			$titulo = 'Editar';
 		} else {
-			$titulo = 'Agregar Categoria';
+			$titulo = 'Agregar';
 		}
 		$this->set(compact('id','titulo'));
 	}

@@ -5,7 +5,7 @@
 		echo $this->Form->create();
 		echo '<table>';
 		echo '<tr>';
-		echo '<td>Categorias</td>';
+		echo '<td>Linea</td>';
 		echo '<td>';
 		echo $this->Form->input('categoria_id',array(
 			'label' => false,
@@ -14,7 +14,7 @@
 		echo '</td>';
 		echo '</tr>';
 		echo '<tr>';
-		echo '<td>Subcategoria</td>';
+		echo '<td>Categoria</td>';
 		echo '<td>';
 		echo $this->Form->input('subcategoria_id',array(
 			'label' => false,

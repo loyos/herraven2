@@ -2,15 +2,15 @@
 <?php
 echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
-<h1>Subcategorias (Nota: en las imágenes sale "Categorias" pero me parece mas lógico que diga subcategorias, aqui también esta acabado, lo estoy colocando en otra vista distinta para tener mas orden, pero cualquier cosa se pasa para aca y ya)</h1>
+<h1>Categorias</h1>
 <?php 
 	if (!empty($subcategorias)) {
 		?>
 		<table class="tabla_index">
 		<tr>
 		<th>Oculto</th>
+		<th>Linea</th>
 		<th>Categoria</th>
-		<th>SubCategoria</th>
 		<th>Acciones</th>
 		</tr>
 		<?php

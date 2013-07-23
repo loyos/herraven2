@@ -2,14 +2,14 @@
 <?php
 echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
-<h1>Categorias</h1>
+<h1>Lineas</h1>
 <?php 
 	if (!empty($categorias)) {
 		?>
 		<table class="tabla_index">
 		<tr>
 		<th>Oculto</th>
-		<th>Categoria</th>
+		<th>Linea</th>
 		<th>Acciones</th>
 		</tr>
 		<?php

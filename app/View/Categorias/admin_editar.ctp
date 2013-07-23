@@ -7,7 +7,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo $this->Form->create('Categoria');
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>Categoria</td>';
+	echo '<td>Linea</td>';
 	echo '<td>';
 	echo $this->Form->input('descripcion',array(
 		'label' => false

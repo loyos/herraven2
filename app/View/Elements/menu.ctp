@@ -17,10 +17,10 @@
 	<?php } ?>
 	<?php if ($admin_catalogo){ ?>
 	<li class = "option">
-		Categorias
+		Lineas
 		<ul>
-			<li class = "children"><?php echo $this->Html->link('Categorias',array('controller' => 'categorias', 'action' => 'admin_index')); ?></li>
-			<li class = "children"><?php echo $this->Html->link('Subcategorias',array('controller' => 'subcategorias', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Linea',array('controller' => 'categorias', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Categorias',array('controller' => 'subcategorias', 'action' => 'admin_index')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Acabados',array('controller' => 'acabados', 'action' => 'admin_index')); ?></li>
 		</ul>
 	</li>

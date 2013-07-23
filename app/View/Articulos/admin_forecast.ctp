@@ -9,8 +9,8 @@
 			<tr>
 			<th>Seleccionar</th>
 			<th>Articulo</th>
+			<th>Linea</th>
 			<th>Categoria</th>
-			<th>Subcategoria</th>
 			<th>Cajas</th>
 			<th>Acabado</th>
 			</tr>

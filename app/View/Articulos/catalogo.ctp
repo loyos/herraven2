@@ -73,7 +73,7 @@ foreach ($info_articulos as $a) { ?>
 <?php
 } 
 } else {
-	echo "No hay artículos en esta subcategoria";
+	echo "No hay artículos en esta categoria";
 }
 ?>
 </div>

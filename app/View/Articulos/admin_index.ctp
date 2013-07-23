@@ -9,8 +9,8 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 		<table class="tabla_index">
 		<tr>
 		<th>Código</th>
+		<th>Linea</th>
 		<th>Categoria</th>
-		<th>Subcategoria</th>
 		<th>Descripcion</th>
 		<th>Precio Total (con costo de produccion y margen de ganancia)</th>
 		<th>Acciones</th>

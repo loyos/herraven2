@@ -7,7 +7,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo $this->Form->create('Subcategoria');
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>SubCategoria</td>';
+	echo '<td>Categoria</td>';
 	echo '<td>';
 	echo $this->Form->input('descripcion',array(
 		'label' => false
@@ -28,7 +28,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Categoria</td>';
+	echo '<td>Linea</td>';
 	echo '<td>';
 	echo $this->Form->input('categoria_id',array(
 		'label' => false,

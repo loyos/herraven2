@@ -13,14 +13,14 @@ $materias = array();
 	echo $this->Form->create('Articulo', array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>Categoria</td>';
+	echo '<td>Linea</td>';
 	echo '<td>';
 	echo $this->Form->input('categoria_id',array(
 			'label' => false,
 			'id' => 'categoria'
 		));
 	echo '</td>';
-	echo '<td>Subcategoria</td>';
+	echo '<td>Categoria</td>';
 	echo '<td>';
 	echo $this->Form->input('subcategoria_id',array(
 		'label' => false,
