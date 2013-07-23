@@ -13,8 +13,8 @@ class Acabado extends AppModel {
 		)
     );
 	var $hasAndBelongsToMany = array(
-		'MateriasPrima' =>
-            array('className'            => 'MateriasPrima',
+		'Materiasprima' =>
+            array('className'            => 'Materiasprima',
                  'joinTable'              => 'acabados_materiasprimas',
                  'foreignKey'             => 'acabado_id',
                  'associationForeignKey'  => 'materiasprima_id',
