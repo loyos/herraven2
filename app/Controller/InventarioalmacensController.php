@@ -4,14 +4,15 @@ class InventarioalmacensController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	public $uses = array('Materiasprima','Inventariomaterial','Config','Categoria','Articulo','Acabado','Inventarioalmacen','Caja');
+	public $uses = array('Inventarioalmacen','Materiasprima','Inventariomaterial','Config','Categoria','Articulo','Acabado','Caja','Subcategoria');
 	
 	
 	function admin_agregar(){
 		if (!empty($this->data)){
 			$data = $this->data;
-			$subcategoria_id = $data['Materiasprima']['subcategoria_id'];
-			$this->redirect(array('action' => 'admin_articulos',$subcategoria_id));
+			$subcategoria_id = $data['Inventarioalmacen']['subcategoria_id'];
+			$categoria_id = $data['Inventarioalmacen']['categoria_id'];
+			$this->redirect(array('action' => 'admin_articulos',$categoria_id,$subcategoria_id));
 		} else {
 			$categorias = $this->Categoria->find('list',array(
 				'fields' => array('id','descripcion')
@@ -91,10 +92,18 @@ class InventarioalmacensController extends AppController {
 		
 	}
 	
-	function admin_articulos($sub_id) {
-		$articulos = $this->Articulo->find('all',array(
-				'conditions' => array('Articulo.subcategoria_id' => $sub_id)
+	function admin_articulos($cat_id = null,$sub_id = null) {
+		if (empty($sub_id)) {
+			$buscar_sub = $this->Subcategoria->find('all',array(
+				'conditions' => array('Subcategoria.categoria_id' => $cat_id)
 			));
+			foreach ($buscar_sub as $sub) {
+				$sub_id[]= $sub['Subcategoria']['id'];
+			}
+		}
+		$articulos = $this->Articulo->find('all',array(
+			'conditions' => array('Articulo.subcategoria_id' => $sub_id)
+		));
 			$this->set(compact('articulos'));
 	}
 	
