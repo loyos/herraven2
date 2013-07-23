@@ -139,7 +139,7 @@ class ArticulosController extends AppController {
 				//var_dump($materias_asociadas);
 				foreach ($materias_asociadas as $m_a) {
 					$nombre_acabado = $this->Acabado->findById($m_a['AcabadosMateriasprima']['acabado_id']);
-					$valores['materia_acabado'][$id_a]['acabado'][] = $nombre_acabado['Acabado']['descripcion'];
+					$valores['materia_acabado'][$id_a]['acabado'][] = $nombre_acabado['Acabado']['acabado'];
 					$valores['materia_acabado'][$id_a]['id'][] = $m_a['AcabadosMateriasprima']['materiasprima_id'];
 					$valores['cantidad_acabado'][$id_a][] = $m_a['AcabadosMateriasprima']['cantidad'];
 				}

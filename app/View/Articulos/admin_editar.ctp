@@ -104,11 +104,11 @@ $materias = array();
 			$checked = false;
 		}
 		echo '<td>';
-		echo $this->Form->input($acabado['Acabado']['descripcion'],array(
+		echo $this->Form->input($acabado['Acabado']['acabado'],array(
 			'type' => 'checkbox',
 			'id' => $acabado['Acabado']['id'],
 			'class' => 'check_acabado',
-			'desc' => $acabado['Acabado']['descripcion'],
+			'desc' => $acabado['Acabado']['acabado'],
 			'checked' => $checked
 		));
 		echo '</td>';
