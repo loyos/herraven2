@@ -2,11 +2,16 @@
 <ul>
 	<?php if ($admin_usuario){ ?>
 	<li class = "option">
-		Clientes y usuarios
+		Usuarios
 		<ul>
-			<li class = "children"><?php echo $this->Html->link('Cliente',array('controller' => 'clientes', 'action' => 'admin_index')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Usuario',array('controller' => 'users', 'action' => 'admin_index')); ?></li>
 			
+		</ul>
+	</li>
+	<li class = "option">
+		Clientes
+		<ul>
+			<li class = "children"><?php echo $this->Html->link('Cliente',array('controller' => 'clientes', 'action' => 'admin_index')); ?></li>
 		</ul>
 	</li>
 	<?php } ?>
