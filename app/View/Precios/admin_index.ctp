@@ -20,7 +20,10 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>';
 			if ($p['Precio']['id'] != 1) {
 			echo $this->Html->link('Editar',array('action' => 'admin_editar',$p['Precio']['id'])).'<br>';
-			echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$p['Precio']['id'])).'<br>';
+			echo $this->Html->link('Eliminar',
+				array('action' => 'admin_eliminar',$p['Precio']['id']),
+				array(),
+				'¿Estás seguro que deseas eliminar?').'<br>';
 			}
 			echo $this->Html->link('Ver',array('action' => 'admin_ver',$p['Precio']['id'])).'</td>';
 			echo '</tr>';

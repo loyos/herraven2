@@ -27,7 +27,9 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>'.$this->Html->link('Editar',array(
 				'action' => 'admin_editar',$c['Categoria']['id'])).'<br>';
 			if ($eliminar_cat[$c['Categoria']['id']] == 0){
-				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Categoria']['id'])).'<br>';
+				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Categoria']['id']),
+					array(),
+					'Estás seguro que deseas eliminar?').'<br>';
 			}
 			echo '</tr>';
 		}

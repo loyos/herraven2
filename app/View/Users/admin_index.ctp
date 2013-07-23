@@ -24,7 +24,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>'.$u['User']['rol'].'</td>';
 			echo '<td>'.$u['Cliente']['denominacion_legal'].'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'admin_editar',$u['User']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$u['User']['id'])).'<br>'.
+				'action' => 'admin_editar',$u['User']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$u['User']['id']),array(),'¿Estás seguro que deseas eliminar?').'<br>'.
 				$this->Html->link('Ver',array('action' => 'admin_ver',$u['User']['id'])).'</td>';
 			echo '</tr>';
 		}
