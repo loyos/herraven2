@@ -331,7 +331,10 @@ class ArticulosController extends AppController {
 		$acabados = $this->Acabado->find('list',array(
 			'fields' => array('id','descripcion')
 		));
-		$this->set(compact('info_articulos','subcategoria','acabados'));
+		for ($count=1; $count<=25; $count++){
+			$cantidad_de_cajas[$count] = $count;
+		}
+		$this->set(compact('info_articulos','subcategoria','acabados','cantidad_de_cajas'));
 	}
 }
 

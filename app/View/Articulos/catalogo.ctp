@@ -27,13 +27,7 @@ foreach ($info_articulos as $a) { ?>
 					
 					echo $this->Form->input('cantidad',array(
 						'type' => 'select',
-						'options' => array(
-							'1' => '1',
-							'2' => '2',
-							'3' => '3',
-							'4' => '4',
-							'5' => '5'
-						),
+						'options' => $cantidad_de_cajas,
 						'name' => 'cantidad['.$a['id'].']'
 					));
 					//echo '<br>';
