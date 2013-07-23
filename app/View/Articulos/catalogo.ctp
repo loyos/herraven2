@@ -7,6 +7,7 @@
 </div>
 <?php
 echo $this->Form->create('Pedido');
+if (!empty($info_articulos)) {
 foreach ($info_articulos as $a) { ?>
 <div class="articulo_catalogo">
 	<div class="imagen_catalogo">
@@ -23,7 +24,7 @@ foreach ($info_articulos as $a) { ?>
 				<td></td>
 				<td>
 					<?php
-					echo '<b>' .$a['articulo']. '</b><br>';					
+					echo '<b>' .$a['codigo']. '</b><br>';					
 					
 					echo $this->Form->input('cantidad',array(
 						'type' => 'select',
@@ -42,6 +43,7 @@ foreach ($info_articulos as $a) { ?>
 					<?php echo 'Bs. '. number_format($a['precio']*$a['cantidad_por_caja'], 0, ',', '.');
 					echo '<br>';
 					echo 'Precio de caja';
+					
 					?>
 				</td>
 				<td>
@@ -58,8 +60,9 @@ foreach ($info_articulos as $a) { ?>
 							'name' => 'activo['.$a['id'].']',
 							'id' => $a['id'],
 						));
-						echo $this->Form->submit('Pedir',array('class' => 'button', 'onclick' => 'activar('.$a['id'].')'));
+						echo $this->Form->submit('Pedir',array('class' => 'button boton_catalogo', 'onclick' => 'activar('.$a['id'].')'));
 						echo $this->Form->end();
+						echo '<span class="descripcion_catalogo">' .$a['articulo']. '</span>';	
 					?>
 				</td>
 			</tr>
@@ -68,7 +71,11 @@ foreach ($info_articulos as $a) { ?>
 
 </div>
 <?php
-} ?>
+} 
+} else {
+	echo "No hay artículos en esta subcategoria";
+}
+?>
 </div>
 <script>
 	function activar(id){

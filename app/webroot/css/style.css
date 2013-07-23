@@ -253,4 +253,12 @@ td.titulo_tabla {
 	float:left;
 	width: 30px;
 }
+
+input.boton_catalogo {
+	float:left;
+}
+
+span.descripcion_catalogo{
+	font-weight:bold;
+	margin:15px;
 }

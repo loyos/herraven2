@@ -319,6 +319,7 @@ class ArticulosController extends AppController {
 			$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id'], $ganancia); // llamamos a la funcion del modelo para calcular el precio
 			$info_articulos[] = array (
 				'articulo' => $a['Articulo']['descripcion'],
+				'codigo' => $a['Articulo']['codigo'],
 				'precio' => $acum_precio,
 				'id' => $a['Articulo']['id'],
 				'imagen' =>	$a['Articulo']['imagen'],			
