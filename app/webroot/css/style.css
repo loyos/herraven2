@@ -248,3 +248,9 @@ td.titulo_tabla {
 .logout a {
 	color:white;
 }
+
+.codigo_telefono {
+	float:left;
+	width: 30px;
+}
+}

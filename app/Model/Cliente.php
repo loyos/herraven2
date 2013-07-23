@@ -56,7 +56,11 @@ class Cliente extends AppModel {
 		'precio_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Este campo no puede quedar vacío.'
-		)
+		),
+		'codigo_uno' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Debes colocar un código, por ejemplo 0212.'
+		),
     );
 }
 

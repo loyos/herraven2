@@ -12,12 +12,26 @@ class ClientesController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
-			if ($this->Cliente->save($this->data)) {
+			$data = $this->data;
+			$data['Cliente']['telefono_uno'] = $data['Cliente']['codigo_uno'].'-'.$data['Cliente']['telefono_uno'];
+			if (!empty($data['Cliente']['telefono_dos'])) {
+				$data['Cliente']['telefono_dos'] = $data['Cliente']['codigo_dos'].'-'.$data['Cliente']['telefono_dos'];
+			}
+			if ($this->Cliente->save($data)) {
 				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			}
 		} elseif (!empty($id)) {
-			$this->data = $this->Cliente->findById($id);
+			$data = $this->Cliente->findById($id);
+			$codigo_uno = explode('-',$data['Cliente']['telefono_uno']);
+			$data['Cliente']['codigo_uno'] = $codigo_uno[0];
+			$data['Cliente']['telefono_uno'] = $codigo_uno[1];
+			if (!empty($data['Cliente']['telefono_dos'])) {
+				$codigo_dos = explode('-',$data['Cliente']['telefono_dos']);
+				$data['Cliente']['codigo_dos'] = $codigo_dos[0];
+				$data['Cliente']['telefono_dos'] = $codigo_dos[1];
+			}
+			$this->data = $data;
 			$titulo = 'Editar';
 		} else {
 			$titulo = 'Agregar';
