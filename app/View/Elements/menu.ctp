@@ -24,16 +24,16 @@
 	<li class = "option">Artículos
 		<ul>
 			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'admin_index')); ?></li>
-			<li class = "children"><?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'admin_index')); ?></li>
-			<li class = "children"><?php echo $this->Html->link('Inventario Materia prima',array('controller' => 'inventariomaterials', 'action' => 'admin_index')); ?></li>
-			<li class = "children"><?php echo $this->Html->link('Forecast',array('controller' => 'articulos', 'action' => 'admin_forecast')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Lista de precios',array('controller' => 'precios', 'action' => 'admin_index')); ?></li>
 		</ul>
 	</li>
 	<?php } ?>
 	<?php if ($admin_catalogo){ ?>
-	<li class = "option">Lista de precios
+	<li class = "option">Materias prima
 		<ul>
-			<li class = "children"><?php echo $this->Html->link('Lista de precios',array('controller' => 'precios', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Inventario Materia prima',array('controller' => 'inventariomaterials', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Forecast',array('controller' => 'articulos', 'action' => 'admin_forecast')); ?></li>
 		</ul>
 	</li>
 	<?php } ?>
