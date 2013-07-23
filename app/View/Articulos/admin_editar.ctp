@@ -230,7 +230,8 @@ function buscar_subcat() {
 	var cate_id = $('#categoria').val();
 	$.ajax({
 		type: "POST",
-		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_subcat.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_subcat.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_subcat.json' ?>',
 		data: { cat_id: cate_id },
 		dataType: "json"
 	}).done(function( msg ) {
