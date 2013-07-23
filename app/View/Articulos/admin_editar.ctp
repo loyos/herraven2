@@ -66,9 +66,9 @@ $materias = array();
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
-	echo '<h2>Materia prima</h2>';
+	echo '<h2>Materias prima Básicas</h2>';
 	echo '<table>';
-	for ($i=0;$i<=9;$i++){
+	for ($i=0;$i<=($numero_materias-1);$i++){
 		if (!empty($valor_mp[$i])){
 			$value_m = $valor_mp[$i];
 		} else {
@@ -83,7 +83,8 @@ $materias = array();
 		echo '<td>';
 		echo $this->Form->input('materiasprima_id',array(
 			'name' => 'materias[]',
-			'value' => $value_m
+			'value' => $value_m,
+			'label' => false
 		));
 		echo '</td>';
 		echo '<td>';

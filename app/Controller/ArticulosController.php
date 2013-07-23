@@ -164,11 +164,13 @@ class ArticulosController extends AppController {
 		$materiasprimas_busqueda= $this->Materiasprima->find('all',array(
 			'fields' => array('id','descripcion','unidad')
 		));
+		$numero_materias = 0;
 		foreach ($materiasprimas_busqueda as $mp) {
 			$materiasprimas[$mp['Materiasprima']['id']] =  $mp['Materiasprima']['descripcion'].' ('.$mp['Materiasprima']['unidad'].')';
+			$numero_materias++;
 		}
 		$acabados = $this->Acabado->find('all');
-		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores'));
+		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores','numero_materias'));
 	}
 	
 	function buscar_subcat() {
