@@ -67,6 +67,7 @@ class PedidosController extends AppController {
 			}
 			
 			//die("sd");
+			$this->Session->setFlash("Los datos se guardaron con éxito");
 			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$titulo = "Editar";

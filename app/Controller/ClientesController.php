@@ -13,6 +13,7 @@ class ClientesController extends AppController {
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			if ($this->Cliente->save($this->data)) {
+				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			}
 		} elseif (!empty($id)) {
@@ -29,6 +30,7 @@ class ClientesController extends AppController {
 	
 	function admin_eliminar($id) {
 		$this->Cliente->delete($id);
+		$this->Session->setFlash("El cliente se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	

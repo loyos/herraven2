@@ -14,11 +14,6 @@ class MateriasprimasController extends AppController {
 			} else {
 				$borrar[$m['Materiasprima']['id']] = 0;
 			}
-			// foreach($m['Precio'] as $p){
-				// if ($p['id'] == 1){
-					// $precios[$m['Materiasprima']['id']] = $p['MateriasprimasPrecio']['precio'];
-				// }
-			// }
 		}
 		//var_dump($materias);die();
 		$this->set(compact('materias','precios','borrar'));
@@ -31,37 +26,12 @@ class MateriasprimasController extends AppController {
 			$i = 0;
 			
 			if ($this->Materiasprima->save($data)) {
-			// $id = $this->Materiasprima->id;
-			// $precios = $this->Precio->find('all');
-			// $this->MateriasprimasPrecio->deleteAll(array(
-				// 'materiasprima_id' => $id
-			// ));
-			// foreach ($precios as $lista) {
-				// if (empty($lista['Precio']['ganancia'])){
-					// $p = $this->data['Materiasprima']['precio'];
-				// } else {
-					// $p = $this->data['Materiasprima']['precio'] + ($this->data['Materiasprima']['precio']*($lista['Precio']['ganancia']/100));
-				// }
-				
-				// $data_p = array(
-					// 'precio_id' => $lista['Precio']['id'],
-					// 'materiasprima_id' => $id,
-					// 'precio' => $p
-				// );
-				// $this->MateriasprimasPrecio->saveAll($data_p);
-			// }
+				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			}
 		} elseif (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Materiasprima->findById($id);
-			// $precio_b = $this->MateriasprimasPrecio->find('first',array(
-				// 'conditions' => array(
-					// 'materiasprima_id' => $id,
-					// 'precio_id' => '1'
-				// )
-			// ));
-			// $precio_b = $precio_b['MateriasprimasPrecio']['precio'];
 		} else {
 			$titulo = "Agregar";
 		}
@@ -74,6 +44,7 @@ class MateriasprimasController extends AppController {
 		$this->MateriasprimasPrecio->deleteAll(array(
 			'materiasprima_id' => $id
 		));
+		$this->Session->setFlash("La materia prima se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	

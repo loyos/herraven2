@@ -22,6 +22,7 @@ class SubcategoriasController extends AppController {
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			if ($this->Subcategoria->save($this->data)) {
+				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			} else {
 				$titulo = "";
@@ -40,6 +41,7 @@ class SubcategoriasController extends AppController {
 	
 	function admin_eliminar($id) {
 		$this->Subcategoria->delete($id);
+		$this->Session->setFlash("La subcategoria se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	

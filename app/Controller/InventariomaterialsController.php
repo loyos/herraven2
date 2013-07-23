@@ -55,7 +55,8 @@ class InventariomaterialsController extends AppController {
 			$data['Inventariomaterial']['ano'] = $this->Config->obtenerAno($hoy);
 			$data['Inventariomaterial']['tipo'] = 'entrada';
 			if ($this->Inventariomaterial->save($data)) {
-			$this->redirect(array('action' => 'admin_index'));
+				$this->Session->setFlash("El ingreso de materia prima se realizó con éxito");
+				$this->redirect(array('action' => 'admin_index'));
 			}
 		} 
 		

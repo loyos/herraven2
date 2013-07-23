@@ -77,6 +77,7 @@ class InventarioalmacensController extends AppController {
 					$this->Caja->create();
 					$this->Caja->save($nueva_caja);	
 				}
+				$this->Session->setFlash("El ingreso al almacén se realizó con éxito");
 				$this->redirect(array('action' => 'admin_etiquetas',$id_inventario_almacen));
 			}
 		}

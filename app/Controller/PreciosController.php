@@ -14,6 +14,7 @@ class PreciosController extends AppController {
 		$titulo = "";
 		if (!empty($this->data)) {
 			if ($this->Precio->save($this->data)) {
+				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			}
 		} elseif (!empty($id)) {
@@ -27,6 +28,7 @@ class PreciosController extends AppController {
 	
 	function admin_eliminar($id) {
 		$this->Precio->delete($id);
+		$this->Session->setFlash("la lista de precio se elimino con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	

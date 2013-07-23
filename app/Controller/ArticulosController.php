@@ -182,6 +182,7 @@ class ArticulosController extends AppController {
 		$this->ArticulosMateriasprima->deleteAll(array(
 			'articulo_id' => $id
 		));
+		$this->Session->setFlash("El artículo se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
