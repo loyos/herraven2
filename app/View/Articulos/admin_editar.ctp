@@ -188,10 +188,9 @@ $materias = array();
 		}
 	}
 	echo '</div>';
-	echo '<h2>Ganancia</h2>';
+	echo '<h2>Costo de producción</h2>';
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>Costo de producción (en %)</td>';
 	echo '<td>';
 	if (empty($this->data['Articulo']['costo_produccion'])) {
 		$value_cp = $costo_produccion;
@@ -200,17 +199,28 @@ $materias = array();
 	}
 	echo $this->Form->input('costo_produccion',array(
 		'label' => false,
-		'value' => $value_cp
+		'value' => $value_cp,
+		'class' => 'input_pequeno'
 	));
 	echo '</td>';
-	echo '<td>Margen de ganancia</td>';
-	echo '<td>';
-	echo $this->Form->input('margen_ganancia',array(
-		'label' => false
-	));
-	echo '</td>';
+	echo '<td>(% sobre el costo de la materia prima)</td>';
 	echo '</tr>';
 	echo '</table>';
+	echo '<h2>Ganancia</h2>';
+	echo '<table>';
+	echo '<tr>';
+	echo '<td>';
+	echo $this->Form->input('margen_ganancia',array(
+		'label' => false,
+		'class' => 'input_pequeno'
+	));
+	echo '</td>';
+	echo '<td>(% margen de ganancia)</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '<h2>Precio final</h2>';
+	echo '<div id="precio_final">';
+	echo '</div>';
 	if (!empty($id)) {
 		echo $this->Form->input('id',array('type'=>'hidden'));
 	}
@@ -223,6 +233,7 @@ $(document).ready(function() {
 	buscar_subcat();
 	buscar_acabados();
 })
+
 $('#categoria').change(function(){
 	buscar_subcat();
 });

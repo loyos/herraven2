@@ -278,3 +278,7 @@ span.descripcion_catalogo{
 .subtitulo_movimientos {
 	float:left;
 }
+
+.input_pequeno {
+	width:35px;
+}
