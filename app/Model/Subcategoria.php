@@ -15,16 +15,16 @@ class Subcategoria extends AppModel {
         )
     );
 	
-	var $validate = array(
-        'descripcion' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
-		),
-		'categoria_id' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
-		),
-    );
+	// var $validate = array(
+        // 'descripcion' => array(
+			// 'rule' => 'notEmpty',
+			// 'message' => 'Este campo no puede quedar vacío.'
+		// ),
+		// 'categoria_id' => array(
+			// 'rule' => 'notEmpty',
+			// 'message' => 'Este campo no puede quedar vacío.'
+		// ),
+    // );
 }
 
 

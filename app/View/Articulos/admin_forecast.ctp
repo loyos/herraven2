@@ -1,9 +1,15 @@
 <div class="wrap">
 <?php 
+	echo $this->element('search');
 	if (!empty($articulos)){
-		echo $this->Form->create('Articulo');
+	
+		echo '<div class = "ejecutar">';
+		echo $this->Form->create('Articulo', array(
+				'url' => array('action' => 'admin_ver_forecast')
+			));
 		echo $this->Form->submit('Ejecutar', array('class' => 'button'));
 		echo $this->Form->end;
+		echo '</div>';
 		?>
 		<table>
 			<tr>
@@ -48,29 +54,6 @@
 			</tr>
 			<?php
 		}
-	} elseif (!empty($articulos_mp)) {
-		echo $this->Html->link('Regresar',array('action' => 'admin_forecast'));
-		foreach ($articulos_mp as $a_mp) {
-			?>
-			<h2><?php echo $a_mp[0]['Articulo'].' Num de cajas: '.$a_mp[0]['cajas'];?></h2>
-			<table>
-			<tr>
-				<th>Materia prima</th>
-				<th>Cantidad necesitada</th>
-			</tr>
-			<?php
-			foreach ($a_mp as $a) {
-				?>
-				<tr>
-					<td><?php echo $a['Materiasprima'] ?></td>
-					<td><?php echo $a['cantidad'] ?></td>
-				</tr>
-				<?php
-			}
-			?>
-			</table>
-			<?php
-		}
-	}
+	} 
 ?>
 </div>

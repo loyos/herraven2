@@ -3,8 +3,10 @@
 class ArticulosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop','RequestHandler');
+	public $components = array('Session','JqImgcrop','RequestHandler', 'Search.Prg');
 	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado','AcabadosMateriasprima');
+    public $presetVars = true; // using the model configuration
+	public $paginate = array();
 	
     function admin_index() {
 		$articulos = $this->Articulo->find('all',array(
@@ -197,66 +199,122 @@ class ArticulosController extends AppController {
 		$this->set(compact('articulo'));
 	}
 	
-	function admin_forecast(){
+	function admin_ver_forecast(){
 		if (!empty($this->data)) {
-			$data = $this->data;
-			foreach ($data['cantidad'] as $key => $value){
-				if ($value == 1){
-					$cajas = $data['cajas'][$key];
-					$articulo = $this->Articulo->findById($key);
-					foreach ($articulo['Materiasprima'] as $mp){
-						$datos = array (
-							'Articulo' => $articulo['Articulo']['descripcion'],
-							'Materiasprima' => $mp['descripcion'],
-							'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
-							'cajas' => $cajas
-						);
-						$articulos_mp[$key][]= $datos;
-					}
-					if (!empty($data['acabados'][$key])) {
-						$materias_acabado = $this->AcabadosMateriasprima->find('all',array(
-							'conditions' => array(
-								'AcabadosMateriasprima.acabado_id' => $data['acabados'][$key],
-								'AcabadosMateriasprima.articulo_id' => $key
-							)
-						));
-						foreach ($materias_acabado as $ma){
-							$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
+				$data = $this->data;
+				foreach ($data['cantidad'] as $key => $value){
+					if ($value == 1){
+						$cajas = $data['cajas'][$key];
+						$articulo = $this->Articulo->findById($key);
+						foreach ($articulo['Materiasprima'] as $mp){
 							$datos = array (
 								'Articulo' => $articulo['Articulo']['descripcion'],
-								'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
-								'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
+								'Materiasprima' => $mp['descripcion'],
+								'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 								'cajas' => $cajas
 							);
 							$articulos_mp[$key][]= $datos;
 						}
+						if (!empty($data['acabados'][$key])) {
+							$materias_acabado = $this->AcabadosMateriasprima->find('all',array(
+								'conditions' => array(
+									'AcabadosMateriasprima.acabado_id' => $data['acabados'][$key],
+									'AcabadosMateriasprima.articulo_id' => $key
+								)
+							));
+							foreach ($materias_acabado as $ma){
+								$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
+								$datos = array (
+									'Articulo' => $articulo['Articulo']['descripcion'],
+									'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
+									'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
+									'cajas' => $cajas
+								);
+								$articulos_mp[$key][]= $datos;
+							}
+						}
 					}
 				}
+				$this->set(compact('articulos_mp'));
 			}
-			$this->set(compact('articulos_mp'));
-		} else {
-			$articulos = $this->Articulo->find('all',array(
-				'link' => array('Subcategoria' => 'Categoria'),
-				'recursive' => 2
+	}
+	
+	function admin_forecast(){
+		
+		// debug($this->Articulo);
+		// die();
+		// mandamos a la vista todas las subcategorias (Categorias al final)
+		$this->loadModel('Subcategoria');
+		$categorias = $this->Subcategoria->find('list', array(
+			'fields' => array('Subcategoria.descripcion', 'Subcategoria.descripcion')
+		));
+		$categorias = array_merge( array('' => 'Todas'), $categorias);
+		$this->set('descripcions', $categorias);	
+		
+		//preguntamos si vienen parametros del buscador
+		$this->Prg->commonProcess();
+		$parametros = $this->Prg->parsedParams();
+		if($parametros){   // si viene con datos para el buscador, esto es para trabajar el buscador
+											// sin una vista auxiliar como viene en el manual!! parece que sirve
+		
+		$this->paginate['conditions'] = $this->Articulo->parseCriteria($this->Prg->parsedParams());
+		$this->loadModel('Genero');
+		$this->paginate['recursive'] = 2;
+		$articulos = $this->paginate(); // this->paginate() es magico, hace todo dadas las condiciones en this->paginate
+		
+		// aqui buscamos los acabados dado el resultado del search plugin
+		
+		foreach($articulos as $art){
+			$acabados[$art['Articulo']['id']] = $prueba = $this->AcabadosMateriasprima->find('all', array (
+				'conditions' => array(
+					'articulo_id' => $art['Articulo']['id']
+				),
+				'fields' => array('acabado_id')
 			));
-			$articulos_con_acabado = $this->AcabadosMateriasprima->find('all',array(
-				'group' => array('AcabadosMateriasprima.articulo_id')
-			));
-			foreach ($articulos_con_acabado as $a_c_a) {
-				$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
-					'conditions' => array('AcabadosMateriasprima.articulo_id' => $a_c_a['AcabadosMateriasprima']['articulo_id']),
-					'group' => array('AcabadosMateriasprima.acabado_id')
+		}		
+		foreach($acabados as $a => $aca ){
+			foreach($aca as $bados){
+				$encontrado =  $this->Acabado->find('first', array(
+					'conditions' => array(
+						'id' => $bados['AcabadosMateriasprima']['acabado_id']
+					)
 				));
-				foreach($busca_acabados as $a) {
-					$acabados_array[] = $a['AcabadosMateriasprima']['acabado_id'];
-					//$arreglo_acabados[$a['AcabadosMateriasprima']['articulo_id']]
+				$final[$a][$encontrado['Acabado']['id']] =  $encontrado['Acabado']['descripcion'];
+			}
+		}		
+		// fin algoritmo de busqueda de acabados
+		
+        $this->set('articulos', $this->paginate());
+		if(!empty($final)){
+			$this->set('acabados', $final);
+		}
+		}else{ // si viene sin datos para el buscador jeje
+	
+			if (!empty($this->data)) {
+			
+			} else {
+				$articulos = $this->Articulo->find('all',array(
+					'recursive' => 2
+				));
+				$articulos_con_acabado = $this->AcabadosMateriasprima->find('all',array(
+					'group' => array('AcabadosMateriasprima.articulo_id')
+				));
+				foreach ($articulos_con_acabado as $a_c_a) {
+					$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
+						'conditions' => array('AcabadosMateriasprima.articulo_id' => $a_c_a['AcabadosMateriasprima']['articulo_id']),
+						'group' => array('AcabadosMateriasprima.acabado_id')
+					));
+					foreach($busca_acabados as $a) {
+						$acabados_array[] = $a['AcabadosMateriasprima']['acabado_id'];
+						//$arreglo_acabados[$a['AcabadosMateriasprima']['articulo_id']]
+					}
+					$acabados[$a_c_a['AcabadosMateriasprima']['articulo_id']] = $this->Acabado->find('list', array(
+						'fields' => array('id','descripcion'),
+						'conditions' => array('Acabado.id' => $acabados_array)
+					));
 				}
-				$acabados[$a_c_a['AcabadosMateriasprima']['articulo_id']] = $this->Acabado->find('list', array(
-					'fields' => array('id','descripcion'),
-					'conditions' => array('Acabado.id' => $acabados_array)
-				));
+				$this->set(compact('articulos','acabados'));
 			}
-			$this->set(compact('articulos','acabados'));
 		}
 	}
 	

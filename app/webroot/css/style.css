@@ -23,6 +23,19 @@ label {
 	width:300px;
 }
 
+.search {
+	float: right;
+}
+
+.search_button{
+	float: right;
+	margin-right: 10px; 
+}
+
+.ejecutar{
+	margin-bottom: 40px;
+}
+
 table.tabla_index th {
 	border-bottom: 2px solid black;
 	padding: 5px;

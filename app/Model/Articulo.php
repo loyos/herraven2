@@ -1,6 +1,7 @@
 <?php
 class Articulo extends AppModel {
     var $name = 'Articulo';
+	public $actsAs = array('Search.Searchable');
 	
 	public $belongsTo = array(
         'Subcategoria' => array(
@@ -29,38 +30,59 @@ class Articulo extends AppModel {
             )
     );
 	
-	var $validate = array( 
-		'cantidad_por_caja' => array(
-			'no_vacio' => array(
-				'rule' => 'notEmpty',
-				'message' => 'Este campo no puede quedar vacÃ­o.'
-			),
-			'mayor_a_cero' => array(
-				'rule' => array('comparison', '>', 0),
-				'message' => 'El nÃºmero de cajas debe ser positivo'
-			)
-		),
-		'descripcion' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÃ­o.'
-		),
-		'margen_ganancia' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÃ­o.'
-		),
-		'costo_produccion' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÃ­o.'
-		),
-		'imagen' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÃ­o.'
-		),
-		'codigo' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacÃ­o.'
-		),
-    );
+
+	// var $validate = array( 
+		// 'cantidad_por_caja' => array(
+			// 'rule' => 'notEmpty',
+			// 'message' => 'Este campo no puede quedar vacío.'
+		// ),
+		// 'descripcion' => array(
+			// 'rule' => 'notEmpty',
+			// 'message' => 'Este campo no puede quedar vacío.'
+		// ),
+		// 'imagen' => array(
+			// 'rule' => 'notEmpty',
+			// 'message' => 'Este campo no puede quedar vacío.'
+		// ),
+		// 'codigo' => array(
+			// 'rule' => 'notEmpty',
+			// 'message' => 'Este campo no puede quedar vacío.'
+		// ),
+    // );
+	
+	// aqui se configura el filtro
+	
+	public $filterArgs = array(
+		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast')
+		'descripcion' => array('type' => 'like', 'field' => 'Subcategoria.descripcion'),
+		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast', 'field' => 'descripcion'),
+		// 'wachu' => array('type' => 'like', 'field' => 'Categoria.descripcion'),
+	);
+	
+	public function forecast($data = array()){
+	
+		debug($data);
+		$tag = $data['descripcion'];
+		$query = $this->getQuery('all', array(
+            'conditions' => array('Articulo.descripcion LIKE'  => '%'. $tag .'%' ),
+			'contain' => array('Subcategoria')
+        ));
+		
+		//die();
+		debug($query);
+        return $query;
+	}
+	
+	public function forecast2($data = array()){
+		debug($data);
+		
+		$query_sub = $this->find('all', array(
+            'conditions' => array('Subcategoria.descripcion LIKE'  => '%'. $data['descripcion_sub'] .'%' ),
+        ));
+		die();
+		debug($query_sub);
+        return $query_sub;
+	}
 	
 	function calcular_precio($id, $ganancia = null){
 	
