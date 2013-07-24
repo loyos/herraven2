@@ -4,49 +4,67 @@ class InventariomaterialsController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	public $uses = array('Materiasprima','Inventariomaterial','Config');
+	public $uses = array('Inventariomaterial','Config','Materiasprima');
 	
     function admin_index() {
-		$combinaciones = $this->Inventariomaterial->find('all',array(
-			'fields' => array('DISTINCT Inventariomaterial.ano,DISTINCT Inventariomaterial.trimestre,DISTINCT Inventariomaterial.materiasprima_id'),
-		));
-		foreach ($combinaciones as $c){
-			$materiales[]= $this->Inventariomaterial->find('all',array(
+		$materiasprima = $this->Materiasprima->find('all');
+		$ano = date ("Y");
+		foreach ($materiasprima as $materias) {
+			$entradas_materia[$materias['Materiasprima']['id']] = $this->Inventariomaterial->find('all',array(
+				'fields' => array('SUM(Inventariomaterial.cantidad)'),
 				'conditions' => array(
-					'ano' => $c['Inventariomaterial']['ano'],
-					'trimestre' => $c['Inventariomaterial']['trimestre'],
-					'materiasprima_id' => $c['Inventariomaterial']['materiasprima_id']
+					'Inventariomaterial.materiasprima_id' => $materias['Materiasprima']['id'],
+					'Inventariomaterial.tipo' => 'entrada',
+					'Inventariomaterial.ano' => $ano
 				)
 			));
-		}
-		$count_entrada = 0;
-		$count_salidas = 0;
-		foreach ($materiales as $m) {
-			foreach ($m as $a){
-				if ($a['Inventariomaterial']['tipo'] == 'entrada'){
-					$count_entrada = $count_entrada+$a['Inventariomaterial']['cantidad'];
-				} else {
-					$count_salidas = $count_salidas +$a['Inventariomaterial']['cantidad'];
-				}
-			}
-			$materia = $this->Materiasprima->find('first',array('conditions' => array('Materiasprima.id' => $m[0]['Inventariomaterial']['materiasprima_id'])));
-			$nombre_materia = $materia['Materiasprima']['descripcion'];
-			$unidad = $materia['Materiasprima']['unidad'];
-			$saldo = $count_entrada-$count_salidas;
-			$info[] = array(
-				'trimestre' => $m[0]['Inventariomaterial']['trimestre'],
-				'ano' => $m[0]['Inventariomaterial']['ano'],
-				'materia' =>$nombre_materia,
-				'unidad' => $unidad,
-				'entradas' => $count_entrada,
-				'salidas' => $count_salidas,
-				'saldo' => $saldo
-			);
-			$count_entrada = 0;
-			$count_salidas = 0;
-		}
-		$this->set(compact('info'));
+			$salidas_materia[$materias['Materiasprima']['id']] = $this->Inventariomaterial->find('all',array(
+				'fields' => array('SUM(Inventariomaterial.cantidad)'),
+				'conditions' => array(
+					'Inventariomaterial.materiasprima_id' => $materias['Materiasprima']['id'],
+					'Inventariomaterial.tipo' => 'salida',
+					'Inventariomaterial.ano' => $ano 
+				)
+			));
+		} 
+		$this->set(compact('ano','entradas_materia','salidas_materia','materiasprima'));
 	}
+	
+	function admin_movimientos() {
+		$ano = date ("Y");
+		if (!empty($this->data)) {
+			$id_m = $this->data['Inventariomaterial']['materiasprima_id'];
+			$hoy = date('Y-m-d H:i:s');
+			$trimestre = $this->Config->obtenerTrimestre($hoy);
+			$entradas = $this->Inventariomaterial->find('all',array(
+				'fields' => array('Inventariomaterial.trimestre','SUM(Inventariomaterial.cantidad)','Materiasprima.descripcion','Materiasprima.unidad'),
+				'conditions' => array(
+					'Inventariomaterial.materiasprima_id' => $id_m,
+					'Inventariomaterial.tipo' => 'entrada',
+					'Inventariomaterial.ano' => $ano
+				),
+				'group' => array('Inventariomaterial.trimestre'),
+				'order' => array('Inventariomaterial.trimestre')
+			));
+			$salidas = $this->Inventariomaterial->find('all',array(
+				'fields' => array('Inventariomaterial.trimestre','SUM(Inventariomaterial.cantidad)'),
+				'conditions' => array(
+					'Inventariomaterial.materiasprima_id' => $id_m,
+					'Inventariomaterial.tipo' => 'salida',
+					'Inventariomaterial.ano' => $ano
+				),
+				'group' => array('Inventariomaterial.trimestre')
+			));
+			$this->set(compact('id_m','entradas','salidas','trimestre','ano'));
+		}
+		
+		$materiasprimas = $this->Materiasprima->find('list',array(
+			'fields' => array('id','descripcion')
+		));
+		$materiasprimas[0] = 'Selecciona una materia prima';
+		$this->set(compact('materiasprimas'));
+	}
+	
 	function admin_editar() {
 		if (!empty($this->data)) {
 			$data = $this->data;
