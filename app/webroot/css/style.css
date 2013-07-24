@@ -275,3 +275,23 @@ span.descripcion_catalogo{
 	font-weight:bold;
 	margin:15px;
 }
+
+.agregar_inventario {
+	float:left;
+}
+
+.ano_inventario {
+	float:right;
+}
+
+.ano_movimientos {
+	float:right;
+}
+
+.subtitulo_movimientos {
+	float:left;
+}
+
+.input_pequeno {
+	width:35px;
+}
