@@ -10,9 +10,6 @@ class PedidosController extends AppController {
 		$pedidos = $this->Pedido->find('all',array(
 			'recursive' => 2
 		));
-		
-		
-		
 		foreach ($pedidos as $p) {
 			$entradas = 0;
 			$salidas = 0;
@@ -33,7 +30,11 @@ class PedidosController extends AppController {
 					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
 				}
 			} else {
-				$status[$p['Pedido']['id']] = 'No disponible';
+				if ($p['Pedido']['status'] == 'pendiente') {
+					$status[$p['Pedido']['id']] = 'No disponible';
+				} else {
+					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+				}
 			}
 		}
 		$this->set(compact('status','pedidos'));
@@ -189,7 +190,7 @@ class PedidosController extends AppController {
 						'conditions' => array('CajasPedido.caja_id' => $caja['Caja']['id'])
 					));
 					if (!empty($existe_codigo)){
-						$this->Session->setFlash("El código ".$c.' ya ha sido asignado');
+						$this->Session->setFlash("El código ".$c." ya ha sido asignado");
 						$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
 					} else {
 						$buscar_en_inventario = $this->Inventarioalmacen->find('first',array(
