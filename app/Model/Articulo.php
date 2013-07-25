@@ -31,24 +31,30 @@ class Articulo extends AppModel {
     );
 	
 
-	// var $validate = array( 
-		// 'cantidad_por_caja' => array(
-			// 'rule' => 'notEmpty',
-			// 'message' => 'Este campo no puede quedar vacÌo.'
-		// ),
-		// 'descripcion' => array(
-			// 'rule' => 'notEmpty',
-			// 'message' => 'Este campo no puede quedar vacÌo.'
-		// ),
-		// 'imagen' => array(
-			// 'rule' => 'notEmpty',
-			// 'message' => 'Este campo no puede quedar vacÌo.'
-		// ),
-		// 'codigo' => array(
-			// 'rule' => 'notEmpty',
-			// 'message' => 'Este campo no puede quedar vacÌo.'
-		// ),
-    // );
+	var $validate = array( 
+		'cantidad_por_caja' => array(
+			'not_empty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Este campo no puede quedar vac√≠o.'
+			), 
+			'mayor_a_cero' => array(
+				'rule' => array('comparison', '>=', 0),
+				'message' => 'El n√∫mero de cajas debe ser mayor a 0'
+			)
+		),
+		'descripcion' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vac√≠o.'
+		),
+		'imagen' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vac√≠o.'
+		),
+		'codigo' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vac√≠o.'
+		),
+    );
 	
 	// aqui se configura el filtro
 	

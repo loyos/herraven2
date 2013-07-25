@@ -10,8 +10,14 @@ echo $this->Form->create('Pedido');
 if (!empty($info_articulos)) {
 foreach ($info_articulos as $a) { ?>
 <div class="articulo_catalogo">
-	<div class="imagen_catalogo">
-		<?php echo $this->Html->image('articulos/'.$a['imagen'],array('height' => '120px;'));?>
+	<div class="imagen_catalogo fotos">
+		<?php 
+		echo $this->Html->link(
+			$this->Html->image('articulos/'.$a['imagen'], array("height" => "120px",'class'=>'prim')),
+			"../img/articulos/".$a['imagen'],
+			array('escape' => false, 'class="fancybox primera"')
+		);
+		?>
 	</div>
 	<div class="info_catalogo">
 		<table>
@@ -81,4 +87,23 @@ foreach ($info_articulos as $a) { ?>
 	function activar(id){
 		val = $('input#'+id).val('1');
 	}
+$(document).ready(function() {
+	var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+	var is_firefox = navigator.userAgent.indexOf("Firefox") != -1;
+	
+	$('.fancybox').fancybox();
+	
+	$('.fotos a').mouseenter(function() {
+		$(this).find('.prim').css('opacity','0.5');
+		if (is_chrome) {
+			// $(this).append('<?php echo $this->Html->image('icon_zoom.png',array('class'=>'zoom','style' => "position:absolute;",'width'=>'50px','height'=>'50px'))?>');
+				} else 
+			if(is_firefox) {
+				// $(this).append('<img src="img/icon_zoom.png" alt="" width="50px" height="50px" class = "zoom" style= "position:absolute;margin-top:70px; margin-left:-120px;"/>');
+			}
+	});
+	$('a.primera').mouseleave(function() {
+		$(this).find('.prim').css('opacity','1');
+		//$('.zoom').remove();
+	});});
 </script>
