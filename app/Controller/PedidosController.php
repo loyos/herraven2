@@ -8,25 +8,32 @@ class PedidosController extends AppController {
 	
     function admin_index() {
 		$pedidos = $this->Pedido->find('all',array(
-			'recursive' => 3
+			'recursive' => 2
 		));
+		
+		
+		
 		foreach ($pedidos as $p) {
 			$entradas = 0;
 			$salidas = 0;
-			foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
-				if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
-					$entradas = $entradas + $ia['cajas'];
-				} elseif ($ia['tipo'] == 'salida' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
-					$salidas = $salidas + $ia['cajas'];
+			if(!empty($p['Articulo']['Inventarioalmacen'])) {
+				foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
+					if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
+						$entradas = $entradas + $ia['cajas'];
+					} elseif ($ia['tipo'] == 'salida' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
+						$salidas = $salidas + $ia['cajas'];
+					}
 				}
-			}
-			$saldo = $entradas - $salidas;
-			if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
-				$status[$p['Pedido']['id']] = 'Disponible';
-			} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
-				$status[$p['Pedido']['id']] = 'No disponible';
+				$saldo = $entradas - $salidas;
+				if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+					$status[$p['Pedido']['id']] = 'Disponible';
+				} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+					$status[$p['Pedido']['id']] = 'No disponible';
+				} else {
+					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+				}
 			} else {
-				$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+				$status[$p['Pedido']['id']] = 'No disponible';
 			}
 		}
 		$this->set(compact('status','pedidos'));
@@ -205,7 +212,7 @@ class PedidosController extends AppController {
 				}
 			}
 			if($this->CajasPedido->saveAll($cajas_pedidos)){
-				$this->Session->setFlash('Pedido agregado con existo');
+				$this->Session->setFlash('Pedido agregado con exito');
 				$this->redirect(array('action' => 'admin_index'));
 			}
 			//var_dump($this->data); die();
