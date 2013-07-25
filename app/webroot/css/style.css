@@ -295,3 +295,8 @@ span.descripcion_catalogo{
 .input_pequeno {
 	width:35px;
 }
+
+.input_descripcion {
+	width: 246px;
+	height: 45px;
+}

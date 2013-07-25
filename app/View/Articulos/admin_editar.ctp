@@ -38,7 +38,8 @@ $materias = array();
 	echo '<td>Descripción</td>';
 	echo '<td>';
 	echo $this->Form->input('descripcion',array(
-		'label' => false
+		'label' => false,
+		'class' => 'input_descripcion'
 	));
 	echo '</td>';
 	echo '</tr>';
