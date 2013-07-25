@@ -25,7 +25,7 @@ class User extends AppModel {
         'username' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Este campo no puede quedar vacío.'
+				'message' => 'Este campo no puede quedar vacÃ­o.'
 			),
 			'unico' => array(
 				'rule' => 'isUnique',
@@ -34,29 +34,39 @@ class User extends AppModel {
 		),
 		'password' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'message' => 'Este campo no puede quedar vacÃ­o.'
 		),
 		'email' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'message' => 'Este campo no puede quedar vacÃ­o.'
 		),
 		'nombre' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'message' => 'Este campo no puede quedar vacÃ­o.'
 		),
 		'apellido' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'message' => 'Este campo no puede quedar vacÃ­o.'
 		),
 		'rol' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'message' => 'Este campo no puede quedar vacÃ­o.'
 		),
 		'cliente_id' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'rule' => 'notEmpty_f',
+			'message' => 'Este campo no puede quedar vacÃ­o.'
 		),
     );
+	
+	function notEmpty_f($field){
+		if ($this->data['User']['rol'] == 'cliente') {
+			if (empty($field['cliente_id'])) {
+				return false;
+			}
+			return true;
+		}
+		return true;
+	}
 }
 
 

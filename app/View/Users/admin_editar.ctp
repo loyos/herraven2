@@ -171,10 +171,11 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo '</div>';
 	echo '<table>';
 	echo '<tr>';
-	echo '<td>Cliente</td>';
+	echo '<td class="cliente_label">Cliente</td>';
 	echo '<td>';
 	echo $this->Form->input('cliente_id',array(
 		'label' => false,
+		'class' => 'cliente'
 	));
 	echo '</td>';
 	echo '</tr>';
@@ -196,7 +197,10 @@ function funciones_rol() {
 	if (rol == 'admin') {
 		$('#div_rol_cliente').css('display','none');
 		$('#div_rol_admin').css('display','block');
+		$('.cliente').css('display','none');
+		$('.cliente_label').css('display','none');
 		inputs = $('#div_rol_cliente input');
+		$('.cliente').val(0);
 		$.each( inputs, function( key, value ) {
 			$(this).val(0);
 			$(this).attr('checked',false);
@@ -204,6 +208,8 @@ function funciones_rol() {
 	} else if (rol == 'cliente') {
 		$('#div_rol_admin').css('display','none');
 		$('#div_rol_cliente').css('display','block');
+		$('.cliente').css('display','block');
+		$('.cliente_label').css('display','block');
 		inputs = $('#div_rol_admin input');
 		$.each( inputs, function( key, value ) {
 			$(this).val(0);
