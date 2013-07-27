@@ -215,7 +215,7 @@ class ArticulosController extends AppController {
 						$articulo = $this->Articulo->findById($key);
 						foreach ($articulo['Materiasprima'] as $mp){
 							$datos = array (
-								'Articulo' => $articulo['Articulo']['descripcion'],
+								'Articulo' => $articulo['Articulo']['codigo'],
 								'Materiasprima' => $mp['descripcion'],
 								'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 								'cajas' => $cajas
@@ -232,7 +232,7 @@ class ArticulosController extends AppController {
 							foreach ($materias_acabado as $ma){
 								$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
 								$datos = array (
-									'Articulo' => $articulo['Articulo']['descripcion'],
+									'Articulo' => $articulo['Articulo']['codigo'],
 									'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
 									'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 									'cajas' => $cajas
@@ -316,7 +316,7 @@ class ArticulosController extends AppController {
 						//$arreglo_acabados[$a['AcabadosMateriasprima']['articulo_id']]
 					}
 					$acabados[$a_c_a['AcabadosMateriasprima']['articulo_id']] = $this->Acabado->find('list', array(
-						'fields' => array('id','descripcion'),
+						'fields' => array('id','acabado'),
 						'conditions' => array('Acabado.id' => $acabados_array)
 					));
 				}
