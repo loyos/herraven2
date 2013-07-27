@@ -238,9 +238,15 @@ $materias = array();
 	echo '<table>';
 	echo '<tr>';
 	echo '<td>';
+	if (empty($this->data['Articulo']['margen_ganancia'])) {
+		$value_mg = $margen_ganancia;
+	} else {
+		$value_mg = $this->data['Articulo']['margen_ganancia'];
+	}
 	echo $this->Form->input('margen_ganancia',array(
 		'label' => false,
-		'class' => 'input_pequeno'
+		'class' => 'input_pequeno',
+		'value' => $value_mg
 	));
 	echo '</td>';
 	echo '<td>(% margen de ganancia)</td>';
@@ -296,8 +302,8 @@ function buscar_cantidad_basica(input) {
 	i = $(input).attr('id');
 	$.ajax({
 		type: "POST",
-		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_subcat.json' ?>',
-		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_unidad.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
 		data: { id_materia: id_materia },
 		dataType: "json"
 	}).done(function( msg ) {

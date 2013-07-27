@@ -163,8 +163,9 @@ class ArticulosController extends AppController {
 		} else {
 			$titulo = "Agregar";
 		}
-		$costo_produccion = $this->Config->find('first');
-		$costo_produccion = $costo_produccion['Config']['costo_produccion'];
+		$config = $this->Config->find('first');
+		$costo_produccion = $config['Config']['costo_produccion'];
+		$margen_ganancia = $config['Config']['margen_ganancia'];
 		$categorias = $this->Categoria->find('list',array(
 			'fields' => array('id','descripcion')
 		));
@@ -178,7 +179,7 @@ class ArticulosController extends AppController {
 			$numero_materias++;
 		}
 		$acabados = $this->Acabado->find('all');
-		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores','numero_materias'));
+		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores','numero_materias','margen_ganancia'));
 	}
 	
 	function buscar_subcat() {
