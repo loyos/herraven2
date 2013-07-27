@@ -1,14 +1,18 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'admin_index'));
+echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id']));
 ?>
-<h1>Lista de precio: <?php echo $precio['Precio']['descripcion']?></h1>
+<h1><?php echo $precio['Precio']['descripcion']?></h1>
 <?php 
-	echo '<h2>Precios de articulos</h2>';
+	if (!empty($precio_articulo)) {
 	echo '<table  class="tabla_ver">';
+	echo '<tr>';
+		echo '<th>Codigo</th>';
+		echo '<th>Precio</th>';
+	echo '</tr>';
 	foreach ($precio_articulo as $a){
 		echo '<tr>';
-		echo '<th>'.$a['articulo'].' ('.$a['codigo'].')</th>';
+		echo '<th>'.$a['codigo'].'</th>';
 		echo '<td>';
 		echo 'Bs. '.number_format($a['precio'], 0, ',', '.');
 		echo '</td>';
@@ -16,7 +20,11 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 		echo '<tr>';
 	}
 	echo '</table>';
+	} else {
+		echo '<h3>No hay artículos en esta categoria</h3>';
+	}
 ?>
+
 <?php 
 	// echo '<h2>Precios de materias prima</h2>';
 	// echo '<table  class="tabla_ver">';

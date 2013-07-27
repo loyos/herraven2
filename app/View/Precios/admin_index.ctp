@@ -25,7 +25,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 				array(),
 				'¿Estás seguro que deseas eliminar?').'<br>';
 			}
-			echo $this->Html->link('Ver',array('action' => 'admin_ver',$p['Precio']['id'])).'</td>';
+			echo $this->Html->link('Ver',array('action' => 'admin_listar_subcategorias',$p['Precio']['id'])).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';

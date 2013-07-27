@@ -3,7 +3,7 @@
 class PreciosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $uses = array('Precio','Materiasprima','MateriasprimasPrecio','Articulo');
+	public $uses = array('Precio','Materiasprima','MateriasprimasPrecio','Articulo','Categoria');
 	
     function admin_index() {
 		$precios = $this->Precio->find('all');
@@ -32,23 +32,27 @@ class PreciosController extends AppController {
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	function admin_ver($id) {
+	function admin_listar_subcategorias($id){
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias','id'));
+	}
+	
+	function admin_ver($id,$subcat) {
 		$materias = $this->Materiasprima->find('all');
 		$precio = $this->Precio->findById($id);
 		$ganancia = $precio['Precio']['ganancia'];
-		$articulos = $this->Articulo->find('all');
+		$articulos = $this->Articulo->find('all',array(
+			'conditions' => array('Articulo.subcategoria_id' => $subcat)
+		));
 		if ($id == 1) {
-			// foreach ($materias as $m){
-				// $precio_materia[] = array(
-					// 'materia' => $m['Materiasprima']['descripcion'],
-					// 'precio' => $m['Materiasprima']['precio']
-				// );
-			// };
 			foreach ($articulos as $a) {
 				$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id']);
 				$precio_articulo[] = array (
 					'articulo' => $a['Articulo']['descripcion'],
-					'precio' => $acum_precio
+					'precio' => $acum_precio,
+					'codigo' => $a['Articulo']['codigo'],
 				);
 			};
 			
