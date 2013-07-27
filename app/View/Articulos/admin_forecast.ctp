@@ -30,7 +30,7 @@
 						'label' => false,
 					));?> 
 				</td>
-				<td><?php echo $a['Articulo']['descripcion'] ?></td>
+				<td><?php echo $a['Articulo']['codigo'] ?></td>
 				<td><?php echo $a['Subcategoria']['Categoria']['descripcion'] ?></td>
 				<td><?php echo $a['Subcategoria']['descripcion'] ?></td>
 				<td><?php echo $this->Form->input('cajas',array(
