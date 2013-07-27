@@ -73,26 +73,38 @@ $materias = array();
 		if (!empty($valor_mp[$i])){
 			$value_m = $valor_mp[$i];
 		} else {
-			$value_m = null;
+			$value_m = 0;
 		}
 		if (!empty($valor_cant[$i])){
-			$value_c = $valor_cant[$i];
+			$value_c = $valor_cant[$i]['cantidad'];
 		} else {
 			$value_c = null;
 		}
-		echo '<tr>';
+		echo '<tr class="'.$i.'">';
 		echo '<td>';
 		echo $this->Form->input('materiasprima_id',array(
 			'name' => 'materias[]',
 			'value' => $value_m,
-			'label' => false
+			'label' => false,
+			'class' => 'materia_basica',
+			'id' => $i
 		));
 		echo '</td>';
 		echo '<td>';
 		echo $this->Form->input('cantidad',array(
 			'name' => 'cantidad[]',
-			'value' => $value_c
+			'value' => $value_c,
+			'label' => false,
+			'id' => $i,
+			'class' => 'cantidad_basica' 
 		));
+		echo '<td class="after'.$i.'">';
+		if (!empty($valor_cant[$i]['unidad'])){
+			echo 'Cantidad ('.$valor_cant[$i]['unidad'].')';
+		} else {
+			echo 'Cantidad';
+		}
+		echo '</td>';
 		echo '</td>';
 		echo '</tr>';
 	}
@@ -129,22 +141,24 @@ $materias = array();
 	echo '<td class="titulo_tabla">';
 	echo '</td>';
 	echo '</tr>';
-	// echo $this->Form->input('id_acabados',array(
-		// 'name' => 'id_acabados',
-		// 'id' => 'id_acabado',
-		// 'type' => 'hidden'
-	// ));
 	for ($i=0;$i<=3;$i++){
 		echo '<tr>';
 		echo '<td>';
 		echo $this->Form->input('materiasprima_id',array(
 			'name' => 'materia_acabado',
+			'label' => false,
+			'class' => 'materias_acabado',
+			'id' => $i
 		));
 		echo '</td>';
 		echo '<td>';
 		echo $this->Form->input('cantidad',array(
 			'name' => 'cantidad_acabado',
+			'label' => false,
+			'id' => $i
 		));
+		echo '</td>';
+		echo '<td class="after_acabado'.$i.'">';
 		echo '</td>';
 		echo '</tr>';
 	}
@@ -162,10 +176,10 @@ $materias = array();
 				if (!empty($m_a['id'][$i])) {
 					$valor_m = $m_a['id'][$i];
 				} else {
-					$valor_m = null;
+					$valor_m = 0;
 				}
-				if (!empty($valores['cantidad_acabado'][$key][$i])) {
-					$valor_c = $valores['cantidad_acabado'][$key][$i];
+				if (!empty($valores['cantidad_acabado'][$key]['cantidad'][$i])) {
+					$valor_c = $valores['cantidad_acabado'][$key]['cantidad'][$i];
 				} else {
 					$valor_c = null;
 				}
@@ -173,15 +187,28 @@ $materias = array();
 				echo '<td>';
 				echo $this->Form->input('materiasprima_id',array(
 					'name' => 'materia_acabado_'.$key.'[]',
-					'value' => $valor_m
+					'value' => $valor_m,
+					'label' => false,
+					'class' => 'materias_acabado',
+					'id' => $i
 				));
 				echo '</td>';
 				echo '<td>';
 				echo $this->Form->input('cantidad',array(
 					'name' => 'cantidad_acabado_'.$key.'[]',
-					'value' => $valor_c
+					'value' => $valor_c,
+					'label' => false,
+					'class' => 'cantidad_materia',
 				));
+				
 				echo '</td>';
+				echo '<td class="after_acabado'.$i.'">';
+				if (!empty($valores['cantidad_acabado'][$key]['unidad'][$i])){
+					echo 'Cantidad ('.$valores['cantidad_acabado'][$key]['unidad'][$i].')';
+				} else {
+					echo 'Cantidad';
+				}
+		echo '</td>';
 				echo '</tr>';
 			}
 			echo '</table>';
@@ -235,9 +262,49 @@ $(document).ready(function() {
 	buscar_acabados();
 })
 
+$('.materia_basica').change(function(){
+	buscar_cantidad_basica(this);
+});
+
+// $('.materias_acabado').change(function(){
+	// buscar_cantidad_acabado(this);
+// });
+
 $('#categoria').change(function(){
 	buscar_subcat();
 });
+
+function buscar_cantidad_acabado(input) {
+	alert("entro");
+	id_materia = $(input).val();
+	i = $(input).attr('id');
+	alert(i);
+	$.ajax({
+		type: "POST",
+		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_subcat.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
+		data: { id_materia: id_materia },
+		dataType: "json"
+	}).done(function( msg ) {
+		$('.after_acabado'+i).html(msg);
+	});
+//	alert(i);
+}
+
+function buscar_cantidad_basica(input) {
+	id_materia = $(input).val();
+	i = $(input).attr('id');
+	$.ajax({
+		type: "POST",
+		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_subcat.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
+		data: { id_materia: id_materia },
+		dataType: "json"
+	}).done(function( msg ) {
+		$('.after'+i).html(msg);
+	});
+}
+
 function buscar_subcat() {
 	var cate_id = $('#categoria').val();
 	$.ajax({

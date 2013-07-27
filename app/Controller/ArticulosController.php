@@ -119,11 +119,15 @@ class ArticulosController extends AppController {
 			$materiales = $this->ArticulosMateriasprima->find('all',array(
 				'conditions' => array(
 					'articulo_id' => $id
-				)
+				),
 			));
+			$aux = 0;
 			foreach ($materiales as $mat) {
-				$valor_mp[] = $mat['ArticulosMateriasprima']['materiasprima_id'];
-				$valor_cant[] = $mat['ArticulosMateriasprima']['cantidad'];
+				$m = $this->Materiasprima->findById($mat['ArticulosMateriasprima']['materiasprima_id']);
+				$valor_mp[$aux]= $mat['ArticulosMateriasprima']['materiasprima_id'];
+				$valor_cant[$aux]['cantidad'] = $mat['ArticulosMateriasprima']['cantidad'];
+				$valor_cant[$aux]['unidad'] = $m['Materiasprima']['unidad'];
+				$aux++;
 			}
 			
 			//Editar de acabado
@@ -145,9 +149,11 @@ class ArticulosController extends AppController {
 				//var_dump($materias_asociadas);
 				foreach ($materias_asociadas as $m_a) {
 					$nombre_acabado = $this->Acabado->findById($m_a['AcabadosMateriasprima']['acabado_id']);
+					$m = $this->Materiasprima->findById($m_a['AcabadosMateriasprima']['materiasprima_id']);
 					$valores['materia_acabado'][$id_a]['acabado'][] = $nombre_acabado['Acabado']['acabado'];
 					$valores['materia_acabado'][$id_a]['id'][] = $m_a['AcabadosMateriasprima']['materiasprima_id'];
-					$valores['cantidad_acabado'][$id_a][] = $m_a['AcabadosMateriasprima']['cantidad'];
+					$valores['cantidad_acabado'][$id_a]['cantidad'][] = $m_a['AcabadosMateriasprima']['cantidad'];
+					$valores['cantidad_acabado'][$id_a]['unidad'][] = $m['Materiasprima']['unidad'];
 				}
 			}
 			}
@@ -168,7 +174,7 @@ class ArticulosController extends AppController {
 		));
 		$numero_materias = 0;
 		foreach ($materiasprimas_busqueda as $mp) {
-			$materiasprimas[$mp['Materiasprima']['id']] =  $mp['Materiasprima']['descripcion'].' ('.$mp['Materiasprima']['unidad'].')';
+			$materiasprimas[$mp['Materiasprima']['id']] =  $mp['Materiasprima']['descripcion'];
 			$numero_materias++;
 		}
 		$acabados = $this->Acabado->find('all');
@@ -394,6 +400,14 @@ class ArticulosController extends AppController {
 			$cantidad_de_cajas[$count] = $count;
 		}
 		$this->set(compact('info_articulos','subcategoria','acabados','cantidad_de_cajas'));
+	}
+	
+	function buscar_unidad() {
+		$this->loadModel('Materiasprima');
+		$m = $this->Materiasprima->findById($_POST['id_materia']);
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode('Cantidad ('.$m['Materiasprima']['unidad'].')');
 	}
 }
 
