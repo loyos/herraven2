@@ -27,11 +27,15 @@ class Inventarioalmacen extends AppModel {
 		'cajas' => array(
 			'not_Empty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Este campo no puede quedar vac�o.'
+				'message' => 'Este campo no puede quedar vacío.'
 			),
 			'mayor_cero' => array(
 				'rule' => array('comparison', '>', 0),
 				'message' => 'Este campo no puede tener valores negativos.'
+			),
+			'menor_veinticinco' => array(
+				'rule' => array('comparison', '<=', 25),
+				'message' => 'Se puede hacer un ingreso de máximo 25 cajas.'
 			),
 		),
     ); 
