@@ -12,7 +12,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 		<th>Linea</th>
 		<th>Categoria</th>
 		<th>Descripcion</th>
-		<th>Precio Total (con costo de produccion y margen de ganancia)</th>
+		<th>Precio Venta</th>
 		<th>Acciones</th>
 		</tr>
 		<?php
