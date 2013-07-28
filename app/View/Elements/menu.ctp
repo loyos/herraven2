@@ -51,12 +51,7 @@
 		</ul>
 	</li>
 	<?php } ?>
-	<li class = "option">Funciones cliente
-		<ul>
-			<li class = "children"><?php echo $this->Html->link('Catálogo',array('controller' => 'articulos', 'action' => 'subcategoria_catalogo')); ?></li>
-			<li class = "children"><?php echo $this->Html->link('Egresos',array('controller' => 'pedidos', 'action' => 'admin_index')); ?></li>
-		</ul>
-	</li>
+	<li class = "option"><?php echo $this->Html->link('Catálogo',array('controller' => 'articulos', 'action' => 'subcategoria_catalogo')); ?></li>
 	
 </ul>
 </div>
