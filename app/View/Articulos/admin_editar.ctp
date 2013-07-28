@@ -99,11 +99,7 @@ $materias = array();
 			'class' => 'cantidad_basica' 
 		));
 		echo '<td class="after'.$i.'">';
-		if (!empty($valor_cant[$i]['unidad'])){
-			echo 'Cantidad ('.$valor_cant[$i]['unidad'].')';
-		} else {
 			echo 'Cantidad';
-		}
 		echo '</td>';
 		echo '</td>';
 		echo '</tr>';
@@ -203,12 +199,8 @@ $materias = array();
 				
 				echo '</td>';
 				echo '<td class="after_acabado'.$i.'">';
-				if (!empty($valores['cantidad_acabado'][$key]['unidad'][$i])){
-					echo 'Cantidad ('.$valores['cantidad_acabado'][$key]['unidad'][$i].')';
-				} else {
-					echo 'Cantidad';
-				}
-		echo '</td>';
+				echo 'Cantidad';
+				echo '</td>';
 				echo '</tr>';
 			}
 			echo '</table>';
@@ -252,9 +244,9 @@ $materias = array();
 	echo '<td>(% margen de ganancia)</td>';
 	echo '</tr>';
 	echo '</table>';
-	echo '<h2>Precio final</h2>';
-	echo '<div id="precio_final">';
-	echo '</div>';
+	// echo '<h2>Precio final</h2>';
+	// echo '<div id="precio_final">';
+	// echo '</div>';
 	if (!empty($id)) {
 		echo $this->Form->input('id',array('type'=>'hidden'));
 	}
@@ -266,49 +258,15 @@ $materias = array();
 $(document).ready(function() {
 	buscar_subcat();
 	buscar_acabados();
+	calcular_precio();
 })
-
-$('.materia_basica').change(function(){
-	buscar_cantidad_basica(this);
-});
-
-// $('.materias_acabado').change(function(){
-	// buscar_cantidad_acabado(this);
-// });
 
 $('#categoria').change(function(){
 	buscar_subcat();
 });
 
-function buscar_cantidad_acabado(input) {
-	alert("entro");
-	id_materia = $(input).val();
-	i = $(input).attr('id');
-	alert(i);
-	$.ajax({
-		type: "POST",
-		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_subcat.json' ?>',
-		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
-		data: { id_materia: id_materia },
-		dataType: "json"
-	}).done(function( msg ) {
-		$('.after_acabado'+i).html(msg);
-	});
-//	alert(i);
-}
-
-function buscar_cantidad_basica(input) {
-	id_materia = $(input).val();
-	i = $(input).attr('id');
-	$.ajax({
-		type: "POST",
-		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_unidad.json' ?>',
-		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
-		data: { id_materia: id_materia },
-		dataType: "json"
-	}).done(function( msg ) {
-		$('.after'+i).html(msg);
-	});
+function calcular_precio(){
+	materias_basicas = 
 }
 
 function buscar_subcat() {
@@ -376,4 +334,44 @@ function agregar_acabado(el){
 			}
 		}
 }
+
+// $('.materia_basica').change(function(){
+	// buscar_cantidad_basica(this);
+// });
+
+// $('.materias_acabado').change(function(){
+	// buscar_cantidad_acabado(this);
+// });
+
+
+// function buscar_cantidad_acabado(input) {
+	// alert("entro");
+	// id_materia = $(input).val();
+	// i = $(input).attr('id');
+	// alert(i);
+	// $.ajax({
+		// type: "POST",
+		// // url: '<?php echo FULL_BASE_URL.'/articulos/buscar_subcat.json' ?>',
+		// url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
+		// data: { id_materia: id_materia },
+		// dataType: "json"
+	// }).done(function( msg ) {
+		// $('.after_acabado'+i).html(msg);
+	// });
+	// // alert(i);
+// }
+
+// function buscar_cantidad_basica(input) {
+	// id_materia = $(input).val();
+	// i = $(input).attr('id');
+	// $.ajax({
+		// type: "POST",
+		// url: '<?php echo FULL_BASE_URL.'/articulos/buscar_unidad.json' ?>',
+		// //url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_unidad.json' ?>',
+		// data: { id_materia: id_materia },
+		// dataType: "json"
+	// }).done(function( msg ) {
+		// $('.after'+i).html(msg);
+	// });
+// }
 </script>
