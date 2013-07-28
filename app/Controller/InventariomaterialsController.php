@@ -78,9 +78,12 @@ class InventariomaterialsController extends AppController {
 			}
 		} 
 		
-		$materiasprimas = $this->Materiasprima->find('list',array(
-			'fields' => array('id','descripcion')
+		$materiasprimas_all = $this->Materiasprima->find('all',array(
+			'fields' => array('id','descripcion','unidad')
 		));
+		foreach ($materiasprimas_all as $m) {
+			$materiasprimas[$m['Materiasprima']['id']] = $m['Materiasprima']['descripcion'].' ('.$m['Materiasprima']['unidad'].')';
+		}
 		$this->set(compact('materiasprimas'));
 	}
 	
