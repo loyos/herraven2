@@ -111,7 +111,30 @@ class InventarioalmacensController extends AppController {
 		$this->set(compact('cajas'));
 	} 
 	
-	
+	function admin_inventario(){
+		$articulos = $this->Articulo->find('all');
+		$acabados = $this->Acabado->find('all');
+		$ano = date ("Y");
+		foreach ($articulos as $a) {
+			$entradas_articulo[$a['Articulo']['codigo']] = $this->Inventarioalmacen->find('all',array(
+				'fields' => array('SUM(Inventarioalmacen.cajas)','acabado_id','Acabado.acabado'),
+				'conditions' => array(
+					'Inventarioalmacen.articulo_id' => $a['Articulo']['id'],
+					'Inventarioalmacen.tipo' => 'entrada',
+				),
+				'group' => array('Inventarioalmacen.acabado_id')
+			));
+			$salidas_articulo[$a['Articulo']['codigo']] = $this->Inventarioalmacen->find('all',array(
+				'fields' => array('SUM(Inventarioalmacen.cajas)','acabado_id'),
+				'conditions' => array(
+					'Inventarioalmacen.articulo_id' => $a['Articulo']['id'],
+					'Inventarioalmacen.tipo' => 'salida',
+				),
+				'group' => array('Inventarioalmacen.acabado_id')
+			));
+		} 
+		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados'));
+	}
 	
 }
 
