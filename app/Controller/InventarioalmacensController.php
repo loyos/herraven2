@@ -25,9 +25,9 @@ class InventarioalmacensController extends AppController {
 	}
 	
 	function admin_ingresar($id) {
+		$articulo = $this->Articulo->findById($id);
 		if (!empty($this->data)) {
 			$data = $this->data;
-			$articulo = $this->Articulo->findById($id);
 			$hoy = date('Y-m-d H:i:s');
 			foreach ($articulo['Materiasprima'] as $m) {
 				$cantidad_materia = $m['ArticulosMateriasprima']['cantidad'] * $data['Inventarioalmacen']['cajas'] *$articulo['Articulo']['cantidad_por_caja'];
@@ -78,7 +78,7 @@ class InventarioalmacensController extends AppController {
 		$acabados = $this->Acabado->find('list',array(
 			'fields' => array('Acabado.id','Acabado.acabado')
 		));
-		$this->set(compact('acabados'));
+		$this->set(compact('acabados','articulo'));
 	}
 	
 	function admin_index(){
@@ -97,7 +97,7 @@ class InventarioalmacensController extends AppController {
 		$articulos = $this->Articulo->find('all',array(
 			'conditions' => array('Articulo.subcategoria_id' => $sub_id)
 		));
-			$this->set(compact('articulos'));
+		$this->set(compact('articulos'));
 	}
 	
 	function admin_etiquetas($id_inventario,$print=null) {
