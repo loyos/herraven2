@@ -8,17 +8,10 @@ class InventarioalmacensController extends AppController {
 	
 	
 	function admin_agregar(){
-		if (!empty($this->data)){
-			$data = $this->data;
-			$subcategoria_id = $data['Inventarioalmacen']['subcategoria_id'];
-			$categoria_id = $data['Inventarioalmacen']['categoria_id'];
-			$this->redirect(array('action' => 'admin_articulos',$categoria_id,$subcategoria_id));
-		} else {
-			$categorias = $this->Categoria->find('list',array(
-				'fields' => array('id','descripcion')
-			));
-			$this->set(compact('categorias'));
-		}
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias'));
 	}
 	
 	function buscar_subcat() {
