@@ -210,6 +210,7 @@ class ArticulosController extends AppController {
 		if (!empty($this->data)) {
 				$data = $this->data;
 				foreach ($data['cantidad'] as $key => $value){
+					$acabado = $this->Acabado->findById($data['acabados'][$key]);
 					if ($value == 1){
 						$cajas = $data['cajas'][$key];
 						$articulo = $this->Articulo->findById($key);
@@ -217,6 +218,9 @@ class ArticulosController extends AppController {
 							$datos = array (
 								'Articulo' => $articulo['Articulo']['codigo'],
 								'Materiasprima' => $mp['descripcion'],
+								'acabado' => $acabado['Acabado']['acabado'],
+								'unidad' => $mp['unidad'],
+								'piezas' => $cajas*$articulo['Articulo']['cantidad_por_caja'],
 								'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 								'cajas' => $cajas
 							);
@@ -233,7 +237,9 @@ class ArticulosController extends AppController {
 								$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
 								$datos = array (
 									'Articulo' => $articulo['Articulo']['codigo'],
+									'acabado' => $data['acabados'][$key],
 									'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
+									'unidad' => $nombre_materia['Materiasprima']['unidad'],
 									'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 									'cajas' => $cajas
 								);
