@@ -21,7 +21,7 @@
 				<td><?php echo $p['Pedido']['fecha'] ?></td>
 				<td><?php echo $p['Pedido']['id'] ?></td>
 				<td><?php echo $p['Cliente']['denominacion_legal'] ?></td>
-				<td><?php echo $p['Articulo']['descripcion'] ?></td>
+				<td><?php echo $p['Articulo']['codigo'] ?></td>
 				<td><?php echo $p['Acabado']['acabado'] ?></td>
 				<td><?php echo $p['Pedido']['cantidad_cajas'] ?></td>
 				<td><?php echo $p['Pedido']['cantidad_cajas'] * $p['Articulo']['cantidad_por_caja'] ?></td>
