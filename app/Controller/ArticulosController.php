@@ -221,48 +221,58 @@ class ArticulosController extends AppController {
 	
 	function admin_ver_forecast(){
 		if (!empty($this->data)) {
-				$data = $this->data;
-				foreach ($data['cantidad'] as $key => $value){
-					$acabado = $this->Acabado->findById($data['acabados'][$key]);
-					if ($value == 1){
-						$cajas = $data['cajas'][$key];
-						$articulo = $this->Articulo->findById($key);
-						foreach ($articulo['Materiasprima'] as $mp){
+			$data = $this->data;
+			$entro = false;
+			foreach ($data['cantidad'] as $key => $value){
+				$acabado = $this->Acabado->findById($data['acabados'][$key]);
+				if ($value == 1){
+					$entro = true;
+					$cajas = $data['cajas'][$key];
+					if (empty($cajas) || $cajas < 0) {
+						$this->Session->setFlash("El número de cajas debe ser mínimo 1");
+						$this->redirect(array('action' => 'admin_forecast'));
+					}
+					$articulo = $this->Articulo->findById($key);
+					foreach ($articulo['Materiasprima'] as $mp){
+						$datos = array (
+							'Articulo' => $articulo['Articulo']['codigo'],
+							'Materiasprima' => $mp['descripcion'],
+							'acabado' => $acabado['Acabado']['acabado'],
+							'unidad' => $mp['unidad'],
+							'piezas' => $cajas*$articulo['Articulo']['cantidad_por_caja'],
+							'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
+							'cajas' => $cajas
+						);
+						$articulos_mp[$key][]= $datos;
+					}
+					if (!empty($data['acabados'][$key])) {
+						$materias_acabado = $this->AcabadosMateriasprima->find('all',array(
+							'conditions' => array(
+								'AcabadosMateriasprima.acabado_id' => $data['acabados'][$key],
+								'AcabadosMateriasprima.articulo_id' => $key
+							)
+						));
+						foreach ($materias_acabado as $ma){
+							$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
 							$datos = array (
 								'Articulo' => $articulo['Articulo']['codigo'],
-								'Materiasprima' => $mp['descripcion'],
-								'acabado' => $acabado['Acabado']['acabado'],
-								'unidad' => $mp['unidad'],
-								'piezas' => $cajas*$articulo['Articulo']['cantidad_por_caja'],
-								'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
+								'acabado' => $data['acabados'][$key],
+								'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
+								'unidad' => $nombre_materia['Materiasprima']['unidad'],
+								'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 								'cajas' => $cajas
 							);
 							$articulos_mp[$key][]= $datos;
 						}
-						if (!empty($data['acabados'][$key])) {
-							$materias_acabado = $this->AcabadosMateriasprima->find('all',array(
-								'conditions' => array(
-									'AcabadosMateriasprima.acabado_id' => $data['acabados'][$key],
-									'AcabadosMateriasprima.articulo_id' => $key
-								)
-							));
-							foreach ($materias_acabado as $ma){
-								$nombre_materia = $this->Materiasprima->findById($ma['AcabadosMateriasprima']['materiasprima_id']);
-								$datos = array (
-									'Articulo' => $articulo['Articulo']['codigo'],
-									'acabado' => $data['acabados'][$key],
-									'Materiasprima' => $nombre_materia['Materiasprima']['descripcion'],
-									'unidad' => $nombre_materia['Materiasprima']['unidad'],
-									'cantidad' =>  $ma['AcabadosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
-									'cajas' => $cajas
-								);
-								$articulos_mp[$key][]= $datos;
-							}
-						}
 					}
 				}
-				$this->set(compact('articulos_mp'));
 			}
+			if (!$entro){
+				$this->Session->setFlash("Debes escoger mínimo un artículo");
+				$this->redirect(array('action' => 'admin_forecast'));
+			}
+			$this->set(compact('articulos_mp'));
+		}
 	}
 	
 	function admin_forecast(){
