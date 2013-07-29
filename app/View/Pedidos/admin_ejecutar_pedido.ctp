@@ -1,6 +1,6 @@
 <div class="wrap">
 	<div class="egreso_izquierda">
-		<b><?php echo $pedido['Articulo']['descripcion']?></b>
+		<b><?php echo $pedido['Articulo']['codigo']?></b>
 		<br><br>
 		<?php 
 		echo 'Fecha: '.$pedido['Pedido']['fecha'];
