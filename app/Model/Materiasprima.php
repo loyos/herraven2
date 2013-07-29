@@ -36,13 +36,19 @@ class Materiasprima extends AppModel {
 			'message' => 'Este campo no puede quedar vacío.'
 		),
 		'descripcion' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'not_empty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Este campo no puede quedar vacío.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'Esta materia prima ya existe.'
+			)
 		),
 		'precio' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Este campo no puede quedar vacío.'
-		),
+		)
     ); 
 }
 ?>
