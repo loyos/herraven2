@@ -258,16 +258,11 @@ $materias = array();
 $(document).ready(function() {
 	buscar_subcat();
 	buscar_acabados();
-	calcular_precio();
 })
 
 $('#categoria').change(function(){
 	buscar_subcat();
 });
-
-function calcular_precio(){
-	materias_basicas = 
-}
 
 function buscar_subcat() {
 	var cate_id = $('#categoria').val();
@@ -291,6 +286,7 @@ function buscar_subcat() {
 }
 
 $(".check_acabado").change(function() {
+
 	agregar_acabado(this)
 });
 
