@@ -36,6 +36,7 @@ class ArticulosController extends AppController {
 		if (!empty($this->data)) {
 			$guardo = true;
 			$data = $this->data;
+			$data['Articulo']['codigo'] = strtoupper($data['Articulo']['codigo']);
 			if (!empty($this->data['Articulo']['Foto']['name'])) {
 				if ($this->JqImgcrop->uploadImage($this->data['Articulo']['Foto'], 'img/articulos', '')) {
 					$data['Articulo']['imagen'] = $this->data['Articulo']['Foto']['name'];
