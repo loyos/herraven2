@@ -17,6 +17,9 @@ class ClientesController extends AppController {
 			if (!empty($data['Cliente']['telefono_dos'])) {
 				$data['Cliente']['telefono_dos'] = $data['Cliente']['codigo_dos'].'-'.$data['Cliente']['telefono_dos'];
 			}
+			if (!empty($data['Cliente']['fax'])) {
+				$data['Cliente']['fax'] = $data['Cliente']['codigo_fax'].'-'.$data['Cliente']['fax'];
+			}
 			if ($this->Cliente->save($data)) {
 				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
@@ -30,6 +33,11 @@ class ClientesController extends AppController {
 				$codigo_dos = explode('-',$data['Cliente']['telefono_dos']);
 				$data['Cliente']['codigo_dos'] = $codigo_dos[0];
 				$data['Cliente']['telefono_dos'] = $codigo_dos[1];
+			}
+			if (!empty($data['Cliente']['fax'])) {
+				$fax = explode('-',$data['Cliente']['fax']);
+				$data['Cliente']['codigo_fax'] = $fax[0];
+				$data['Cliente']['fax'] = $fax[1];
 			}
 			$this->data = $data;
 			$titulo = 'Editar';

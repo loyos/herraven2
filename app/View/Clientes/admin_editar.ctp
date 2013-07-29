@@ -64,6 +64,10 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo '</td>';
 	echo '<td>Fax</td>';
 	echo '<td>';
+	echo $this->Form->input('codigo_fax',array(
+		'label' => false,
+		'class' => 'codigo_telefono',
+	));
 	echo $this->Form->input('fax',array(
 		'label' => false
 	));
