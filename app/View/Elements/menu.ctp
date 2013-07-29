@@ -1,6 +1,9 @@
 <div class = "menu">
 <ul>
-	<?php if ($admin_usuario){ ?>
+	
+	<?php 
+	if (!empty($user_id)){
+	if ($admin_usuario){ ?>
 	<li class = "option">
 		Usuarios
 		<ul>
@@ -53,6 +56,9 @@
 	</li>
 	<?php } ?>
 	<li class = "option"><?php echo $this->Html->link('Catálogo',array('controller' => 'articulos', 'action' => 'subcategoria_catalogo')); ?></li>
+	<?php
+	}
+	?>
 	
 </ul>
 </div>
