@@ -179,6 +179,14 @@ class PedidosController extends AppController {
 		if (!empty($this->data)) {
 			$data = $this->data;
 			foreach ($data['codigo'] as $c) {
+				$count = 0;
+				 foreach ($data['codigo'] as $d) {
+					  $count += substr_count( $d, $c);
+				 }
+				if ($count > 1){
+					$this->Session->setFlash("Cajas repetidas");
+					$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+				}
 				$caja = $this->Caja->find('first',array(
 					'conditions' => array('Caja.codigo'=>$c)
 				));
