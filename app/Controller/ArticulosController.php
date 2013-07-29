@@ -8,11 +8,24 @@ class ArticulosController extends AppController {
     public $presetVars = true; // using the model configuration
 	public $paginate = array();
 	
-    function admin_index() {
+    function admin_index($cat_id, $sub_id = null) {
+		if (empty($sub_id)) {
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array('Subcategoria.categoria_id' => $cat_id)
+			));
+			foreach ($subcategorias as $s){
+				$sub_id[]= $s['Subcategoria']['id'];
+			}
+		} else {
+			$subcategoria = $this->Subcategoria->findById($sub_id);
+		}
+		$linea = $this->Categoria->findById($cat_id);
 		$articulos = $this->Articulo->find('all',array(
+			'conditions' => array('Articulo.subcategoria_id' => $sub_id),
 			'recursive' => 2
 		));
-		$this->set(compact('articulos'));
+
+		$this->set(compact('articulos','subcategoria','linea'));
     }
 	
 	function admin_editar($id = null) {
@@ -332,6 +345,13 @@ class ArticulosController extends AppController {
 	}
 	
 	function subcategoria_catalogo(){
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias'));
+	}
+	
+	function subcategoria_articulo(){
 		$categorias = $this->Categoria->find('all',array(
 			'contain' => array('Subcategoria')
 		));

@@ -1,9 +1,16 @@
 <div class="wrap">
 <?php
+echo $this->Html->link('<<Regresar',array('action' => 'subcategoria_articulo'));
+echo '<br>';
 echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 ?>
 <h1>Artículos</h1>
 <?php 
+echo '<b>Linea</b>: '.$linea['Categoria']['descripcion'].'<br>';
+if (!empty($subcategoria['Subcategoria']['descripcion'])){
+	echo '<b>Categoria</b>: '.$subcategoria['Subcategoria']['descripcion'].'<br>';
+}
+echo '<br>';
 	if (!empty($articulos)) {
 		?>
 		<table class="tabla_index">

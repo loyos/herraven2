@@ -28,7 +28,7 @@
 	<?php if ($admin_catalogo){ ?>
 	<li class = "option">Artículos
 		<ul>
-			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'admin_index')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'subcategoria_articulo')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Lista de precios',array('controller' => 'precios', 'action' => 'admin_index')); ?></li>
 		</ul>
 	</li>
