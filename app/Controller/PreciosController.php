@@ -53,6 +53,7 @@ class PreciosController extends AppController {
 					'articulo' => $a['Articulo']['descripcion'],
 					'precio' => $acum_precio,
 					'codigo' => $a['Articulo']['codigo'],
+					'cantidad' => $a['Articulo']['cantidad_por_caja']
 				);
 			};
 			
@@ -71,7 +72,8 @@ class PreciosController extends AppController {
 				$precio_articulo[] = array (
 					'articulo' => $a['Articulo']['descripcion'],
 					'codigo' => $a['Articulo']['codigo'],
-					'precio' => $acum_precio
+					'precio' => $acum_precio,
+					'cantidad' => $a['Articulo']['cantidad_por_caja']
 				);
 			};
 		}

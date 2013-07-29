@@ -9,6 +9,8 @@ echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias'
 	echo '<tr>';
 		echo '<th>Codigo</th>';
 		echo '<th>Precio</th>';
+		echo '<th>Pz. por Caja</th>';
+		echo '<th>Precio Caja</th>';
 	echo '</tr>';
 	foreach ($precio_articulo as $a){
 		echo '<tr>';
@@ -16,6 +18,8 @@ echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias'
 		echo '<td>';
 		echo 'Bs. '.number_format($a['precio'], 0, ',', '.');
 		echo '</td>';
+		echo '<td>'.$a['cantidad'].'</td>';
+		echo '<td>Bs. '.number_format($a['cantidad']*$a['precio'], 0, ',', '.').'</td>';
 		echo '</tr>';
 		echo '<tr>';
 	}
