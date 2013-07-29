@@ -209,6 +209,15 @@ class ArticulosController extends AppController {
 		echo json_encode($subcat);
 	}
 	
+	function buscar_precio() {
+		$this->loadModel('Materiasprima');
+		$materia = $this->Materiasprima->findById($_POST['id_materia']);
+		$precio = $materia['Materiasprima']['precio']*$_POST['cantidad'];
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode($precio);
+	}
+	
 	function admin_eliminar($id) {
 		$this->Articulo->delete($id);
 		$this->ArticulosMateriasprima->deleteAll(array(
