@@ -172,10 +172,16 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 	echo '<table>';
 	echo '<tr>';
 	echo '<td class="cliente_label">Cliente</td>';
+	if (!empty($this->data['User']['cliente_id'])){
+		$value = $this->data['User']['cliente_id'];
+	} else {
+		$value = 0;
+	}
 	echo '<td>';
 	echo $this->Form->input('cliente_id',array(
 		'label' => false,
-		'class' => 'cliente'
+		'class' => 'cliente',
+		'value' => $value
 	));
 	echo '</td>';
 	echo '</tr>';
