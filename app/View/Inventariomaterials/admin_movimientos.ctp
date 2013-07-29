@@ -1,7 +1,4 @@
 <div class="wrap">
-<?php
-echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
-?>
 <h1>Movimientos de Materia Prima</h1>
 <?php 
 	echo $this->Form->create('Inventariomaterial');
