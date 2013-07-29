@@ -13,8 +13,6 @@
 				<tr>
 					<td><?php echo $this->Html->image('articulos/'.$a['Articulo']['imagen'],array('width' => '150px')); ?></td>
 					<td style="text-align:center">
-						<span style="font-weight:bold"><?php echo $a['Articulo']['descripcion']; ?></span>
-						<br>
 						<span style="font-weight:bold"><?php echo $a['Articulo']['codigo']; ?></span>
 						<br>
 						<?php echo $a['Articulo']['cantidad_por_caja'].' pz'; ?>
