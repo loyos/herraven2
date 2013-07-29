@@ -300,3 +300,7 @@ span.descripcion_catalogo{
 	width: 246px;
 	height: 45px;
 }
+
+input#codigo {
+	text-transform: uppercase;
+}

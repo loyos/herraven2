@@ -32,7 +32,8 @@ $materias = array();
 	echo '<td>Código</td>';
 	echo '<td>';
 	echo $this->Form->input('codigo',array(
-		'label' => false
+		'label' => false,
+		'id' => 'codigo'
 	));
 	echo '</td>';
 	echo '<td>Descripción</td>';
