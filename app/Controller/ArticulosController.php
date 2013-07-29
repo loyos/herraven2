@@ -9,6 +9,7 @@ class ArticulosController extends AppController {
 	public $paginate = array();
 	
     function admin_index($cat_id, $sub_id = null) {
+		$this->set(compact('cat_id','sub_id'));
 		if (empty($sub_id)) {
 			$subcategorias = $this->Subcategoria->find('all',array(
 				'conditions' => array('Subcategoria.categoria_id' => $cat_id)
@@ -28,7 +29,7 @@ class ArticulosController extends AppController {
 		$this->set(compact('articulos','subcategoria','linea'));
     }
 	
-	function admin_editar($id = null) {
+	function admin_editar($cat_id,$id = null,$sub_id = null) {
 		$titulo = "";
 		if (!empty($this->data)) {
 			$guardo = true;
@@ -119,7 +120,7 @@ class ArticulosController extends AppController {
 					if ($guardo){
 					
 					$this->Session->setFlash("El articulo ha sido guardado exitósamente");
-					$this->redirect(array('action' => 'admin_index'));
+					$this->redirect(array('action' => 'admin_index',$cat_id,$sub_id));
 					}
 				} 
 			} else {
@@ -192,7 +193,7 @@ class ArticulosController extends AppController {
 			$numero_materias++;
 		}
 		$acabados = $this->Acabado->find('all');
-		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores','numero_materias','margen_ganancia'));
+		$this->set(compact('id','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion','categorias','acabados','array_acabados','valores','numero_materias','margen_ganancia','cat_id','sub_id'));
 	}
 	
 	function buscar_subcat() {
@@ -214,9 +215,9 @@ class ArticulosController extends AppController {
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	function admin_ver($id) {
+	function admin_ver($id,$cat_id,$sub_id=null) {
 		$articulo = $this->Articulo->findById($id);
-		$this->set(compact('articulo'));
+		$this->set(compact('articulo','cat_id','sub_id'));
 	}
 	
 	function admin_ver_forecast(){
