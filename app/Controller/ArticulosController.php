@@ -53,7 +53,7 @@ class ArticulosController extends AppController {
 				$a++;
 			}
 			}
-			if ( $hay_materias > 0 ){
+			if ( $hay_materias > 0 && !empty($data['Articulo']['imagen'])){
 				if ($this->Articulo->save($data)) {
 					$id = $this->Articulo->id;
 					$this->ArticulosMateriasprima->deleteAll(array(
@@ -120,7 +120,11 @@ class ArticulosController extends AppController {
 					}
 				} 
 			} else {
-				$this->Session->setFlash("El articulo debe tener por lo menos una materia prima asociada");
+				if ($hay_materias <= 0){
+					$this->Session->setFlash("El articulo debe tener por lo menos una materia prima asociada");
+				} else {
+					$this->Session->setFlash("Debes seleccionar una foto");
+				}
 			}
 		} 
 		if (!empty($id)) {

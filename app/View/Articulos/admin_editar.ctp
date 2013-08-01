@@ -255,6 +255,9 @@ $materias = array();
 	if (!empty($id)) {
 		echo $this->Form->input('id',array('type'=>'hidden'));
 	}
+	if (!empty($this->data['Articulo']['imagen'])) {
+		echo $this->Form->input('imagen',array('type'=>'hidden'));
+	}
 	echo $this->Form->submit('Agregar', array('class' => 'button'));
 	echo $this->Form->end;
 ?>
