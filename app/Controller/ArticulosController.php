@@ -454,7 +454,7 @@ class ArticulosController extends AppController {
 			);
 		};
 		$acabados = $this->Acabado->find('list',array(
-			'fields' => array('id','descripcion')
+			'fields' => array('id','acabado')
 		));
 		for ($count=1; $count<=25; $count++){
 			$cantidad_de_cajas[$count] = $count;
