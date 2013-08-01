@@ -4,7 +4,7 @@ class ArticulosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler', 'Search.Prg');
-	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado','AcabadosMateriasprima');
+	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado','AcabadosMateriasprima','User');
     public $presetVars = true; // using the model configuration
 	public $paginate = array();
 	
@@ -384,13 +384,26 @@ class ArticulosController extends AppController {
 			}
 			$cantidad = $data['cantidad'][$articulo_id];
 			$acabado = $data['acabado'][$articulo_id]; 
-			$cliente_id = $this->Auth->User('Cliente.id');
+			$cliente_id = $this->User->findById($this->Auth->User('id'));
+			$cliente_id = $cliente_id['User']['cliente_id'];
+			$ultimo_pedido = $this->Pedido->find('first',array(
+				'order' => 'Pedido.id DESC'
+			));
+			$hoy = date('Y-m-d');
+			$ano_hoy = $this->Config->obtenerAno($hoy);
+			$ano_pedido = $this->Config->obtenerAno($ultimo_pedido['Pedido']['fecha']);
+			if ($ano_hoy == $ano_pedido) {
+				$num_pedido = $ultimo_pedido['Pedido']['num_pedido']+1;
+			} else {
+				$num_pedido = 1;
+			}
 			$nuevo_pedido = array('Pedido' => array(
 				'cliente_id' => $cliente_id,
 				'status' => 'pendiente',
 				'articulo_id' => $articulo_id,
 				'cantidad_cajas' => $cantidad,
 				'acabado_id' => $acabado,
+				'num_pedido' => $num_pedido
 			));
 			$this->Pedido->save($nuevo_pedido);
 			//var_dump($nuevo_pedido);die();

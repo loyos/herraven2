@@ -10,9 +10,12 @@ class PedidosController extends AppController {
 		$pedidos = $this->Pedido->find('all',array(
 			'recursive' => 2
 		));
+		$count = 0;
 		foreach ($pedidos as $p) {
 			$entradas = 0;
 			$salidas = 0;
+			$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
+			$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
 			if(!empty($p['Articulo']['Inventarioalmacen'])) {
 				foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
 					if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
@@ -36,6 +39,7 @@ class PedidosController extends AppController {
 					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
 				}
 			}
+			$count++;
 		}
 		$this->set(compact('status','pedidos'));
     }
