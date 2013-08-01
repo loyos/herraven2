@@ -3,6 +3,7 @@
 class UsersController extends AppController {
     
 	public $helpers = array ('Html','Form');
+	public $components = array('Session','JqImgcrop');
 	var $uses = array('User','Cliente');
 	
 	 public function beforeFilter() {
@@ -10,17 +11,23 @@ class UsersController extends AppController {
 		$this->Auth->allow('editar','login','logout'); // Letting users register themselves
 	}
 	
+	function index(){
+		$user = $this->Auth->User('id');
+		$usuario = $this->User->findById($user);
+		$this->set(compact('usuario'));
+	}
+	
 	public function login() {
 		if ($this->Auth->User('id')) {
 			$this->redirect(array(
-				'controller' => 'index',
+				'controller' => 'users',
 				'action' => 'index'
  			));
 		}
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->redirect(array(
-						'controller' => 'index',
+						'controller' => 'users',
 						'action' => 'index'
 					));
 			} else {
@@ -41,7 +48,13 @@ class UsersController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
-			if ($this->User->save($this->data,array('validate' => 'first'))) {
+			$data = $this->data;
+			if (!empty($this->data['User']['Foto']['name'])) {
+				if ($this->JqImgcrop->uploadImage($this->data['User']['Foto'], 'img/users', '')) {
+					$data['User']['imagen'] = $this->data['User']['Foto']['name'];
+				}
+			}
+			if ($this->User->save($data,array('validate' => 'first'))) {
 				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			} else {
@@ -62,6 +75,47 @@ class UsersController extends AppController {
 			'admin' => 'Administrador'
 		);
 		$this->set(compact('id','titulo','clientes','roles'));
+	}
+
+	function editar($id) {
+		if (!empty($this->data)) {
+			$data = $this->data;
+			if (!empty($this->data['User']['password_new'])){
+				if (!empty($this->data['User']['password_old']) && !empty($this->data['User']['password_confirm'])) {
+					$usuario = $this->User->findById($id);
+					if (Security::hash($data['User']['password_old'], null, true) == $usuario['User']['password']) {
+						if ($data['User']['password_new'] == $data['User']['password_confirm']) {
+							$data['User']['password'] = $data['User']['password_new'];
+						} else {
+							$this->Session->setFlash("La confirmación de contraseña fue incorrecta");
+							$this->redirect(array('action' => 'editar',$id));
+						}
+					} else {
+						$this->Session->setFlash("La contraseña actual es incorrecta");
+						$this->redirect(array('action' => 'editar',$id));
+					}
+				} else {
+					$this->Session->setFlash("Faltan datos para cambiar la contraseña");
+					$this->redirect(array('action' => 'editar',$id));
+				}
+			}
+			if (!empty($this->data['User']['Foto']['name'])) {
+				if ($this->JqImgcrop->uploadImage($this->data['User']['Foto'], 'img/users', '')) {
+					$data['User']['imagen'] = $this->data['User']['Foto']['name'];
+				}
+			}
+			if ($this->User->save($data,array('validate' => 'first'))) {
+				$this->Session->setFlash("Los datos se guardaron con éxito");
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$titulo = '';
+			}
+		} 
+		
+		$this->data = $this->User->findById($id);
+		$titulo = 'Edita tu perfil'; 
+		
+		$this->set(compact('id','titulo'));
 	}
 	
 	function admin_eliminar($id) {

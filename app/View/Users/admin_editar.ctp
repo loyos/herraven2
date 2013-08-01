@@ -4,7 +4,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
-	echo $this->Form->create('User');
+	echo $this->Form->create('User',array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
 	echo '<td>Usuario</td>';
@@ -182,6 +182,15 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 		'label' => false,
 		'class' => 'cliente',
 		'value' => $value
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Imagen</td>';
+	echo '<td>';
+	echo $this->Form->input('Foto',array(
+		'label' => false,
+		'type' => 'file'
 	));
 	echo '</td>';
 	echo '</tr>';

@@ -82,13 +82,6 @@ class ArticulosController extends AppController {
 							$i++;
 						} 
 					}
-					// $precio = $this->Articulo->calcular_precio($id);
-					// $precio_arreglo = array('Articulo' => array(
-						// 'precio' => $precio,
-						// 'id' => $id
-					// ));
-					// $this->Articulo->save($precio_arreglo);
-
 					//Guardando los acabados
 					$this->AcabadosMateriasprima->deleteAll(array(
 						'articulo_id' => $id
