@@ -10,6 +10,7 @@
 		<th>Total entradas (cajas)</th>
 		<th>Total salidas (cajas)</th>
 		<th>Saldo</th>
+		<th>Cajas</th>
 		</tr>
 		<?php
 		foreach($entradas_articulo as $key => $articulo) {
@@ -36,6 +37,7 @@
 				echo '<td>'.$entrada.'</td>';
 				echo '<td>'.$salida.'</td>';
 				echo '<td>'.$saldo.'</td>';
+				echo '<td>'.$this->Html->link('Consultar',array('action' => 'admin_consultar_cajas',$a['Inventarioalmacen']['articulo_id'],$a['Inventarioalmacen']['acabado_id'])).'</td>';
 				echo '</tr>';
 			}
 		}

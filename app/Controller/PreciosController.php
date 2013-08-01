@@ -80,6 +80,8 @@ class PreciosController extends AppController {
 		
 		$this->set(compact('precio','precio_materia','precio_articulo'));
 	}
+	
+	
 }
 
 ?>
