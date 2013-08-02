@@ -218,11 +218,11 @@ table.tabla_ver td, table.tabla_ver th{
 	margin:10px;
 	float:left;
 	padding:20px;
+	font-size:14px;
 }
 
 .codigo_caja {
-	text-align:center;
-	font-weight:bold;
+	font-size:27px;
 }
 
 .imagen_catalogo {
