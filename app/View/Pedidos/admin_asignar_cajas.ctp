@@ -17,15 +17,15 @@
 	
 </div>
 <script>
-	function validar(){
-		input = $('.codigos_cajas');
-		$.each(input, function(index, value) {
-			valor = $(value).val();
-			if (valor == "") {
-				alert('mensaje_error['+index+']');
-				$('.mensaje_error['+index+']').val('dfd');
-			}
-		});
-		return false;
-	}
+	// function validar(){
+		// input = $('.codigos_cajas');
+		// $.each(input, function(index, value) {
+			// valor = $(value).val();
+			// if (valor == "") {
+				// alert('mensaje_error['+index+']');
+				// $('.mensaje_error['+index+']').val('dfd');
+			// }
+		// });
+		// return false;
+	// }
 </script>

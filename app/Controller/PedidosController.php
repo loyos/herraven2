@@ -152,7 +152,6 @@ class PedidosController extends AppController {
 	function admin_ejecutar_pedido($id) {
 		if (!empty($this->data)) {
 			$pedido = $this->Pedido->findById($this->data['Pedido']['id']);
-			//var_dump($this);die();
 			$data = array(
 				'Inventarioalmacen' => array(
 					'tipo' => 'salida',
@@ -183,45 +182,50 @@ class PedidosController extends AppController {
 		if (!empty($this->data)) {
 			$data = $this->data;
 			foreach ($data['codigo'] as $c) {
-				$count = 0;
-				 foreach ($data['codigo'] as $d) {
-					  $count += substr_count( $d, $c);
-				 }
-				if ($count > 1){
-					$this->Session->setFlash("Cajas repetidas");
-					$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
-				}
-				$caja = $this->Caja->find('first',array(
-					'conditions' => array('Caja.codigo'=>$c)
-				));
-				if (empty($caja)) {
-					$this->Session->setFlash("No existe una caja con el código ".$c);
-					$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
-				} else {
-					$existe_codigo = $this->CajasPedido->find('first',array(
-						'conditions' => array('CajasPedido.caja_id' => $caja['Caja']['id'])
+				if (!empty($c)) {
+					$count = 0;
+					 foreach ($data['codigo'] as $d) {
+						  $count += substr_count( $d, $c);
+					 }
+					if ($count > 1){
+						$this->Session->setFlash("Cajas repetidas");
+						$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+					}
+					$caja = $this->Caja->find('first',array(
+						'conditions' => array('Caja.codigo'=>$c)
 					));
-					if (!empty($existe_codigo)){
-						$this->Session->setFlash("El código ".$c." ya ha sido asignado");
+					if (empty($caja)) {
+						$this->Session->setFlash("No existe una caja con el código ".$c);
 						$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
 					} else {
-						$buscar_en_inventario = $this->Inventarioalmacen->find('first',array(
-							'conditions' => array(
-								'Inventarioalmacen.id' => $caja['Caja']['inventarioalmacen_id']
-							)
+						$existe_codigo = $this->CajasPedido->find('first',array(
+							'conditions' => array('CajasPedido.caja_id' => $caja['Caja']['id'])
 						));
-						$articulo_id = $buscar_en_inventario['Inventarioalmacen']['articulo_id'];
-						$acabado_id = $buscar_en_inventario['Inventarioalmacen']['acabado_id'];
-						$pedido  = $this->Pedido->findById($pedido_id);
-						if ($articulo_id != $pedido['Pedido']['articulo_id'] || $acabado_id != $pedido['Pedido']['acabado_id']) {
-							$this->Session->setFlash("El código ".$c.' no contiene los articulos relacionados con este pedido');
+						if (!empty($existe_codigo)){
+							$this->Session->setFlash("El código ".$c." ya ha sido asignado");
 							$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+						} else {
+							$buscar_en_inventario = $this->Inventarioalmacen->find('first',array(
+								'conditions' => array(
+									'Inventarioalmacen.id' => $caja['Caja']['inventarioalmacen_id']
+								)
+							));
+							$articulo_id = $buscar_en_inventario['Inventarioalmacen']['articulo_id'];
+							$acabado_id = $buscar_en_inventario['Inventarioalmacen']['acabado_id'];
+							$pedido  = $this->Pedido->findById($pedido_id);
+							if ($articulo_id != $pedido['Pedido']['articulo_id'] || $acabado_id != $pedido['Pedido']['acabado_id']) {
+								$this->Session->setFlash("El código ".$c.' no contiene los articulos relacionados con este pedido');
+								$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
+							}
+							$cajas_pedidos[] = array(
+								'caja_id' => $caja['Caja']['id'],
+								'pedido_id' => $pedido_id,
+							);
 						}
-						$cajas_pedidos[] = array(
-							'caja_id' => $caja['Caja']['id'],
-							'pedido_id' => $pedido_id,
-						);
 					}
+				} else {
+					$this->Session->setFlash("Debe ingresar todas las cajas");
+					$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));
 				}
 			}
 			if($this->CajasPedido->saveAll($cajas_pedidos)){
