@@ -20,7 +20,7 @@ foreach ($info_articulos as $a) { ?>
 		?>
 	</div>
 	<div class="info_catalogo">
-		<table>
+		<table style="width: 80%;">
 			<tr>
 				<td>				
 					Bs. <?php echo number_format($a['precio'], 0, ',', '.') ?>
@@ -38,9 +38,19 @@ foreach ($info_articulos as $a) { ?>
 						'name' => 'cantidad['.$a['id'].']'
 					));
 					//echo '<br>';
-					echo $this->Form->input('acabado_id',array(
-						'name' => 'acabado['.$a['id'].']'
-					));
+					if (!empty($acabado_articulo[$a['id']])){
+						echo $this->Form->input('acabado_id',array(
+							'name' => 'acabado['.$a['id'].']',
+							'type' => 'select',
+							'label' => false,
+							'options' => $acabado_articulo[$a['id']],
+							'id' => $a['id'],
+							'class' => 'acabados_catalogo'
+						));
+						echo '<span class="descripcion_acabado_'.$a['id'].'">'.$acabado_descripcion[$a['id']].'</span>';
+					} else {
+						echo 'No hay acabados asociados';
+					}
 					?>
 				</td>
 			</tr>
@@ -84,9 +94,25 @@ foreach ($info_articulos as $a) { ?>
 ?>
 </div>
 <script>
-	function activar(id){
-		val = $('input#'+id).val('1');
-	}
+function activar(id){
+	val = $('input#'+id).val('1');
+}
+
+$( ".acabados_catalogo" ).change(function() {
+	acabado_id = $(this).val();
+	id = $(this).attr('id');
+	$.ajax({
+		type: "POST",
+		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
+		data: { acabado_id: acabado_id },
+		dataType: "json"
+	}).done(function( msg ) {
+		$('span.descripcion_acabado_'+id).html(msg);		
+	});
+
+});
+
 $(document).ready(function() {
 	var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 	var is_firefox = navigator.userAgent.indexOf("Firefox") != -1;
@@ -105,5 +131,6 @@ $(document).ready(function() {
 	$('a.primera').mouseleave(function() {
 		$(this).find('.prim').css('opacity','1');
 		//$('.zoom').remove();
-	});});
+	});
+});
 </script>

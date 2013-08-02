@@ -453,13 +453,37 @@ class ArticulosController extends AppController {
 				'acabado_despacho' => $despacho['Acabado']['descripcion'],
 			);
 		};
-		$acabados = $this->Acabado->find('list',array(
-			'fields' => array('id','acabado')
-		));
+
+		// aqui buscamos los acabados dado el resultado del search plugin
+		
+		foreach($articulos as $art){
+			$acabados[$art['Articulo']['id']] = $this->AcabadosMateriasprima->find('all', array (
+				'conditions' => array(
+					'articulo_id' => $art['Articulo']['id']
+				),
+				'fields' => array('acabado_id')
+			));
+		}		
+		foreach($acabados as $a => $aca ){
+			$count = 0;
+			foreach($aca as $bados){
+				$encontrado =  $this->Acabado->find('first', array(
+					'conditions' => array(
+						'id' => $bados['AcabadosMateriasprima']['acabado_id']
+					)
+				));
+				$acabado_articulo[$a][$encontrado['Acabado']['id']] =  $encontrado['Acabado']['acabado'];
+				if ($count == 0) {
+					$acabado_descripcion[$a] =  $encontrado['Acabado']['descripcion'];
+				}
+				$count++;
+			}
+		}
+		// fin algoritmo de busqueda de acabados
 		for ($count=1; $count<=25; $count++){
 			$cantidad_de_cajas[$count] = $count;
 		}
-		$this->set(compact('info_articulos','subcategoria','acabados','cantidad_de_cajas'));
+		$this->set(compact('info_articulos','subcategoria','acabados','cantidad_de_cajas','acabado_articulo','acabado_descripcion'));
 	}
 	
 	function buscar_unidad() {
@@ -468,6 +492,14 @@ class ArticulosController extends AppController {
 		$this->autoRender = false;
 		$this->RequestHandler->respondAs('json');
 		echo json_encode('Cantidad ('.$m['Materiasprima']['unidad'].')');
+	}
+	
+	function buscar_acabado(){
+		$this->loadModel('Acabado');
+		$a = $this->Acabado->findById($_POST['acabado_id']);
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode($a['Acabado']['descripcion']);
 	}
 }
 
