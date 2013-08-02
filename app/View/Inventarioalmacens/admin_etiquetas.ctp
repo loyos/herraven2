@@ -1,10 +1,18 @@
 <div class="wrap">
 	<?php
 	//echo $this->Html->link('Imprimir',array_merge($this->params['pass'], array('print')), array('target' => uniqid(), 'class' => 'print'));
+	$count = 1;
 	foreach ($cajas as $a) {
-		echo '<div class="etiqueta">';
+		if ($count%10==0 || $count%9==0){
+			echo '<div class="etiqueta" style="margin-top:200px">';
+		} else {
+			echo '<div class="etiqueta">';
+		}
+		if ($count==10){
+			$count = 2;
+		}
 		?>
-		<table style="width:100%">
+		<table style="width:100%; height:165px;">
 			<tr>
 				<td style="width:200px"><?php echo $this->Html->image('logo.jpg', array('width' => '100px','height' => '100px'))?></td>
 				<td style="text-align:right">
@@ -37,6 +45,7 @@
 		</table>
 		<?php
 		echo '</div>';
+		$count++;
 	}
 	?>
 </div>

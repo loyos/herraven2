@@ -219,6 +219,7 @@ table.tabla_ver td, table.tabla_ver th{
 	float:left;
 	padding:20px;
 	font-size:14px;
+	max-height:165px;
 }
 
 .codigo_caja {

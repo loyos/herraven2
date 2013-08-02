@@ -108,6 +108,7 @@ class InventarioalmacensController extends AppController {
 			'recursive' => 2
 		));
 		//var_dump($this->params);die();
+		$this->layout = 'sin_menu';
 		$this->set(compact('cajas'));
 	} 
 	
