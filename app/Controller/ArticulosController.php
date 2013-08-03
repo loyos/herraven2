@@ -86,6 +86,7 @@ class ArticulosController extends AppController {
 					$this->AcabadosMateriasprima->deleteAll(array(
 						'articulo_id' => $id
 					));
+					//debug($this->data);die();
 					foreach ($this->data as $k => $d) {
 						if (strpos($k,'materia_acabado_') === false) {
 						
@@ -93,30 +94,43 @@ class ArticulosController extends AppController {
 							$id_acabado = explode('_',$k);
 							$id_acabado = $id_acabado[2];
 							$count = 0;
+							$hay_materia = 0;
 							foreach($d as $a) {
 								if ($a != 0) {
-									$data_n = array(
-										'articulo_id' => $id,
-										'acabado_id' => $id_acabado,
-										'cantidad' => $this->data['cantidad_acabado_'.$id_acabado][$count],
-										'materiasprima_id' => $a
-									);
-									$this->AcabadosMateriasprima->create();
-									if ($this->AcabadosMateriasprima->saveAll($data_n)) {
-										$guardo = true;
+									$hay_materia++;
+									if ($this->data['cantidad_acabado_'.$id_acabado][$count] > 0){
+										$data_n = array(
+											'articulo_id' => $id,
+											'acabado_id' => $id_acabado,
+											'cantidad' => $this->data['cantidad_acabado_'.$id_acabado][$count],
+											'materiasprima_id' => $a
+										);
+										$this->AcabadosMateriasprima->create();
+										if ($this->AcabadosMateriasprima->saveAll($data_n)) {
+											$guardo = true;
+										} else {
+											$guardo = false;
+										}
 									} else {
 										$guardo = false;
+										$this->Session->setFlash("Se debe colocar cantidad a todas las materias primas seleccionadas");
+										break;
 									}
 								}
 								$count++;
+							}
+							if ($hay_materia < 1) {
+								$guardo = false;
+								$this->Session->setFlash("Para agregar una acabado este debe tener al menos una materia prima asociada");
+								break;
 							}
 						}
 					}
 					
 					if ($guardo){
 					
-					$this->Session->setFlash("El articulo ha sido guardado exitósamente");
-					$this->redirect(array('action' => 'admin_index',$cat_id,$sub_id));
+						$this->Session->setFlash("El articulo ha sido guardado exitósamente");
+						$this->redirect(array('action' => 'admin_index',$cat_id,$sub_id));
 					}
 				} 
 			} else {
@@ -215,13 +229,13 @@ class ArticulosController extends AppController {
 		echo json_encode($precio);
 	}
 	
-	function admin_eliminar($id) {
+	function admin_eliminar($id, $cat_id, $sub_id = null) {
 		$this->Articulo->delete($id);
 		$this->ArticulosMateriasprima->deleteAll(array(
 			'articulo_id' => $id
 		));
 		$this->Session->setFlash("El artículo se eliminó con éxito");
-		$this->redirect(array('action' => 'admin_index'));
+		$this->redirect(array('action' => 'admin_index',$cat_id,$sub_id));
 	}
 	
 	function admin_ver($id,$cat_id,$sub_id=null) {
@@ -382,6 +396,7 @@ class ArticulosController extends AppController {
 		if (!empty($this->data)){
 			$data = $this->data;
 			foreach ($data['activo'] as $key => $d) {
+				
 				if ($d == '1'){
 					$articulo_id = $key;
 				}

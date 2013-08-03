@@ -74,7 +74,7 @@ foreach ($info_articulos as $a) { ?>
 							'value' => 0,
 							'type' => 'hidden',
 							'name' => 'activo['.$a['id'].']',
-							'id' => $a['id'],
+							'id' => 'activo_'.$a['id'],
 						));
 						echo $this->Form->submit('Pedir',array('class' => 'button boton_catalogo', 'onclick' => 'activar('.$a['id'].')'));
 						echo $this->Form->end();
@@ -95,7 +95,8 @@ foreach ($info_articulos as $a) { ?>
 </div>
 <script>
 function activar(id){
-	val = $('input#'+id).val('1');
+	
+	val = $('input#activo_'+id).val('1');
 }
 
 $( ".acabados_catalogo" ).change(function() {
