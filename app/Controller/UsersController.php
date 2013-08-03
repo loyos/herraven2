@@ -1,5 +1,5 @@
 <?php
-
+App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
     
 	public $helpers = array ('Html','Form');
@@ -8,7 +8,7 @@ class UsersController extends AppController {
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('editar','login','logout'); // Letting users register themselves
+		$this->Auth->allow('editar','login','logout','reset_password'); // Letting users register themselves
 	}
 	
 	function index(){
@@ -167,6 +167,50 @@ class UsersController extends AppController {
 			} 
 		}
 		$this->set(compact('usuario','funciones'));
+	}
+	
+	function reset_password(){
+		if (!empty($this->data)) {
+			$existe = $this->User->find('first',array(
+				'conditions' => array('User.username' => $this->data['User']['username'])
+			));
+			if (!empty($existe)){
+				$clave = $this->generaPass();
+				$username = $existe['User']['username'];
+				$nombre = $existe['User']['nombre'];
+				$apellido = $existe['User']['apellido'];
+				$update = array('User'=>array(
+					'id' => $existe['User']['id'],
+					'password' => $clave
+				));
+				$this->User->save($update);
+				$Email = new CakeEmail();
+				$Email->from(array('me@example.com' => 'Proartista.com'));
+				$Email->emailFormat('html');
+				$Email->to($existe['User']['email']);
+				$Email->subject('Nueva clave');
+				$Email->template('cambiar_password');
+				$Email->viewVars(compact('username','apellido','nombre','clave'));
+				$Email->send();
+				$this->Session->setFlash('En breve recibirás un correo para restablecer tu contraseña', 'success');
+				$this->redirect(array('controller'=>'index', 'action'=>'index'));
+			} else {
+				$this->Session->setFlash('No existe un usuario registrado con este email', 'success');
+				$this->redirect(array('action' => 'reset_password'));
+			}
+		}
+	}
+	
+	function generaPass(){
+		$cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+		$longitudCadena=strlen($cadena);
+		$pass = "";
+		$longitudPass=10;
+		for($i=1 ; $i<=$longitudPass ; $i++){
+			$pos=rand(0,$longitudCadena-1);
+			$pass .= substr($cadena,$pos,1);
+		}
+		return $pass;
 	}
 }
 

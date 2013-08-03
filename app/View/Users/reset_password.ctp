@@ -8,14 +8,16 @@
 	echo $this->Form->input('username',array(
 		'label' => false
 	));
-	echo '</td><tr><td>';
-	echo 'Password:</td><td>';
-	echo $this->Form->input('password',array(
-		'label' => false
-	));
+	// echo '</td>';
+	// echo 'ò';
+	// echo '</td>';
+	// echo '</tr><tr><td>';
+	// echo 'Email asociado:</td><td>';
+	// echo $this->Form->input('email',array(
+		// 'label' => false
+	// ));
 	echo '</td></tr></table>';
 	echo $this->Form->submit('Entrar', array('class' => 'button'));
 	echo $this->Form->end;
-	echo $this->Html->link('¿Olvidaste tu contraseña?',array('controller' => 'users', 'action' => 'reset_password'));
 	?>
 </div>
