@@ -2,7 +2,11 @@
 <ul>
 	
 	<?php 
-	if (!empty($user_id)){
+	if (!empty($user_id)){?>
+	<li class = "option">
+		<?php echo $this->Html->link('Perfil',array('controller' => 'users','action'=>'index')); ?>
+	</li>
+	<?php 
 	if ($admin_usuario){ ?>
 	<li class = "option">
 		Usuarios
