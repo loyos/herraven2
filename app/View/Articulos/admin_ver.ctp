@@ -51,7 +51,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<th>Materias prima</th>';
+	echo '<th>Materias prima básicas</th>';
 	echo '<td>';
 	foreach ($articulo['Materiasprima'] as $m){
 		echo $m['descripcion'].' cantidad: '.$m['ArticulosMateriasprima']['cantidad'].'<br>';
@@ -59,6 +59,20 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
+	if (!empty($acabados)){
+		echo '<th>Acabados</th>';
+		echo '<td>';
+		foreach ($acabados as $a){
+			echo '<b>'.$a['acabado'].':</b><br>';
+			foreach ($a['materia'] as $m) {
+				echo '&nbsp&nbsp&nbsp'.$m.'<br>';
+			}
+			
+		}
+		echo '</td>';
+		echo '</tr>';
+		echo '<tr>';
+	}
 	echo '<th>Costo de producción</th>';
 	echo '<td>';
 	echo $articulo['Articulo']['costo_produccion'];

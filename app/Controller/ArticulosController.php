@@ -240,7 +240,16 @@ class ArticulosController extends AppController {
 	
 	function admin_ver($id,$cat_id,$sub_id=null) {
 		$articulo = $this->Articulo->findById($id);
-		$this->set(compact('articulo','cat_id','sub_id'));
+		$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
+			'conditions' => array('articulo_id' => $id),
+		));
+		foreach ($busca_acabados as $a){
+			$acabado = $this->Acabado->findById($a['AcabadosMateriasprima']['acabado_id']);
+			$materia = $this->Materiasprima->findById($a['AcabadosMateriasprima']['materiasprima_id']);
+			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['acabado'] =  $acabado['Acabado']['acabado'];
+			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['materia'][] =  $materia['Materiasprima']['descripcion'];
+		}
+		$this->set(compact('articulo','cat_id','sub_id','acabados'));
 	}
 	
 	function admin_ver_forecast(){
