@@ -185,17 +185,17 @@ class UsersController extends AppController {
 				));
 				$this->User->save($update);
 				$Email = new CakeEmail();
-				$Email->from(array('me@example.com' => 'Proartista.com'));
+				$Email->from(array('me@example.com' => 'Herraven.com'));
 				$Email->emailFormat('html');
 				$Email->to($existe['User']['email']);
 				$Email->subject('Nueva clave');
 				$Email->template('cambiar_password');
 				$Email->viewVars(compact('username','apellido','nombre','clave'));
 				$Email->send();
-				$this->Session->setFlash('En breve recibirás un correo para restablecer tu contraseña', 'success');
-				$this->redirect(array('controller'=>'index', 'action'=>'index'));
+				$this->Session->setFlash('En breve recibirás un correo para restablecer tu contraseña');
+				$this->redirect(array('controller'=>'users', 'action'=>'login'));
 			} else {
-				$this->Session->setFlash('No existe un usuario registrado con este email', 'success');
+				$this->Session->setFlash('No existe un usuario registrado con este username');
 				$this->redirect(array('action' => 'reset_password'));
 			}
 		}
