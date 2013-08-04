@@ -104,8 +104,8 @@ $( ".acabados_catalogo" ).change(function() {
 	id = $(this).attr('id');
 	$.ajax({
 		type: "POST",
-		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
-		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
 		data: { acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
