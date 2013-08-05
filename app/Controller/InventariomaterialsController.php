@@ -30,10 +30,17 @@ class InventariomaterialsController extends AppController {
 		$this->set(compact('ano','entradas_materia','salidas_materia','materiasprima'));
 	}
 	
-	function admin_movimientos() {
+	function admin_movimientos($materiaprima = null) {
 		$ano = date ("Y");
-		if (!empty($this->data)) {
-			$id_m = $this->data['Inventariomaterial']['materiasprima_id'];
+		if (!empty($this->data) || !empty($materiaprima)) {
+			if (!empty($materiaprima)) {
+				$m = $this->Materiasprima->find('first',array(
+					'conditions' => array('Materiasprima.descripcion' => $materiaprima)
+				));
+				$id_m = $m['Materiasprima']['id'];	
+			} else {
+				$id_m = $this->data['Inventariomaterial']['materiasprima_id'];
+			}
 			$hoy = date('Y-m-d H:i:s');
 			$trimestre = $this->Config->obtenerTrimestre($hoy);
 			$entradas = $this->Inventariomaterial->find('all',array(
@@ -65,12 +72,39 @@ class InventariomaterialsController extends AppController {
 		$this->set(compact('materiasprimas'));
 	}
 	
+	function admin_consultar_movimientos($materiaprima, $trimestre, $ano) {
+		$entradas = $this->Inventariomaterial->find('all',array(
+			'conditions' => array(
+				'Inventariomaterial.trimestre' => $trimestre,
+				'Materiasprima.descripcion' => $materiaprima,
+				'Inventariomaterial.tipo' => 'entrada',
+				'Inventariomaterial.ano' => $ano
+			)
+		));
+		$salidas = $this->Inventariomaterial->find('all',array(
+			'fields' => array('Inventariomaterial.semana','Inventariomaterial.mes','SUM(Inventariomaterial.cantidad)'),
+			'conditions' => array(
+				'Materiasprima.descripcion' => $materiaprima,
+				'Inventariomaterial.tipo' => 'salida',
+				'Inventariomaterial.trimestre' => $trimestre,
+				'Inventariomaterial.ano' => $ano
+			),
+			'group' => array('Inventariomaterial.mes', 'Inventariomaterial.semana'),
+			'order' => array('Inventariomaterial.mes', 'Inventariomaterial.semana')
+		));
+		$this->set(compact('entradas','materiaprima','trimestre','salidas'));
+	}	
+	
 	function admin_editar() {
 		if (!empty($this->data)) {
 			$data = $this->data;
-			$hoy = date('Y-m-d H:i:s');
+			$hoy = '2013-08-17 14:47:08';
+			//$hoy = date('Y-m-d H:i:s');
+			//var_dump($hoy); die();
 			$data['Inventariomaterial']['trimestre'] = $this->Config->obtenerTrimestre($hoy);
 			$data['Inventariomaterial']['ano'] = $this->Config->obtenerAno($hoy);
+			$data['Inventariomaterial']['semana'] = $this->Config->obtenerSemana($hoy);
+			$data['Inventariomaterial']['mes'] = $this->Config->obtenerMes($hoy);
 			$data['Inventariomaterial']['tipo'] = 'entrada';
 			if ($this->Inventariomaterial->save($data)) {
 				$this->Session->setFlash("El ingreso de materia prima se realizó con éxito");

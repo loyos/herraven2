@@ -27,5 +27,31 @@ class Config extends AppModel {
 		$ano = $ano[0];
 		return($ano);
 	}
+	
+	function obtenerMes($fecha){
+		$separar_fecha = explode(" ",$fecha);
+		$fecha = $separar_fecha[0];
+		$mes = explode("-",$fecha);
+		$mes = $mes[1];
+		return($mes);
+	}
+	
+	function obtenerSemana($fecha){
+		$separar_fecha = explode(" ",$fecha);
+		$fecha = $separar_fecha[0];
+		$dia = explode("-",$fecha);
+		$dia = $dia[2];
+		if ($dia >= 1 && $dia<=7) {
+			$semana = 1;
+		} elseif ($dia >= 8 && $dia<=15) {
+			$semana = 2;
+		} elseif ($dia >= 16 && $dia<=22) {
+			$semana = 3;
+		} elseif ($dia >= 23 && $dia<=31) {
+			$semana = 4;
+		}
+		
+		return $semana;
+	}
 }
 ?>

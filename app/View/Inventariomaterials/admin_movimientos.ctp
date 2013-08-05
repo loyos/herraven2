@@ -37,6 +37,7 @@
 			<th>Total entradas</th>
 			<th>Total salidas</th>
 			<th>Saldo al cierre</th>
+			<th>Acciones</th>
 			</tr>
 			<?php
 			foreach($entradas as $key => $m) {
@@ -77,6 +78,7 @@
 				echo '<td>'.$entrada.'</td>';
 				echo '<td>'.$salida.'</td>';
 				echo '<td>'.$saldo.'</td>';
+				echo '<td>'.$this->Html->link('Consultar',array('action' => 'admin_consultar_movimientos',$entradas[0]['Materiasprima']['descripcion'],$m['Inventariomaterial']['trimestre'],$ano)).'</td>';
 				echo '</tr>';
 			}
 			echo '</table>';

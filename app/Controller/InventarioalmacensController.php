@@ -35,7 +35,10 @@ class InventarioalmacensController extends AppController {
 					'Inventariomaterial' => array(
 						'trimestre' => $this->Config->obtenerTrimestre($hoy),
 						'ano' => $this->Config->obtenerAno($hoy),
+						'semana' => $this->Config->obtenerSemana($hoy),
+						'mes' => $this->Config->obtenerMes($hoy),
 						'tipo' => 'salida',
+						'fecha' => $hoy,
 						'materiasprima_id' => $m['id'],
 						'cantidad' => $cantidad_materia
 					)
