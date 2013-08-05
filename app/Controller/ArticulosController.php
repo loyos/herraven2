@@ -243,13 +243,19 @@ class ArticulosController extends AppController {
 		$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
 			'conditions' => array('articulo_id' => $id),
 		));
+		$costo_materiaprima = $this->Articulo->calcular_costo_materiaprima($id);
 		foreach ($busca_acabados as $a){
+			$costo_acabado[$a['AcabadosMateriasprima']['acabado_id']]['monto'] = $this->Articulo->calcular_costo_acabado($id,$a['AcabadosMateriasprima']['acabado_id']);
+			$acabado = $this->Acabado->findById($a['AcabadosMateriasprima']['acabado_id']);
+			$costo_acabado[$a['AcabadosMateriasprima']['acabado_id']]['acabado'] = $acabado['Acabado']['acabado'];
 			$acabado = $this->Acabado->findById($a['AcabadosMateriasprima']['acabado_id']);
 			$materia = $this->Materiasprima->findById($a['AcabadosMateriasprima']['materiasprima_id']);
 			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['acabado'] =  $acabado['Acabado']['acabado'];
 			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['materia'][] =  $materia['Materiasprima']['descripcion'];
 		}
-		$this->set(compact('articulo','cat_id','sub_id','acabados'));
+		$ganancia = $articulo['Articulo']['margen_ganancia'];
+		$produccion = $articulo['Articulo']['costo_produccion'];
+		$this->set(compact('articulo','cat_id','sub_id','acabados','costo_materiaprima','costo_acabado','ganancia','produccion'));
 	}
 	
 	function admin_ver_forecast(){

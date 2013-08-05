@@ -3,7 +3,7 @@
 class PreciosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $uses = array('Precio','Materiasprima','MateriasprimasPrecio','Articulo','Categoria');
+	public $uses = array('Precio','Materiasprima','MateriasprimasPrecio','Articulo','Categoria','Subcategoria');
 	
     function admin_index() {
 		$precios = $this->Precio->find('all');
@@ -39,10 +39,18 @@ class PreciosController extends AppController {
 		$this->set(compact('categorias','id'));
 	}
 	
-	function admin_ver($id,$subcat) {
+	function admin_ver($id,$cat,$subcat=null) {
 		$materias = $this->Materiasprima->find('all');
 		$precio = $this->Precio->findById($id);
 		$ganancia = $precio['Precio']['ganancia'];
+		if (empty($subcat)){
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array('Subcategoria.categoria_id' => $cat)
+			));
+			foreach ($subcategorias as $s) {
+				$subcat[] = $s['Subcategoria']['id'];
+			}
+		}
 		$articulos = $this->Articulo->find('all',array(
 			'conditions' => array('Articulo.subcategoria_id' => $subcat)
 		));

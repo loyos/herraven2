@@ -124,6 +124,38 @@ class Articulo extends AppModel {
 		return(round($precio_total));
 		
 	}	
+	
+	function calcular_costo_materiaprima($id) {
+		$precio_materias = 0;
+		
+		$articulo = $this->find('first', array(
+			'conditions' => array(
+				'Articulo.id' => $id
+			)
+		));
+		
+		foreach($articulo['Materiasprima'] as $art){
+			$precio_materias = $precio_materias + $art['precio']*$art['ArticulosMateriasprima']['cantidad'];
+		}	
+		return(round($precio_materias));
+	}
+	
+	function calcular_costo_acabado($id,$acabado_id) {
+		$this->AcabadosMateriasprima = ClassRegistry::init('AcabadosMateriasprima');
+		$this->Materiasprima = ClassRegistry::init('Materiasprima');
+		$precio_materias = 0;	
+		$materias_acabado = $this->AcabadosMateriasprima->find('all',array(
+			'conditions' => array(
+				'AcabadosMateriasprima.acabado_id' => $acabado_id,
+				'AcabadosMateriasprima.articulo_id' => $id,
+			)
+		));
+		foreach($materias_acabado as $m){
+			$materia = $this->Materiasprima->findById($m['AcabadosMateriasprima']['materiasprima_id']);
+			$precio_materias = $precio_materias + $materia['Materiasprima']['precio']*$m['AcabadosMateriasprima']['cantidad'];
+		}	
+		return($precio_materias);
+	}
 }
 
 ?>
