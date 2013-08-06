@@ -3,7 +3,7 @@
 class InventariomaterialsController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop');
+	public $components = array('Session','JqImgcrop','RequestHandler');
 	public $uses = array('Inventariomaterial','Config','Materiasprima');
 	
     function admin_index() {
@@ -129,7 +129,53 @@ class InventariomaterialsController extends AppController {
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
-	
+	function admin_reporte() {
+		//Inventario de materias primas
+		$materiasprima = $this->Materiasprima->find('all');
+		$ano = date ("Y");
+		foreach ($materiasprima as $materias) {
+			$entradas_materia[$materias['Materiasprima']['id']] = $this->Inventariomaterial->find('all',array(
+				'fields' => array('SUM(Inventariomaterial.cantidad)'),
+				'conditions' => array(
+					'Inventariomaterial.materiasprima_id' => $materias['Materiasprima']['id'],
+					'Inventariomaterial.tipo' => 'entrada',
+					'Inventariomaterial.ano' => $ano
+				)
+			));
+			$salidas_materia[$materias['Materiasprima']['id']] = $this->Inventariomaterial->find('all',array(
+				'fields' => array('SUM(Inventariomaterial.cantidad)'),
+				'conditions' => array(
+					'Inventariomaterial.materiasprima_id' => $materias['Materiasprima']['id'],
+					'Inventariomaterial.tipo' => 'salida',
+					'Inventariomaterial.ano' => $ano 
+				)
+			));
+		} 
+		$this->set(compact('ano','entradas_materia','salidas_materia','materiasprima'));
+		//Fin inventario
+		
+		//Movimientos
+		foreach ($materiasprima as $m){
+			$entradas[$m['Materiasprima']['id']] = $this->Inventariomaterial->find('all',array(
+				'conditions' => array(
+					'Materiasprima.id' => $m['Materiasprima']['id'],
+					'Inventariomaterial.tipo' => 'entrada',
+					'Inventariomaterial.ano' => $ano
+				)
+			));
+			$salidas[$m['Materiasprima']['id']] = $this->Inventariomaterial->find('all',array(
+				'fields' => array('Inventariomaterial.semana','Inventariomaterial.mes','SUM(Inventariomaterial.cantidad)'),
+				'conditions' => array(
+					'Materiasprima.id' => $m['Materiasprima']['id'],
+					'Inventariomaterial.tipo' => 'salida',
+					'Inventariomaterial.ano' => $ano
+				),
+				'group' => array('Inventariomaterial.mes', 'Inventariomaterial.semana'),
+				'order' => array('Inventariomaterial.mes', 'Inventariomaterial.semana')
+			));
+		}
+		$this->set(compact('entradas','salidas'));
+	}
 }
 
 ?>

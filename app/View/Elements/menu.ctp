@@ -60,6 +60,9 @@
 	</li>
 	<?php } ?>
 	<li class = "option"><?php echo $this->Html->link('Catálogo',array('controller' => 'articulos', 'action' => 'subcategoria_catalogo')); ?></li>
+	<ul>
+			<li class = "children"></li>
+	</ul>
 	<?php
 	}
 	?>
