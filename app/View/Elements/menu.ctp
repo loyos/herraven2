@@ -55,7 +55,8 @@
 		<ul>
 			<li class = "children"><?php echo $this->Html->link('Ingreso',array('controller' => 'inventarioalmacens', 'action' => 'admin_agregar')); ?></li>
 			<li class = "children"><?php echo $this->Html->link('Egresos',array('controller' => 'pedidos', 'action' => 'admin_index')); ?></li>
-			<li class = "children"><?php echo $this->Html->link('Inventario',array('controller' => 'inventarioalmacens', 'action' => 'admin_inventario')); ?></li>
+			<li class = "children"><?php echo $this->Html->link('Inventario',array('controller' => 'inventarioalmacens', 'action' => 'admin_inventario'));?></li>
+			<li class = "children"><?php echo $this->Html->link('Movimientos',array('controller' => 'inventarioalmacens', 'action' => 'admin_movimientos'));?></li>
 		</ul>
 	</li>
 	<?php } ?>

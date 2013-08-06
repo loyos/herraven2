@@ -51,6 +51,7 @@ class InventarioalmacensController extends AppController {
 					'tipo' => 'entrada',
 					'articulo_id' => $id,
 					'fecha' => $hoy,
+					'mes' => $this->Config->obtenerMes($hoy),
 					'cajas' => $data['Inventarioalmacen']['cajas'],
 					'acabado_id' => $data['Inventarioalmacen']['acabado_id'],
 				)
@@ -156,6 +157,74 @@ class InventarioalmacensController extends AppController {
 			)
 		));
 		$this->set(compact('cajas'));
+	}
+	
+	function admin_movimientos(){
+		$conditions = array();
+		if (!empty($this->data)){
+			if (!empty($this->data['Inventarioalmacen']['articulo_id'])) {
+				$conditions[] = array('Inventarioalmacen.articulo_id' => $this->data['Inventarioalmacen']['articulo_id']);
+			}
+			if (!empty($this->data['Inventarioalmacen']['tipo'])) {
+				$conditions[] = array('Inventarioalmacen.tipo' => $this->data['Inventarioalmacen']['tipo']);
+			} 
+			if (!empty($this->data['Inventarioalmacen']['mes'])) {
+				$conditions[] = array('Inventarioalmacen.mes' => $this->data['Inventarioalmacen']['mes']);
+			}
+			if (!empty($this->data['Inventarioalmacen']['articulo_id'])) {
+				if (empty($this->data['Inventarioalmacen']['tipo'])) {
+					$cond1 = $conditions;
+					$cond1[] = array('Inventarioalmacen.tipo' => 'entrada');
+					$entradas = $this->Inventarioalmacen->find('all',array(
+						'conditions' => $cond1,
+						'fields' => 'SUM(Inventarioalmacen.cajas)'
+					));
+					$cond2 = $conditions;
+					$cond2[] = array('Inventarioalmacen.tipo' => 'salida');
+					$salidas = $this->Inventarioalmacen->find('all',array(
+						'conditions' => $cond2,
+						'fields' => 'SUM(Inventarioalmacen.cajas)'
+					));
+					$saldo = $entradas[0][0]['SUM(`Inventarioalmacen`.`cajas`)'] - $salidas[0][0]['SUM(`Inventarioalmacen`.`cajas`)'];
+					$this->set(compact('saldo'));
+				} else {
+					$saldo = $this->Inventarioalmacen->find('all',array(
+						'conditions' => $conditions,
+						'fields' => 'SUM(Inventarioalmacen.cajas)'
+					));
+					$saldo = $saldo[0][0]['SUM(`Inventarioalmacen`.`cajas`)'];
+					$this->set(compact('saldo'));
+				}
+			}
+		} 
+		$inventarios = $this->Inventarioalmacen->find('all',array(
+			'conditions' => $conditions
+		));
+		$meses = array(
+			'0' => '',
+			'1' => 'Enero',
+			'2' => 'Febrero',
+			'3' => 'Marzo',
+			'4' => 'Abril',
+			'5' => 'Mayo',
+			'6' => 'Junio',
+			'7' => 'Julio',
+			'8' => 'Agosto',
+			'9' => 'Septiembre',
+			'10' => 'Octubre',
+			'11' => 'Noviembre',
+			'12' => 'Diciembre',
+		);
+		$articulos = $this->Articulo->find('list',array(
+			'fields' => array('id','codigo')
+		));
+		$articulos[0] = '';
+		$tipos = array(
+			'0' => '',
+			'entrada' => 'Ingreso',
+			'salida' => 'Egreso'
+		);
+		$this->set(compact('meses','articulos','tipos','inventarios','saldo'));
 	}
 }
 

@@ -152,20 +152,22 @@ class PedidosController extends AppController {
 	function admin_ejecutar_pedido($id) {
 		if (!empty($this->data)) {
 			$pedido = $this->Pedido->findById($this->data['Pedido']['id']);
+			$hoy = date('Y-m-d H:i:s');
 			$data = array(
 				'Inventarioalmacen' => array(
 					'tipo' => 'salida',
 					'articulo_id'=> $pedido['Articulo']['id'],
 					'cajas' => $pedido['Pedido']['cantidad_cajas'],
 					'acabado_id' => $pedido['Pedido']['acabado_id'],
-					'pedido_id' => $this->data['Pedido']['id']
+					'pedido_id' => $this->data['Pedido']['id'],
+					'mes' => $this->Config->obtenerMes($hoy),
 				)
 			);
 			$this->Inventarioalmacen->save($data);
 			$update_pedido = array(
 				'Pedido' => array(
 					'id' => $this->data['Pedido']['id'],
-					'status' => 'Preparado'
+					'status' => 'Preparado',
 				)
 			);
 			$this->Pedido->save($update_pedido);
