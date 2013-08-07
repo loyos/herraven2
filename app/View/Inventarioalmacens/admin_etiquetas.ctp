@@ -1,6 +1,9 @@
 <div class="wrap">
 	<?php
-	//echo $this->Html->link('Imprimir',array_merge($this->params['pass'], array('print')), array('target' => uniqid(), 'class' => 'print'));
+	echo '<div>';
+	echo $this->Html->link($this->Html->image('imprimir.jpg'),array(''.$id_inventario), array('onclick' => 'window.print()', 'escape' => false));
+	echo $this->Html->link('Finalizar ingreso',array('action' => 'admin_agregar'));
+	echo '</div>';
 	$count = 1;
 	foreach ($cajas as $a) {
 		if ($count%10==0 || $count%9==0){
@@ -50,7 +53,8 @@
 	?>
 </div>
 <script>
-  $(document).ready(function() {
+  function imprimir() {
+	alert("fd");
   window.print()
 });
 </script>

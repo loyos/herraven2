@@ -113,7 +113,7 @@ class InventarioalmacensController extends AppController {
 		));
 		//var_dump($this->params);die();
 		$this->layout = 'sin_menu';
-		$this->set(compact('cajas'));
+		$this->set(compact('cajas','id_inventario'));
 	} 
 	
 	function admin_inventario(){
