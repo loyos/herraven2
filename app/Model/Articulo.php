@@ -125,7 +125,7 @@ class Articulo extends AppModel {
 		
 	}	
 	
-	function calcular_costo_materiaprima($id) {
+	function calcular_costo_materiaprima($id,$ganancia=null) {
 		$precio_materias = 0;
 		
 		$articulo = $this->find('first', array(
@@ -133,14 +133,19 @@ class Articulo extends AppModel {
 				'Articulo.id' => $id
 			)
 		));
-		
-		foreach($articulo['Materiasprima'] as $art){
-			$precio_materias = $precio_materias + $art['precio']*$art['ArticulosMateriasprima']['cantidad'];
-		}	
+		if (empty($ganancia)) {
+			foreach($articulo['Materiasprima'] as $art){
+				$precio_materias = $precio_materias + $art['precio']*$art['ArticulosMateriasprima']['cantidad'];
+			}	
+		} else {
+			foreach($articulo['Materiasprima'] as $art){
+				$precio_materias = $precio_materias + ($art['precio']+$art['precio']*($ganancia/100))*$art['ArticulosMateriasprima']['cantidad'];
+			}
+		}
 		return(round($precio_materias));
 	}
 	
-	function calcular_costo_acabado($id,$acabado_id) {
+	function calcular_costo_acabado($id,$acabado_id,$ganancia = null) {
 		$this->AcabadosMateriasprima = ClassRegistry::init('AcabadosMateriasprima');
 		$this->Materiasprima = ClassRegistry::init('Materiasprima');
 		$precio_materias = 0;	
@@ -150,11 +155,29 @@ class Articulo extends AppModel {
 				'AcabadosMateriasprima.articulo_id' => $id,
 			)
 		));
-		foreach($materias_acabado as $m){
-			$materia = $this->Materiasprima->findById($m['AcabadosMateriasprima']['materiasprima_id']);
-			$precio_materias = $precio_materias + $materia['Materiasprima']['precio']*$m['AcabadosMateriasprima']['cantidad'];
-		}	
+		if (empty($ganancia)) {
+			foreach($materias_acabado as $m){
+				$materia = $this->Materiasprima->findById($m['AcabadosMateriasprima']['materiasprima_id']);
+				$precio_materias = $precio_materias + $materia['Materiasprima']['precio']*$m['AcabadosMateriasprima']['cantidad'];
+			}
+		} else {
+			foreach($materias_acabado as $m){
+				$materia = $this->Materiasprima->findById($m['AcabadosMateriasprima']['materiasprima_id']);
+				$precio_materias = $precio_materias + ($materia['Materiasprima']['precio']+$materia['Materiasprima']['precio']*($ganancia/100))*$m['AcabadosMateriasprima']['cantidad'];
+			}
+		}
 		return($precio_materias);
+	}
+	
+	function calcular_costo_total($id, $acabado_id,$ganancia=null) {
+	
+		$acum_precio_materias = $this->calcular_costo_materiaprima($id,$ganancia); // llamamos a la funcion del modelo para calcular el precio de materias primas basicas
+		$acum_precio_acabados = $this->calcular_costo_acabado($id,$acabado_id,$ganancia);
+		$acum_precio = $acum_precio_materias + $acum_precio_acabados;
+		$articulo_b = $this->findById($id);
+		$acum_precio_costo_produccion = ($acum_precio*($articulo_b['Articulo']['costo_produccion']/100))+$acum_precio;
+		$precio = ($acum_precio_costo_produccion*($articulo_b['Articulo']['margen_ganancia']/100))+$acum_precio_costo_produccion;
+		return($precio);
 	}
 }
 

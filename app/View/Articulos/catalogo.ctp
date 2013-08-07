@@ -22,8 +22,8 @@ foreach ($info_articulos as $a) { ?>
 	<div class="info_catalogo">
 		<table style="width: 80%;">
 			<tr>
-				<td>				
-					Bs. <?php echo number_format($a['precio'], 0, ',', '.') ?>
+				<td class="precio_<?php echo $a['id']?>">				
+					Bs. <?php echo number_format($precio[$a['id']], 0, ',', '.') ?>
 					<br>
 					Precio unitario
 				</td>
@@ -55,8 +55,8 @@ foreach ($info_articulos as $a) { ?>
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<?php echo 'Bs. '. number_format($a['precio']*$a['cantidad_por_caja'], 0, ',', '.');
+				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>">
+					<?php echo 'Bs. '. number_format($precio[$a['id']]*$a['cantidad_por_caja'], 0, ',', '.');
 					echo '<br>';
 					echo 'Precio de caja';
 					
@@ -102,6 +102,7 @@ function activar(id){
 $( ".acabados_catalogo" ).change(function() {
 	acabado_id = $(this).val();
 	id = $(this).attr('id');
+	
 	$.ajax({
 		type: "POST",
 		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
@@ -111,9 +112,22 @@ $( ".acabados_catalogo" ).change(function() {
 	}).done(function( msg ) {
 		$('span.descripcion_acabado_'+id).html(msg);		
 	});
-
+	calcula_precio_acabado(acabado_id,id);
 });
 
+function calcula_precio_acabado(acabado_id,id) {
+	$.ajax({
+		type: "POST",
+		url: '<?php echo FULL_BASE_URL.'/articulos/precio_total.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/precio_total.json' ?>',
+		data: {id:id,acabado_id: acabado_id },
+		dataType: "json"
+	}).done(function( msg ) {
+		$('td.precio_'+id).html('Bs.'+msg+'<br>Precio unitario');
+		cajas = $('td.precio_caja'+id).attr('name');
+		$('td.precio_caja'+id).html('Bs.'+msg*int(cajas)+'<br>Precio caja');		
+	});
+}
 $(document).ready(function() {
 	var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 	var is_firefox = navigator.userAgent.indexOf("Firefox") != -1;

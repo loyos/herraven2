@@ -467,14 +467,9 @@ class ArticulosController extends AppController {
 			}
 			//var_dump($despacho);
 			
-			$precio_id = $this->Auth->User('Cliente.precio_id');
-			$precio = $this->Precio->findById($precio_id);
-			$ganancia = $precio['Precio']['ganancia'];
-			$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id'], $ganancia); // llamamos a la funcion del modelo para calcular el precio
 			$info_articulos[] = array (
 				'articulo' => $a['Articulo']['descripcion'],
 				'codigo' => $a['Articulo']['codigo'],
-				'precio' => $acum_precio,
 				'id' => $a['Articulo']['id'],
 				'imagen' =>	$a['Articulo']['imagen'],			
 				'cantidad_por_caja' => $a['Articulo']['cantidad_por_caja'],
@@ -484,7 +479,7 @@ class ArticulosController extends AppController {
 			);
 		};
 
-		// aqui buscamos los acabados dado el resultado del search plugin
+		// aqui buscamos los acabados 
 		
 		foreach($articulos as $art){
 			$acabados[$art['Articulo']['id']] = $this->AcabadosMateriasprima->find('all', array (
@@ -505,6 +500,11 @@ class ArticulosController extends AppController {
 				$acabado_articulo[$a][$encontrado['Acabado']['id']] =  $encontrado['Acabado']['acabado'];
 				if ($count == 0) {
 					$acabado_descripcion[$a] =  $encontrado['Acabado']['descripcion'];
+					$precio_id = $this->Auth->User('Cliente.precio_id');
+					$lista_precio = $this->Precio->findById($precio_id);
+					$ganancia = $lista_precio['Precio']['ganancia'];
+					
+					$precio[$a] = $this->Articulo->calcular_costo_total($a,$bados['AcabadosMateriasprima']['acabado_id'],$ganancia);
 				}
 				$count++;
 			}
@@ -513,7 +513,7 @@ class ArticulosController extends AppController {
 		for ($count=1; $count<=25; $count++){
 			$cantidad_de_cajas[$count] = $count;
 		}
-		$this->set(compact('info_articulos','subcategoria','acabados','cantidad_de_cajas','acabado_articulo','acabado_descripcion'));
+		$this->set(compact('info_articulos','subcategoria','acabados','cantidad_de_cajas','acabado_articulo','acabado_descripcion','precio'));
 	}
 	
 	function buscar_unidad() {
@@ -530,6 +530,20 @@ class ArticulosController extends AppController {
 		$this->autoRender = false;
 		$this->RequestHandler->respondAs('json');
 		echo json_encode($a['Acabado']['descripcion']);
+	}
+	
+	function precio_total(){
+		$this->loadModel('Articulo');
+		$this->loadModel('Precio');
+		$precio_id = $this->Auth->User('Cliente.precio_id');
+		$lista_precio = $this->Precio->findById($precio_id);
+		$ganancia = $lista_precio['Precio']['ganancia'];
+		
+		$precio = $this->Articulo->calcular_costo_total($_POST['id'],$_POST['acabado_id'],$ganancia);
+		
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode($precio);
 	}
 }
 
