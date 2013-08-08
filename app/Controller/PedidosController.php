@@ -44,6 +44,48 @@ class PedidosController extends AppController {
 		$this->set(compact('status','pedidos'));
     }
 	
+	function admin_despachos() {
+		$pedidos = $this->Pedido->find('all',array(
+			'recursive' => 2
+		));
+		$count = 0;
+		foreach ($pedidos as $p) {
+			$entradas = 0;
+			$salidas = 0;
+			$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
+			$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
+			if ($p['Pedido']['status'] != 'Preparado' || $p['Pedido']['status'] != 'Despachado') {
+				if(!empty($p['Articulo']['Inventarioalmacen'])) {
+					foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
+						if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
+							$entradas = $entradas + $ia['cajas'];
+						} elseif ($ia['tipo'] == 'salida' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
+							$salidas = $salidas + $ia['cajas'];
+						}
+					}
+					$saldo = $entradas - $salidas;
+					if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+						$status[$p['Pedido']['id']] = 'Disponible';
+					} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+						$status[$p['Pedido']['id']] = 'No disponible';
+					} else {
+						$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+					}
+				} else {
+					if ($p['Pedido']['status'] == 'pendiente') {
+						$status[$p['Pedido']['id']] = 'No disponible';
+					} else {
+						$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+					}
+				}
+			} else {
+				$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+			}
+			$count++;
+		}
+		$this->set(compact('status','pedidos'));
+    }
+	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$data = $this->data;
@@ -173,6 +215,29 @@ class PedidosController extends AppController {
 			$this->Pedido->save($update_pedido);
 			$pedido_id = $this->Pedido->id;
 			$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));	
+		}
+		$pedido = $this->Pedido->findById($id);
+		$this->set(compact('pedido','id'));
+	}
+	
+	function admin_ejecutar_despacho($id) {
+		if (!empty($this->data)){
+			if (!empty($this->data['Pedido']['factura'])) {
+				$pedido = $this->Pedido->findById($this->data['Pedido']['id']);
+				$hoy = date('Y-m-d H:i:s');
+				$update_pedido = array(
+					'Pedido' => array(
+						'id' => $this->data['Pedido']['id'],
+						'status' => 'Despachado',
+						'factura' => $this->data['Pedido']['factura'],
+						'fecha' => $hoy
+					)
+				);
+				$this->Pedido->save($update_pedido);
+				$this->redirect(array('action' => 'admin_despachos'));	
+			} else {
+				$this->Session->setFlash('Se debe introducir un número de factura');
+			}
 		}
 		$pedido = $this->Pedido->findById($id);
 		$this->set(compact('pedido','id'));
