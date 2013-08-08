@@ -543,7 +543,7 @@ class ArticulosController extends AppController {
 		
 		$this->autoRender = false;
 		$this->RequestHandler->respondAs('json');
-		echo json_encode($precio);
+		echo json_encode(round($precio));
 	}
 }
 
