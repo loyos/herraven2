@@ -68,7 +68,9 @@
 	}
 	?>
 	<?php if ($admin_despachos){ ?>
-	<li class = "option"><?php echo $this->Html->link('Pedidos',array('controller' => 'pedidos', 'action' => 'admin_despachos')); ?>
+	<li class = "option"><?php echo $this->Html->link('Pedidos',array('controller' => 'pedidos', 'action' => 'admin_pedidos')); ?>
+	</li>
+	<li class = "option"><?php echo $this->Html->link('Despachos',array('controller' => 'pedidos', 'action' => 'admin_despachos')); ?>
 	</li>
 	<?php } ?>
 </ul>

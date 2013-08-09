@@ -4,7 +4,7 @@ class PedidosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja');
+	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja','Cuenta');
 	
     function admin_index() {
 		$pedidos = $this->Pedido->find('all',array(
@@ -44,7 +44,7 @@ class PedidosController extends AppController {
 		$this->set(compact('status','pedidos'));
     }
 	
-	function admin_despachos() {
+	function admin_pedidos() {
 		$pedidos = $this->Pedido->find('all',array(
 			'recursive' => 2
 		));
@@ -54,7 +54,7 @@ class PedidosController extends AppController {
 			$salidas = 0;
 			$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
 			$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
-			if ($p['Pedido']['status'] != 'Preparado' || $p['Pedido']['status'] != 'Despachado') {
+			if ($p['Pedido']['status'] != 'Preparado' || $p['Pedido']['status'] != 'Progreso-Despacho') {
 				if(!empty($p['Articulo']['Inventarioalmacen'])) {
 					foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
 						if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
@@ -80,6 +80,26 @@ class PedidosController extends AppController {
 				}
 			} else {
 				$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+			}
+			$count++;
+		}
+		$this->set(compact('status','pedidos'));
+    }
+	
+	function admin_despachos() {
+		$pedidos = $this->Pedido->find('all',array(
+			'recursive' => 2
+		));
+		$count = 0;
+		foreach ($pedidos as $p) {
+			$entradas = 0;
+			$salidas = 0;
+			$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
+			$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
+			if ($p['Pedido']['status'] == 'Despachado' || $p['Pedido']['status'] == 'Cancelado' ) {
+				$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+			} elseif ($p['Pedido']['status'] == 'Progreso-Despacho') {
+				$status[$p['Pedido']['id']] = 'En progreso';
 			}
 			$count++;
 		}
@@ -228,19 +248,42 @@ class PedidosController extends AppController {
 				$update_pedido = array(
 					'Pedido' => array(
 						'id' => $this->data['Pedido']['id'],
-						'status' => 'Despachado',
+						'status' => 'Progreso-Despacho',
 						'factura' => $this->data['Pedido']['factura'],
 						'fecha' => $hoy
 					)
 				);
 				$this->Pedido->save($update_pedido);
-				$this->redirect(array('action' => 'admin_despachos'));	
+				$this->redirect(array('action' => 'admin_pedidos'));	
 			} else {
 				$this->Session->setFlash('Se debe introducir un número de factura');
 			}
 		}
 		$pedido = $this->Pedido->findById($id);
 		$this->set(compact('pedido','id'));
+	}
+	
+	function admin_pedido_terminado($id) {
+		$pedido = $this->Pedido->findById($id);
+		$hoy = date('Y-m-d H:i:s');
+		$update_pedido = array(
+			'Pedido' => array(
+				'id' => $id,
+				'status' => 'Despachado',
+				'fecha' => $hoy
+			)
+		);
+		$this->Pedido->save($update_pedido);
+		
+		//Crear cuenta
+		$cuenta = array(
+			'Cuenta' => array(
+			'pedido_id' => $id,
+			'status' =>'pendiente',
+		));
+		$this->Cuenta->save($cuenta);
+		$this->Session->setFlash('El pedido ha sido despachado y se creo una cuenta');
+		$this->redirect(array('action' => 'admin_despachos'));	
 	}
 	
 	function admin_asignar_cajas($pedido_id) {

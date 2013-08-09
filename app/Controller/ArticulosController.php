@@ -431,13 +431,20 @@ class ArticulosController extends AppController {
 			} else {
 				$num_pedido = 1;
 			}
+			$precio_id = $this->Auth->User('Cliente.precio_id');
+			$lista_precio = $this->Precio->findById($precio_id);
+			$ganancia = $lista_precio['Precio']['ganancia'];
+			$cuenta = $this->Articulo->calcular_costo_total($articulo_id,$acabado,$ganancia);
+			$articulo = $this->Articulo->findById($articulo_id);
+			$cuenta = $cuenta * $cantidad * $articulo['Articulo']['cantidad_por_caja'];
 			$nuevo_pedido = array('Pedido' => array(
 				'cliente_id' => $cliente_id,
 				'status' => 'pendiente',
 				'articulo_id' => $articulo_id,
 				'cantidad_cajas' => $cantidad,
 				'acabado_id' => $acabado,
-				'num_pedido' => $num_pedido
+				'num_pedido' => $num_pedido,
+				'cuenta' => $cuenta
 			));
 			$this->Pedido->save($nuevo_pedido);
 			//var_dump($nuevo_pedido);die();

@@ -105,8 +105,8 @@ $( ".acabados_catalogo" ).change(function() {
 	
 	$.ajax({
 		type: "POST",
-		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
-		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
 		data: { acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
@@ -118,8 +118,8 @@ $( ".acabados_catalogo" ).change(function() {
 function calcula_precio_acabado(acabado_id,id) {
 	$.ajax({
 		type: "POST",
-		//url: '<?php echo FULL_BASE_URL.'/articulos/precio_total.json' ?>',
-		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/precio_total.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/articulos/precio_total.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/precio_total.json' ?>',
 		data: {id:id,acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
