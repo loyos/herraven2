@@ -251,7 +251,7 @@ class ArticulosController extends AppController {
 			$acabado = $this->Acabado->findById($a['AcabadosMateriasprima']['acabado_id']);
 			$materia = $this->Materiasprima->findById($a['AcabadosMateriasprima']['materiasprima_id']);
 			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['acabado'] =  $acabado['Acabado']['acabado'];
-			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['materia'][] =  $materia['Materiasprima']['descripcion'];
+			$acabados[$a['AcabadosMateriasprima']['acabado_id']]['materia'][] =  $materia['Materiasprima']['descripcion'].': '.$a['AcabadosMateriasprima']['cantidad'].' '.$materia['Materiasprima']['unidad'];
 		}
 		$ganancia = $articulo['Articulo']['margen_ganancia'];
 		$produccion = $articulo['Articulo']['costo_produccion'];

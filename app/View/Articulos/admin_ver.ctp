@@ -54,7 +54,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 	echo '<th>Materias prima básicas</th>';
 	echo '<td>';
 	foreach ($articulo['Materiasprima'] as $m){
-		echo $m['descripcion'].' cantidad: '.$m['ArticulosMateriasprima']['cantidad'].'<br>';
+		echo $m['descripcion'].' cantidad: '.$m['ArticulosMateriasprima']['cantidad'].' '.$m['unidad'].'<br>';
 	}
 	echo '</td>';
 	echo '</tr>';
