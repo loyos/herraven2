@@ -101,7 +101,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<th>Precio total por acabado<br> (tomando en cuenta margen de ganancia y costo de producción)</th>';
+	echo '<th>Precio de Venta</th>';
 	echo '<td>';
 	foreach ($costo_acabado as $a) {
 		echo '<b>'.$a['acabado'].':</b><br>';
