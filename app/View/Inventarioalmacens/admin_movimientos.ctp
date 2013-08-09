@@ -56,6 +56,7 @@
 		<tr>
 			<th>Fecha y hora</th>
 			<th>Articulo</th>
+			<th>Acabado</th>
 			<th>Cajas</th>
 			<th>Tipo</th>
 		</tr>
@@ -64,6 +65,7 @@
 			echo '<tr>';
 				echo '<td>'.$i['Inventarioalmacen']['fecha'].'</td>';
 				echo '<td>'.$i['Articulo']['codigo'].'</td>';
+				echo '<td>'.$i['Acabado']['acabado'].'</td>';
 				echo '<td>'.$i['Inventarioalmacen']['cajas'].'</td>';
 				echo '<td>'.$i['Inventarioalmacen']['tipo'].'</td>';
 			echo '</tr>';
