@@ -13,23 +13,27 @@
 	echo $this->Form->submit('Buscar',array('class' => 'button'));
 	echo $this->Form->end();
 	if (!empty($id_m)) {
+		if (!empty($entradas)){
 		?>
-		<div class="subtitulo_movimientos">
-		<h2>Movimientos de <?php echo $entradas[0]['Materiasprima']['descripcion'] ?></h2>
-		</div>
-		<div class="ano_movimientos">
-			<table>
-				<tr>
-					<td><b><u>Año</u></b></td><td><b><u>Unidad</b></u></td>
-				</tr>
-				<tr>
-					<td style="text-align:center"><?php echo $ano?> </td>
-					<td style="text-align:center"><?php echo $entradas[0]['Materiasprima']['unidad'] ?></td>
-				</tr>
-			</table>
-		</div>
-		<?php
-		echo $this->element('admin_movimientos');
+			<div class="subtitulo_movimientos">
+			<h2>Movimientos de <?php echo $entradas[0]['Materiasprima']['descripcion'] ?></h2>
+			</div>
+			<div class="ano_movimientos">
+				<table>
+					<tr>
+						<td><b><u>Año</u></b></td><td><b><u>Unidad</b></u></td>
+					</tr>
+					<tr>
+						<td style="text-align:center"><?php echo $ano?> </td>
+						<td style="text-align:center"><?php echo $entradas[0]['Materiasprima']['unidad'] ?></td>
+					</tr>
+				</table>
+			</div>
+			<?php
+			echo $this->element('admin_movimientos');
+		} else {
+			echo 'No hay movimientos registrados a esta materia prima';
+		}
 	} else {
 		echo 'Escoge una materia prima para observar sus movimientos';
 	}
