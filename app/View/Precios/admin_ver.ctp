@@ -1,8 +1,19 @@
 <div class="wrap">
 <?php
 echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id']));
+echo $this->Form->create('Precio');
+if (!empty($this->data['Precio']['acabado_id'])) {
+	$value = $this->data['Precio']['acabado_id'];
+} else {
+	$value = 0;
+}
+echo $this->Form->input('acabado_id',array('value' => $value));
+echo $this->Form->submit('Buscar',array('class' => 'button'));
 ?>
 <h1><?php echo $precio['Precio']['descripcion']?></h1>
+<?php
+if (!empty($acabado_seleccionado)) {
+?>
 <?php 
 	if (!empty($precio_articulo)) {
 	echo '<table  class="tabla_ver">';
@@ -25,11 +36,11 @@ echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias'
 	}
 	echo '</table>';
 	} else {
-		echo '<h3>No hay artículos en esta categoria</h3>';
+		echo '<h3>No hay artículos con este acabado</h3>';
 	}
-?>
-
-<?php 
+} else {
+	echo 'Selecciona un acabado';
+}
 	// echo '<h2>Precios de materias prima</h2>';
 	// echo '<table  class="tabla_ver">';
 	// foreach ($precio_materia as $mp){

@@ -3,7 +3,7 @@
 class PreciosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $uses = array('Precio','Materiasprima','MateriasprimasPrecio','Articulo','Categoria','Subcategoria');
+	public $uses = array('Precio','Materiasprima','MateriasprimasPrecio','Articulo','Categoria','Subcategoria','AcabadosMateriasprima','Acabado');
 	
     function admin_index() {
 		$precios = $this->Precio->find('all');
@@ -40,55 +40,72 @@ class PreciosController extends AppController {
 	}
 	
 	function admin_ver($id,$cat,$subcat=null) {
-		$materias = $this->Materiasprima->find('all');
 		$precio = $this->Precio->findById($id);
-		$ganancia = $precio['Precio']['ganancia'];
-		if (empty($subcat)){
-			$subcategorias = $this->Subcategoria->find('all',array(
-				'conditions' => array('Subcategoria.categoria_id' => $cat)
-			));
-			foreach ($subcategorias as $s) {
-				$subcat[] = $s['Subcategoria']['id'];
-			}
-		}
-		$articulos = $this->Articulo->find('all',array(
-			'conditions' => array('Articulo.subcategoria_id' => $subcat)
+		$acabados = $this->Acabado->find('list',array(
+			'fields' => array('id','acabado')
 		));
-		if ($id == 1) {
-			foreach ($articulos as $a) {
-				$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id']);
-				$precio_articulo[] = array (
-					'articulo' => $a['Articulo']['descripcion'],
-					'precio' => $acum_precio,
-					'codigo' => $a['Articulo']['codigo'],
-					'cantidad' => $a['Articulo']['cantidad_por_caja']
-				);
-			};
-			
-		} else {
-			$ganancia = $precio['Precio']['ganancia']/100;
-			// foreach ($materias as $m){
-				// $precio_m = $m['Materiasprima']['precio']+($m['Materiasprima']['precio']*$ganancia);
-				// $precio_materia[] = array(
-					// 'materia' => $m['Materiasprima']['descripcion'],
-					// 'precio' => $precio_m
-				// );
-			// }
+		$acabados[0]= '';
+		if (!empty($this->data['Precio']['acabado_id'])) {
+			$acabado_seleccionado = $this->data['Precio']['acabado_id'];
+			$materias = $this->Materiasprima->find('all');
 			$ganancia = $precio['Precio']['ganancia'];
-			foreach ($articulos as $a) {
-				$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id'], $ganancia);
-				$precio_articulo[] = array (
-					'articulo' => $a['Articulo']['descripcion'],
-					'codigo' => $a['Articulo']['codigo'],
-					'precio' => $acum_precio,
-					'cantidad' => $a['Articulo']['cantidad_por_caja']
-				);
-			};
+			if (empty($subcat)){
+				$subcategorias = $this->Subcategoria->find('all',array(
+					'conditions' => array('Subcategoria.categoria_id' => $cat)
+				));
+				foreach ($subcategorias as $s) {
+					$subcat[] = $s['Subcategoria']['id'];
+				}
+			}
+			$articulos = $this->Articulo->find('all',array(
+				'conditions' => array('Articulo.subcategoria_id' => $subcat)
+			));
+			if ($id == 1) {
+				foreach ($articulos as $a) {
+					$existe_acabado =  $this->AcabadosMateriasprima->find('all',array(
+						'conditions' => array(
+							'AcabadosMateriasprima.acabado_id' => $this->data['Precio']['acabado_id'],
+							'AcabadosMateriasprima.articulo_id' => $a['Articulo']['id']
+						)
+					));
+					if (!empty($existe_acabado)){
+						$acum_precio = $this->Articulo->calcular_costo_total($a['Articulo']['id'],$this->data['Precio']['acabado_id']);
+						$precio_articulo[] = array (
+							'articulo' => $a['Articulo']['descripcion'],
+							'precio' => $acum_precio,
+							'codigo' => $a['Articulo']['codigo'],
+							'cantidad' => $a['Articulo']['cantidad_por_caja']
+						);
+					}
+				};
+				
+			} else {
+				$ganancia = $precio['Precio']['ganancia']/100;
+				
+				$ganancia = $precio['Precio']['ganancia'];
+				foreach ($articulos as $a) {
+					$existe_acabado =  $this->AcabadosMateriasprima->find('all',array(
+						'conditions' => array(
+							'AcabadosMateriasprima.acabado_id' => $this->data['Precio']['acabado_id'],
+							'AcabadosMateriasprima.articulo_id' => $a['Articulo']['id']
+						)
+					));
+					if (!empty($existe_acabado)){
+						$acum_precio = $this->Articulo->calcular_costo_total($a['Articulo']['id'], $this->data['Precio']['acabado_id'],$ganancia);
+						$precio_articulo[] = array (
+							'articulo' => $a['Articulo']['descripcion'],
+							'codigo' => $a['Articulo']['codigo'],
+							'precio' => $acum_precio,
+							'cantidad' => $a['Articulo']['cantidad_por_caja']
+						);
+					}
+				};
+			}
+			
+			$this->set(compact('precio','precio_materia','precio_articulo','acabado_seleccionado'));
 		}
-		
-		$this->set(compact('precio','precio_materia','precio_articulo'));
+		$this->set(compact('precio','acabados'));
 	}
-	
 	
 }
 
