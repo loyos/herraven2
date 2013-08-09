@@ -58,6 +58,7 @@
 			<th>Articulo</th>
 			<th>Acabado</th>
 			<th>Cajas</th>
+			<th>Cantidad de pza</th>
 			<th>Tipo</th>
 		</tr>
 		<?php 
@@ -67,6 +68,7 @@
 				echo '<td>'.$i['Articulo']['codigo'].'</td>';
 				echo '<td>'.$i['Acabado']['acabado'].'</td>';
 				echo '<td>'.$i['Inventarioalmacen']['cajas'].'</td>';
+				echo '<td>'.$i['Articulo']['cantidad_por_caja']*$i['Inventarioalmacen']['cajas'].'</td>';
 				echo '<td>'.$i['Inventarioalmacen']['tipo'].'</td>';
 			echo '</tr>';
 		}
