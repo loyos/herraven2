@@ -72,7 +72,14 @@
 	</li>
 	<li class = "option"><?php echo $this->Html->link('Despachos',array('controller' => 'pedidos', 'action' => 'admin_despachos')); ?>
 	</li>
-	<?php } ?>
+	<?php } 
+	if ($admin_cuentas) { ?>
+		<li class = "option"><?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'admin_index')); ?>
+		</li>
+	<?php
+		}
+	?>
+	
 </ul>
 </div>
 <script>

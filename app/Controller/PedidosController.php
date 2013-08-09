@@ -279,7 +279,7 @@ class PedidosController extends AppController {
 		$cuenta = array(
 			'Cuenta' => array(
 			'pedido_id' => $id,
-			'status' =>'pendiente',
+			'status' =>'Vigente',
 		));
 		$this->Cuenta->save($cuenta);
 		$this->Session->setFlash('El pedido ha sido despachado y se creo una cuenta');
