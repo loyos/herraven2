@@ -56,7 +56,8 @@ foreach ($info_articulos as $a) { ?>
 			</tr>
 			<tr>
 				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>">
-					<?php echo 'Bs. '. number_format($precio[$a['id']]*$a['cantidad_por_caja'], 0, ',', '.');
+					<?php 
+					echo 'Bs. '. number_format($precio[$a['id']]*$a['cantidad_por_caja'], 0, ',', '.');
 					echo '<br>';
 					echo 'Precio de caja';
 					
@@ -124,8 +125,8 @@ function calcula_precio_acabado(acabado_id,id) {
 		dataType: "json"
 	}).done(function( msg ) {
 		$('td.precio_'+id).html('Bs.'+msg+'<br>Precio unitario');
-		cajas = $('td.precio_caja'+id).attr('name');
-		$('td.precio_caja'+id).html('Bs.'+msg*int(cajas)+'<br>Precio caja');		
+		cajas = $('td.precio_caja_'+id).attr('name');
+		$('td.precio_caja_'+id).html('Bs.'+msg*cajas+'<br>Precio caja');		
 	});
 }
 $(document).ready(function() {
