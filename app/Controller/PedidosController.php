@@ -170,13 +170,6 @@ class PedidosController extends AppController {
 		$this->set(compact('id','subcategorias','titulo','materiasprimas','valor_mp','valor_cant','costo_produccion'));
 	}
 	
-	function admin_eliminar($id) {
-		$this->Articulo->delete($id);
-		$this->ArticulosMateriasprima->deleteAll(array(
-			'articulo_id' => $id
-		));
-		$this->redirect(array('action' => 'admin_index'));
-	}
 	
 	function admin_ver($id) {
 		$articulo = $this->Articulo->findById($id);
@@ -345,6 +338,23 @@ class PedidosController extends AppController {
 			//var_dump($this->data); die();
 		}
 		$this->set(compact('cantidad'));
+	}
+	
+	function admin_eliminar($id,$action) {
+		$s = $this->Pedido->deleteAll(array('Pedido.id' => $id));
+		$this->Session->setFlash('El pedido se borró con éxito');
+		$this->redirect(array('action' =>$action));
+	}
+	
+	function admin_cancelar($id,$action) {
+		$update = array('Pedido' => array(
+			'id' => $id,
+			'status' => 'Cancelado'
+		));
+		$this->Pedido->save($update);
+		$this->CajasPedido->deleteAll(array('CajasPedido.pedido_id' => $id),false);
+		$this->Session->setFlash('El pedido se canceló con éxito');
+		$this->redirect(array('action' =>$action));
 	}
 }
 
