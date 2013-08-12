@@ -206,27 +206,7 @@ class PedidosController extends AppController {
 	
 	function admin_ejecutar_pedido($id) {
 		if (!empty($this->data)) {
-			$pedido = $this->Pedido->findById($this->data['Pedido']['id']);
-			$hoy = date('Y-m-d H:i:s');
-			$data = array(
-				'Inventarioalmacen' => array(
-					'tipo' => 'salida',
-					'articulo_id'=> $pedido['Articulo']['id'],
-					'cajas' => $pedido['Pedido']['cantidad_cajas'],
-					'acabado_id' => $pedido['Pedido']['acabado_id'],
-					'pedido_id' => $this->data['Pedido']['id'],
-					'mes' => $this->Config->obtenerMes($hoy),
-				)
-			);
-			$this->Inventarioalmacen->save($data);
-			$update_pedido = array(
-				'Pedido' => array(
-					'id' => $this->data['Pedido']['id'],
-					'status' => 'Preparado',
-				)
-			);
-			$this->Pedido->save($update_pedido);
-			$pedido_id = $this->Pedido->id;
+			$pedido_id = $this->data['Pedido']['id'];
 			$this->redirect(array('action' => 'admin_asignar_cajas',$pedido_id));	
 		}
 		$pedido = $this->Pedido->findById($id);
@@ -332,6 +312,26 @@ class PedidosController extends AppController {
 				}
 			}
 			if($this->CajasPedido->saveAll($cajas_pedidos)){
+				$pedido = $this->Pedido->findById($pedido_id);
+				$hoy = date('Y-m-d H:i:s');
+				$data = array(
+					'Inventarioalmacen' => array(
+						'tipo' => 'salida',
+						'articulo_id'=> $pedido['Articulo']['id'],
+						'cajas' => $pedido['Pedido']['cantidad_cajas'],
+						'acabado_id' => $pedido['Pedido']['acabado_id'],
+						'pedido_id' => $pedido_id,
+						'mes' => $this->Config->obtenerMes($hoy),
+					)
+				);
+				$this->Inventarioalmacen->save($data);
+				$update_pedido = array(
+					'Pedido' => array(
+						'id' => $pedido_id,
+						'status' => 'Preparado',
+					)
+				);
+				$this->Pedido->save($update_pedido);
 				$this->Session->setFlash('Pedido agregado con exito');
 				$this->redirect(array('action' => 'admin_index'));
 			}
