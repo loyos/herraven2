@@ -99,7 +99,10 @@ class InventarioalmacensController extends AppController {
 			}
 		}
 		$articulos = $this->Articulo->find('all',array(
-			'conditions' => array('Articulo.subcategoria_id' => $sub_id)
+			'conditions' => array(
+				'Articulo.subcategoria_id' => $sub_id,
+				'Articulo.oculto' => 0
+			)
 		));
 		$this->set(compact('articulos'));
 	}

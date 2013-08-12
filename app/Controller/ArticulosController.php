@@ -456,7 +456,10 @@ class ArticulosController extends AppController {
 		));
 		
 		$articulos = $this->Articulo->find('all',array(
-			'conditions' => array('Articulo.subcategoria_id' => $sub_id)
+			'conditions' => array(
+				'Articulo.subcategoria_id' => $sub_id,
+				'Articulo.oculto' => 0
+			)
 		));
 		foreach ($articulos as $a) {
 			$acum_precio = 0;
