@@ -476,7 +476,9 @@ class ArticulosController extends AppController {
 				$despacho['Acabado']['descripcion'] = "";
 			}
 			//var_dump($despacho);
-			
+			$precio_id = $this->Auth->User('Cliente.precio_id');
+			$lista_precio = $this->Precio->findById($precio_id);
+			$ganancia = $lista_precio['Precio']['ganancia'];
 			$info_articulos[] = array (
 				'articulo' => $a['Articulo']['descripcion'],
 				'codigo' => $a['Articulo']['codigo'],
@@ -486,6 +488,7 @@ class ArticulosController extends AppController {
 				'fecha_despacho' => $despacho['Pedido']['fecha_despacho'],
 				'cantidad_despacho' => $despacho['Pedido']['cantidad_cajas'],
 				'acabado_despacho' => $despacho['Acabado']['descripcion'],
+				'precio' => $this->Articulo->calcular_precio($a['Articulo']['id'],$ganancia) 
 			);
 		};
 

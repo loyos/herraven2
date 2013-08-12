@@ -92,27 +92,38 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 	echo '<td>'.$costo_materiaprima.' Bs.</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<th>Acabados</th>';
-	echo '<td>';
-	foreach ($costo_acabado as $a) {
-		echo '<b>'.$a['acabado'].':</b><br>';
-		echo '&nbsp&nbsp&nbsp'.$a['monto'].'<br>';
-	}
-	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
-	echo '<th>Precio de Venta</th>';
-	echo '<td>';
-	foreach ($costo_acabado as $a) {
-		echo '<b>'.$a['acabado'].':</b><br>';
-		$precio_materias = $a['monto']+$costo_materiaprima;
-		$costo_produccion = ($a['monto']+$costo_materiaprima)*($produccion/100);
-		$costo_total = $precio_materias + $costo_produccion;
+	if (!empty($costo_acabado)) {
+		echo '<th>Acabados</th>';
+		echo '<td>';
+		foreach ($costo_acabado as $a) {
+			echo '<b>'.$a['acabado'].':</b><br>';
+			echo '&nbsp&nbsp&nbsp'.$a['monto'].'<br>';
+		}
+		echo '</td>';
+		echo '</tr>';
+		echo '<tr>';
+		echo '<th>Precio de Venta</th>';
+		echo '<td>';
+		foreach ($costo_acabado as $a) {
+			echo '<b>'.$a['acabado'].':</b><br>';
+			$precio_materias = $a['monto']+$costo_materiaprima;
+			$costo_produccion = ($a['monto']+$costo_materiaprima)*($produccion/100);
+			$costo_total = $precio_materias + $costo_produccion;
+			$margen_ganancia = $costo_total * ($ganancia/100);
+			$precio_total = $costo_total + $margen_ganancia;
+			echo '&nbsp&nbsp&nbsp'.round($precio_total).'<br>';
+		}
+		echo '</td>';
+	} else {
+		echo '<th>Precio de Venta</th>';
+		echo '<td>';
+		$costo_produccion = ($costo_materiaprima)*($produccion/100);
+		$costo_total = $costo_materiaprima + $costo_produccion;
 		$margen_ganancia = $costo_total * ($ganancia/100);
 		$precio_total = $costo_total + $margen_ganancia;
 		echo '&nbsp&nbsp&nbsp'.round($precio_total).'<br>';
-	}
-	echo '</td>';
+		echo '</td>';
+	}	
 	echo '</tr>';
 	echo '</table>';
 ?>

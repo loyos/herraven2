@@ -22,8 +22,14 @@ foreach ($info_articulos as $a) { ?>
 	<div class="info_catalogo">
 		<table style="width: 80%;">
 			<tr>
-				<td class="precio_<?php echo $a['id']?>">				
-					Bs. <?php echo number_format($precio[$a['id']], 0, ',', '.') ?>
+				<td class="precio_<?php echo $a['id']?>">	
+					<?php 
+					if (!empty($precio[$a['id']])){?>
+					Bs. <?php echo number_format($precio[$a['id']], 0, ',', '.');
+					} else { ?>
+						Bs. <?php echo number_format($a['precio'], 0, ',', '.');
+					}
+					?>
 					<br>
 					Precio unitario
 				</td>
@@ -57,7 +63,11 @@ foreach ($info_articulos as $a) { ?>
 			<tr>
 				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>">
 					<?php 
-					echo 'Bs. '. number_format($precio[$a['id']]*$a['cantidad_por_caja'], 0, ',', '.');
+					if (!empty($precio[$a['id']])){?>
+					Bs. <?php echo number_format($precio[$a['id']]*$a['cantidad_por_caja'], 0, ',', '.'); 
+					} else { ?>
+						Bs. <?php echo number_format($a['precio']*$a['cantidad_por_caja'], 0, ',', '.'); 
+					}
 					echo '<br>';
 					echo 'Precio de caja';
 					
