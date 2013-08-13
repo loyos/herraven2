@@ -87,8 +87,10 @@
 	$('.option').click(function() {
 		$(this).siblings().removeClass('selected');
 		$(this).addClass('selected');
-		$(this).siblings().children().hide();
+		console.debug($(this).siblings().children());
+		$(this).siblings().children().find('li').hide();
 		$(this).find('ul').fadeIn();
+		$(this).find('li').fadeIn();
     });
 		
 </script>

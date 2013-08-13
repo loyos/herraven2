@@ -2,7 +2,7 @@
 
 class ArticulosController extends AppController {
     
-	public $helpers = array ('Html','Form');
+	public $helpers = array ('Html','Form', 'Herra');
 	public $components = array('Session','JqImgcrop','RequestHandler', 'Search.Prg');
 	public $uses = array('Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Categoria','Precio','Pedido','Acabado','AcabadosMateriasprima','User');
     public $presetVars = true; // using the model configuration
@@ -488,7 +488,7 @@ class ArticulosController extends AppController {
 				'fecha_despacho' => $despacho['Pedido']['fecha_despacho'],
 				'cantidad_despacho' => $despacho['Pedido']['cantidad_cajas'],
 				'acabado_despacho' => $despacho['Acabado']['descripcion'],
-				'precio' => $this->Articulo->calcular_precio($a['Articulo']['id'],$ganancia) 
+				'precio' => $this->Articulo->calcular_precio($a['Articulo']['id'],$ganancia)
 			);
 		};
 

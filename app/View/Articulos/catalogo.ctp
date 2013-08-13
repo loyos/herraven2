@@ -1,4 +1,5 @@
 <div class="wrap">
+<?php // echo $this->Herra->format_number(); ?>
 <div class="categoria_catalogo">
 	<?php echo $this->Html->link($subcategoria['Categoria']['descripcion'],array('action' => 'subcategoria_catalogo')); ?>
 </div>
@@ -25,9 +26,9 @@ foreach ($info_articulos as $a) { ?>
 				<td class="precio_<?php echo $a['id']?>">	
 					<?php 
 					if (!empty($precio[$a['id']])){?>
-					Bs. <?php echo number_format($precio[$a['id']], 0, ',', '.');
+						<?php echo $this->Herra->format_number($precio[$a['id']]);
 					} else { ?>
-						Bs. <?php echo number_format($a['precio'], 0, ',', '.');
+						<?php echo $this->Herra->format_number($a['precio']);
 					}
 					?>
 					<br>
@@ -36,7 +37,7 @@ foreach ($info_articulos as $a) { ?>
 				<td></td>
 				<td>
 					<?php
-					echo '<b>' .$a['codigo']. '</b><br>';					
+					echo '<b>' .$a['codigo']. '</b><br>';
 					
 					echo $this->Form->input('cantidad',array(
 						'type' => 'select',
@@ -64,9 +65,9 @@ foreach ($info_articulos as $a) { ?>
 				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>">
 					<?php 
 					if (!empty($precio[$a['id']])){?>
-					Bs. <?php echo number_format($precio[$a['id']]*$a['cantidad_por_caja'], 0, ',', '.'); 
+						<?php echo $this->Herra->format_number($precio[$a['id']]*$a['cantidad_por_caja']);
 					} else { ?>
-						Bs. <?php echo number_format($a['precio']*$a['cantidad_por_caja'], 0, ',', '.'); 
+						<?php echo $this->Herra->format_number($a['precio']*$a['cantidad_por_caja']);
 					}
 					echo '<br>';
 					echo 'Precio de caja';
@@ -136,7 +137,7 @@ function calcula_precio_acabado(acabado_id,id) {
 	}).done(function( msg ) {
 		$('td.precio_'+id).html('Bs.'+msg+'<br>Precio unitario');
 		cajas = $('td.precio_caja_'+id).attr('name');
-		$('td.precio_caja_'+id).html('Bs.'+msg*cajas+'<br>Precio caja');		
+		$('td.precio_caja_'+id).html('Bs.'+msg*cajas+'<br>Precio caja');
 	});
 }
 $(document).ready(function() {

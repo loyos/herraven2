@@ -27,10 +27,10 @@ if (!empty($acabado_seleccionado)) {
 		echo '<tr>';
 		echo '<th>'.$a['codigo'].'</th>';
 		echo '<td>';
-		echo 'Bs. '.number_format($a['precio'], 0, ',', '.');
+		echo $this->Herra->format_number($a['precio']);
 		echo '</td>';
 		echo '<td>'.$a['cantidad'].'</td>';
-		echo '<td>Bs. '.number_format($a['cantidad']*$a['precio'], 0, ',', '.').'</td>';
+		echo '<td>'.$this->Herra->format_number($a['cantidad']*$a['precio']).'</td>';
 		echo '</tr>';
 		echo '<tr>';
 	}

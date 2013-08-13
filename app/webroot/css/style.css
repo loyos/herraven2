@@ -25,6 +25,8 @@ label {
 
 .search {
 	float: right;
+	clear: both;
+	margin-bottom: 30px;
 }
 
 .search_button{
@@ -99,7 +101,7 @@ table.tabla_ver td, table.tabla_ver th{
 
 .menu{
 	height: auto;
-	width: 800px;
+	width: 900px;
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 0px;
@@ -131,7 +133,7 @@ table.tabla_ver td, table.tabla_ver th{
 	min-width: 120px;
 	margin-top: 3px;
 	margin-left: 50%;
-	left: -400px;
+	left: -440px;
 	font-size: 16px;
 }
 
@@ -150,6 +152,9 @@ table.tabla_ver td, table.tabla_ver th{
 
 .children a:hover{
 	color: #d7e4e8;
+}
+
+.children{
 }
 
 .articulos_almacen {

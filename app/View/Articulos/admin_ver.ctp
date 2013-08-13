@@ -89,7 +89,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 	echo '<table class="tabla_ver">';
 	echo '<tr>';
 	echo '<th>Materias primas básicas</th>';
-	echo '<td>'.$costo_materiaprima.' Bs.</td>';
+	echo '<td>'.$this->Herra->format_number($costo_materiaprima).'</td>';
 	echo '</tr>';
 	echo '<tr>';
 	if (!empty($costo_acabado)) {
@@ -111,7 +111,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 			$costo_total = $precio_materias + $costo_produccion;
 			$margen_ganancia = $costo_total * ($ganancia/100);
 			$precio_total = $costo_total + $margen_ganancia;
-			echo '&nbsp&nbsp&nbsp'.round($precio_total).'<br>';
+			echo '&nbsp&nbsp&nbsp'.$this->Herra->format_number($precio_total).'<br>';
 		}
 		echo '</td>';
 	} else {
@@ -121,7 +121,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_i
 		$costo_total = $costo_materiaprima + $costo_produccion;
 		$margen_ganancia = $costo_total * ($ganancia/100);
 		$precio_total = $costo_total + $margen_ganancia;
-		echo '&nbsp&nbsp&nbsp'.round($precio_total).'<br>';
+		echo '&nbsp&nbsp&nbsp'.$this->Herra->format_number($precio_total).'<br>';
 		echo '</td>';
 	}	
 	echo '</tr>';

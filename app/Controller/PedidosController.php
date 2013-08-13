@@ -3,8 +3,11 @@
 class PedidosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop');
+	public $components = array('Session','JqImgcrop','Search.Prg');
 	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja','Cuenta');
+    public $presetVars = true; // using the model configuration
+	public $paginate = array();
+
 	
     function admin_index() {
 		$pedidos = $this->Pedido->find('all',array(
@@ -45,45 +48,61 @@ class PedidosController extends AppController {
     }
 	
 	function admin_pedidos() {
-		$pedidos = $this->Pedido->find('all',array(
-			'recursive' => 2
-		));
-		$count = 0;
-		foreach ($pedidos as $p) {
-			$entradas = 0;
-			$salidas = 0;
-			$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
-			$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
-			if ($p['Pedido']['status'] != 'Preparado' || $p['Pedido']['status'] != 'Progreso-Despacho') {
-				if(!empty($p['Articulo']['Inventarioalmacen'])) {
-					foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
-						if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
-							$entradas = $entradas + $ia['cajas'];
-						} elseif ($ia['tipo'] == 'salida' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
-							$salidas = $salidas + $ia['cajas'];
+		
+		$this->Prg->commonProcess();
+		$parametros = $this->Prg->parsedParams();
+		if ($parametros){
+			$this->paginate['conditions'] = $this->Pedido->parseCriteria($this->Prg->parsedParams());
+			// $this->loadModel('Genero');
+			$this->paginate['recursive'] = 2;
+			$pedidos = $this->paginate();
+		}else{
+			$pedidos = $this->Pedido->find('all',array(
+				'recursive' => 2
+			));
+		}
+			$count = 0;
+			foreach ($pedidos as $p) {
+				$entradas = 0;
+				$salidas = 0;
+				$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
+				$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
+				if ($p['Pedido']['status'] != 'Preparado' || $p['Pedido']['status'] != 'Progreso-Despacho') {
+					if(!empty($p['Articulo']['Inventarioalmacen'])) {
+						foreach ($p['Articulo']['Inventarioalmacen'] as $ia) {
+							if ($ia['tipo'] == 'entrada' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
+								$entradas = $entradas + $ia['cajas'];
+							} elseif ($ia['tipo'] == 'salida' && $ia['acabado_id'] == $p['Pedido']['acabado_id']) {
+								$salidas = $salidas + $ia['cajas'];
+							}
+						}
+						$saldo = $entradas - $salidas;
+						if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+							$status[$p['Pedido']['id']] = 'Disponible';
+						} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+							$status[$p['Pedido']['id']] = 'No disponible';
+						} else {
+							$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+						}
+					} else {
+						if ($p['Pedido']['status'] == 'pendiente') {
+							$status[$p['Pedido']['id']] = 'No disponible';
+						} else {
+							$status[$p['Pedido']['id']] = $p['Pedido']['status'];
 						}
 					}
-					$saldo = $entradas - $salidas;
-					if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
-						$status[$p['Pedido']['id']] = 'Disponible';
-					} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
-						$status[$p['Pedido']['id']] = 'No disponible';
-					} else {
-						$status[$p['Pedido']['id']] = $p['Pedido']['status'];
-					}
 				} else {
-					if ($p['Pedido']['status'] == 'pendiente') {
-						$status[$p['Pedido']['id']] = 'No disponible';
-					} else {
-						$status[$p['Pedido']['id']] = $p['Pedido']['status'];
-					}
+					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
 				}
-			} else {
-				$status[$p['Pedido']['id']] = $p['Pedido']['status'];
+				$count++;
 			}
-			$count++;
-		}
-		$this->set(compact('status','pedidos'));
+			
+		$this->loadModel('Acabado');
+		$acabados = $this->Acabado->find('list', array(
+			'fields' => array('Acabado.acabado', 'Acabado.acabado')
+		));
+		$acabados = array_merge(array('Todos'), $acabados);
+		$this->set(compact('status','pedidos', 'acabados'));
     }
 	
 	function admin_despachos() {

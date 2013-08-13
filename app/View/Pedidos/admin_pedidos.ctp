@@ -1,7 +1,11 @@
 <div class="wrap">
+
+<?php echo $this->element('search_pedidos'); ?>
+
 <h2>Pedidos</h2>
+
 <?php if (!empty($pedidos)) { ?>
-	<table>
+	<table width= '100%'>
 		<tr>
 			<th></th>
 			<th>Fecha</th>
