@@ -324,3 +324,25 @@ input#codigo {
 .info_egreso {
 	margin-top:30px;
 }
+
+.info_izquierda{
+	float:right;
+	clear:right;
+	margin-bottom:10px;
+}
+
+.info_izquierda th{
+	border-bottom:2px solid black;
+}
+
+.info_izquierda th, .info_izquierda td{
+	margin-left:10px;
+}
+
+.consulta_cajas {
+	clear:right;
+}	
+
+.consulta_cajas th, .consulta_cajas td {
+	padding:5px;
+}
