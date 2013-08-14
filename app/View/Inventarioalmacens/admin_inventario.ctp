@@ -10,6 +10,7 @@
 		<th>Total entradas (cajas)</th>
 		<th>Total salidas (cajas)</th>
 		<th>Saldo</th>
+		<th>Saldo Pz.</th>
 		<th>Cajas</th>
 		</tr>
 		<?php
@@ -37,6 +38,7 @@
 				echo '<td>'.$entrada.'</td>';
 				echo '<td>'.$salida.'</td>';
 				echo '<td>'.$saldo.'</td>';
+				echo '<td>'.$saldo*$articulos[$a['Inventarioalmacen']['articulo_id']].'</td>';
 				echo '<td>'.$this->Html->link('Consultar',array('action' => 'admin_consultar_cajas',$a['Inventarioalmacen']['articulo_id'],$a['Inventarioalmacen']['acabado_id'])).'</td>';
 				echo '</tr>';
 			}

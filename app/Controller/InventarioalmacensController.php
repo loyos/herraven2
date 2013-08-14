@@ -141,6 +141,9 @@ class InventarioalmacensController extends AppController {
 				'group' => array('Inventarioalmacen.acabado_id')
 			));
 		} 
+		$articulos = $this->Articulo->find('list',array(
+			'fields' => array('id','cantidad_por_caja')
+		));
 		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados'));
 	}
 	
