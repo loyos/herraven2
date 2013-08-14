@@ -1,8 +1,8 @@
 <div class="wrap">
 <?php 
+	echo '<h1>Forecast</h1>';
 	echo $this->element('search');
 	if (!empty($articulos)){
-	
 		echo '<div class = "ejecutar">';
 		echo $this->Form->create('Articulo', array(
 				'url' => array('action' => 'admin_ver_forecast')
