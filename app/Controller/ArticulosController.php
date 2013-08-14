@@ -54,7 +54,7 @@ class ArticulosController extends AppController {
 			}
 			}
 			if ( $hay_materias > 0 && !empty($data['Articulo']['imagen'])){
-				if ($this->Articulo->save($data)) {
+				if ($this->Articulo->save($data, array('validate' => 'first'))) {
 					$id = $this->Articulo->id;
 					$this->ArticulosMateriasprima->deleteAll(array(
 						'articulo_id' => $id
