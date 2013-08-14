@@ -316,3 +316,11 @@ input#codigo {
 	margin-right: 55px;
 	margin-top: -30px;
 }
+
+.fecha_etiqueta {
+	float:right;
+}
+
+.info_egreso {
+	margin-top:30px;
+}

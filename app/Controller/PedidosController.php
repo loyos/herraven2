@@ -331,12 +331,20 @@ class PedidosController extends AppController {
 					)
 				);
 				$this->Pedido->save($update_pedido);
-				$this->Session->setFlash('Pedido agregado con exito');
-				$this->redirect(array('action' => 'admin_index'));
+				$this->redirect(array('action' => 'admin_info_egreso',$pedido_id));
 			}
 			//var_dump($this->data); die();
 		}
 		$this->set(compact('cantidad'));
+	}
+	
+	function admin_info_egreso($pedido_id) {
+		$pedido = $this->Pedido->findById($pedido_id);
+		$hoy = date('d/m/Y');
+		$this->layout = 'sin_menu';
+		$ano = $this->Config->obtenerAno($pedido['Pedido']['fecha']);
+		$pedido['Pedido']['num_pedido'] = $pedido['Pedido']['num_pedido'].$ano[2].$ano[3];
+		$this->set(compact('pedido','hoy'));
 	}
 	
 	function admin_eliminar($id,$action) {
