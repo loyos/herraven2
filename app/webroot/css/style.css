@@ -310,3 +310,9 @@ span.descripcion_catalogo{
 input#codigo {
 	text-transform: uppercase;
 }
+
+.consulta_lista_base{
+	float: right;
+	margin-right: 55px;
+	margin-top: -30px;
+}
