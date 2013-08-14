@@ -1,5 +1,6 @@
 <div class="wrap">
 	<?php
+	echo '<h1>Movimientos del almacén</h1>';
 	echo $this->Form->create('Inventarioalmacen');
 	echo '<table>';
 	echo '<tr>';
@@ -39,6 +40,7 @@
 	echo '</table>';
 	echo $this->Form->submit('Buscar',array('class'=>'button'));
 	echo $this->Form->end();
+	echo '<br>';
 	if (!empty($saldo)) {
 		if (!empty($this->data['Inventarioalmacen']['tipo']) && $this->data['Inventarioalmacen']['tipo'] == 'entrada') {
 			echo 'Total de entradas '.$saldo;
