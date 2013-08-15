@@ -2,7 +2,7 @@
 
 class CuentasController extends AppController {
     
-	public $helpers = array ('Html','Form');
+	public $helpers = array ('Html','Form','Herra');
 	var $uses = array('Cuenta','Config','User');
 	
     function admin_index() {
