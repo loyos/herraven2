@@ -105,26 +105,6 @@ class PedidosController extends AppController {
 		$this->set(compact('status','pedidos', 'acabados'));
     }
 	
-	function admin_despachos() {
-		$pedidos = $this->Pedido->find('all',array(
-			'recursive' => 2
-		));
-		$count = 0;
-		foreach ($pedidos as $p) {
-			$entradas = 0;
-			$salidas = 0;
-			$ano = $this->Config->obtenerAno($p['Pedido']['fecha']);
-			$pedidos[$count]['Pedido']['num_pedido'] = $pedidos[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
-			if ($p['Pedido']['status'] == 'Despachado' || $p['Pedido']['status'] == 'Cancelado' ) {
-				$status[$p['Pedido']['id']] = $p['Pedido']['status'];
-			} elseif ($p['Pedido']['status'] == 'Progreso-Despacho') {
-				$status[$p['Pedido']['id']] = 'En progreso';
-			}
-			$count++;
-		}
-		$this->set(compact('status','pedidos'));
-    }
-	
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$data = $this->data;
@@ -275,7 +255,7 @@ class PedidosController extends AppController {
 		));
 		$this->Cuenta->save($cuenta);
 		$this->Session->setFlash('El pedido ha sido despachado y se creo una cuenta');
-		$this->redirect(array('action' => 'admin_despachos'));	
+		$this->redirect(array('action' => 'admin_pedidos'));	
 	}
 	
 	function admin_asignar_cajas($pedido_id) {
@@ -351,16 +331,25 @@ class PedidosController extends AppController {
 					)
 				);
 				$this->Pedido->save($update_pedido);
-				$this->Session->setFlash('Pedido agregado con exito');
-				$this->redirect(array('action' => 'admin_index'));
+				$this->redirect(array('action' => 'admin_info_egreso',$pedido_id));
 			}
 			//var_dump($this->data); die();
 		}
 		$this->set(compact('cantidad'));
 	}
 	
+	function admin_info_egreso($pedido_id) {
+		$pedido = $this->Pedido->findById($pedido_id);
+		$hoy = date('d/m/Y');
+		$this->layout = 'sin_menu';
+		$ano = $this->Config->obtenerAno($pedido['Pedido']['fecha']);
+		$pedido['Pedido']['num_pedido'] = $pedido['Pedido']['num_pedido'].$ano[2].$ano[3];
+		$this->set(compact('pedido','hoy'));
+	}
+	
 	function admin_eliminar($id,$action) {
 		$s = $this->Pedido->deleteAll(array('Pedido.id' => $id));
+		$this->Cuenta->deleteAll(array('Cuenta.pedido_id' => $id));
 		$this->Session->setFlash('El pedido se borró con éxito');
 		$this->redirect(array('action' =>$action));
 	}

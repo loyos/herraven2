@@ -54,7 +54,7 @@ class ArticulosController extends AppController {
 			}
 			}
 			if ( $hay_materias > 0 && !empty($data['Articulo']['imagen'])){
-				if ($this->Articulo->save($data)) {
+				if ($this->Articulo->save($data, array('validate' => 'first'))) {
 					$id = $this->Articulo->id;
 					$this->ArticulosMateriasprima->deleteAll(array(
 						'articulo_id' => $id
@@ -425,7 +425,11 @@ class ArticulosController extends AppController {
 			));
 			$hoy = date('Y-m-d');
 			$ano_hoy = $this->Config->obtenerAno($hoy);
-			$ano_pedido = $this->Config->obtenerAno($ultimo_pedido['Pedido']['fecha']);
+			if (empty($ultimo_pedido['Pedido']['fecha'])){
+				$ano_pedido = $this->Config->obtenerAno($hoy);
+			} else {
+				$ano_pedido = $this->Config->obtenerAno($ultimo_pedido['Pedido']['fecha']);
+			}
 			if ($ano_hoy == $ano_pedido) {
 				$num_pedido = $ultimo_pedido['Pedido']['num_pedido']+1;
 			} else {
@@ -501,7 +505,7 @@ class ArticulosController extends AppController {
 				),
 				'fields' => array('acabado_id')
 			));
-		}		
+		}	
 		foreach($acabados as $a => $aca ){
 			$count = 0;
 			foreach($aca as $bados){

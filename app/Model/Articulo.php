@@ -46,6 +46,10 @@ class Articulo extends AppModel {
 			'rule' => 'notEmpty',
 			'message' => 'Este campo no puede quedar vacío.'
 		),
+		'subcategoria_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
 		'imagen' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Este campo no puede quedar vacío.'
