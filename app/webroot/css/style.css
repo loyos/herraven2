@@ -258,7 +258,7 @@ table.tabla_ver td, table.tabla_ver th{
 }
 
 .imagen_catalogo img{
-	max-width: 120px;
+	width: 120px;
 	height: 120px;
 }
 

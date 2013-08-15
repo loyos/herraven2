@@ -1,4 +1,7 @@
 <div class="wrap">
+
+<?php echo $this->element('search_egresos'); ?>
+
 <h2>Pedidos</h2>
 <?php if (!empty($pedidos)) { ?>
 	<table>
