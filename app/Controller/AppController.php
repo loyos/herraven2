@@ -45,6 +45,7 @@ class AppController extends Controller {
 		$this->Auth->authorize = 'Controller'; 
 		$user_id = $this->Auth->user('id');
 		$role = $this->Auth->user('role');
+		$rol = $this->Auth->user('rol');
 		Security::setHash('md5');
 		$this->Auth->allow('*');
 		
@@ -97,7 +98,7 @@ class AppController extends Controller {
 		if ($this->Auth->user('cliente_catalogo') == 1) {
 			$cliente_catalogo = true;
 		} 
-		$this->set(compact('admin_usuario','admin_catalogo','admin_materia_prima','admin_almacen','admin_pedidos','admin_despachos','admin_cuentas','admin_almacenes_clientes','admin_reportes','cliente_perfil','cliente_almacen','cliente_catalogo','user_id'));
+		$this->set(compact('admin_usuario','admin_catalogo','admin_materia_prima','admin_almacen','admin_pedidos','admin_despachos','admin_cuentas','admin_almacenes_clientes','admin_reportes','cliente_perfil','cliente_almacen','cliente_catalogo','user_id','rol'));
 		
 	}
 	public function isAuthorized($user=null) {
