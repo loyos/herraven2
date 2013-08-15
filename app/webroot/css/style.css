@@ -243,9 +243,17 @@ table.tabla_ver td, table.tabla_ver th{
 	border:1px solid black;
 	margin-top:15px;
 }
+.info_catalogo{
+	padding: 20px;
+}
 
 .info_catalogo td {
-	padding:20px;
+	padding-left :15px;
+}
+
+.imagen_catalogo img{
+	max-width: 150px;
+	height: 120px;
 }
 
 .mensaje_vacio {
@@ -274,12 +282,12 @@ td.titulo_tabla {
 }
 
 input.boton_catalogo {
-	float:left;
+	float:right;
 }
 
 span.descripcion_catalogo{
 	font-weight:bold;
-	margin:15px;
+	margin:0px;
 }
 
 .agregar_inventario {

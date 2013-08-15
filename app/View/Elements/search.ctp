@@ -1,5 +1,5 @@
 <div class= "search">
-	<?php			
+	<?php
 			echo $this->Form->create(null, array(
 				'url' => array_merge(array('action' => 'admin_forecast'), $this->params['pass'])
 			));
@@ -8,7 +8,7 @@
 			echo "Categoría:";
 			echo "</td>";
 			echo "<td>";
-			echo $this->Form->input('descripcion', array('div' => false, 'label' => false));
+			echo $this->Form->input('descripcio', array('div' => false, 'label' => false));
 			echo "</td></tr>";
 			// echo "<tr><td>";
 			// echo "Linea:";

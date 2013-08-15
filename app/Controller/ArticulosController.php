@@ -318,13 +318,13 @@ class ArticulosController extends AppController {
 		
 		// debug($this->Articulo);
 		// die();
-		// mandamos a la vista todas las subcategorias (Categorias al final)
+		// mandamos a la vista todas las subcategorias (Categorias finalmente)
 		$this->loadModel('Subcategoria');
 		$categorias = $this->Subcategoria->find('list', array(
 			'fields' => array('Subcategoria.descripcion', 'Subcategoria.descripcion')
 		));
 		$categorias = array_merge( array('' => 'Todas'), $categorias);
-		$this->set('descripcions', $categorias);	
+		$this->set('descripcios', $categorias);
 		
 		//preguntamos si vienen parametros del buscador
 		$this->Prg->commonProcess();

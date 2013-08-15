@@ -23,7 +23,7 @@ foreach ($info_articulos as $a) { ?>
 	<div class="info_catalogo">
 		<table style="width: 80%;">
 			<tr>
-				<td class="precio_<?php echo $a['id']?>">	
+				<td class="precio_<?php echo $a['id']?>" style = "width: 100px;">
 					<?php 
 					if (!empty($precio[$a['id']])){?>
 						<?php echo $this->Herra->format_number($precio[$a['id']]);
@@ -34,8 +34,8 @@ foreach ($info_articulos as $a) { ?>
 					<br>
 					Precio unitario
 				</td>
-				<td></td>
-				<td>
+				<td style = "width: 100px;"></td>
+				<td style = "width: 400px;">
 					<?php
 					echo '<b>' .$a['codigo']. '</b><br>';
 					
@@ -62,7 +62,7 @@ foreach ($info_articulos as $a) { ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>">
+				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>" style = "width: 100px;">
 					<?php 
 					if (!empty($precio[$a['id']])){?>
 						<?php echo $this->Herra->format_number($precio[$a['id']]*$a['cantidad_por_caja']);
@@ -74,7 +74,7 @@ foreach ($info_articulos as $a) { ?>
 					
 					?>
 				</td>
-				<td>
+				<td style = "width: 100px;">
 					<?php echo $a['cantidad_por_caja'];
 					echo '<br>';
 					echo 'Pz. caja';
@@ -88,9 +88,9 @@ foreach ($info_articulos as $a) { ?>
 							'name' => 'activo['.$a['id'].']',
 							'id' => 'activo_'.$a['id'],
 						));
+						echo '<span class="descripcion_catalogo">' .$a['articulo']. '</span>';
 						echo $this->Form->submit('Pedir',array('class' => 'button boton_catalogo', 'onclick' => 'activar('.$a['id'].')'));
 						echo $this->Form->end();
-						echo '<span class="descripcion_catalogo">' .$a['articulo']. '</span>';	
 					?>
 				</td>
 			</tr>
