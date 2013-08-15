@@ -64,7 +64,7 @@ class Articulo extends AppModel {
 	
 	public $filterArgs = array(
 		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast')
-		'descripcion' => array('type' => 'like', 'field' => 'Subcategoria.descripcion'),
+		'descripcio' => array('type' => 'like', 'field' => 'Subcategoria.descripcion'),
 		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast', 'field' => 'descripcion'),
 		// 'wachu' => array('type' => 'like', 'field' => 'Categoria.descripcion'),
 	);

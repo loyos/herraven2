@@ -23,38 +23,38 @@ foreach ($info_articulos as $a) { ?>
 	<div class="info_catalogo">
 		<table style="width: 80%;">
 			<tr>
-				<td class="precio_<?php echo $a['id']?>">	
+				<td class="precio_<?php echo $a['id']?>" style = "width: 100px;">
 					<?php 
+					
+					echo  '<b> Código ' .$a['codigo']. '</b><br><br>';
+					echo 'Precio unitario';
 					if (!empty($precio[$a['id']])){?>
 						<?php echo $this->Herra->format_number($precio[$a['id']]);
 					} else { ?>
 						<?php echo $this->Herra->format_number($a['precio']);
 					}
 					?>
-					<br>
-					Precio unitario
 				</td>
-				<td></td>
-				<td>
-					<?php
-					echo '<b>' .$a['codigo']. '</b><br>';
-					
+				<td style = "width: 100px;"></td>
+				<td style = "width: 400px;">
+					<?php					
 					echo $this->Form->input('cantidad',array(
 						'type' => 'select',
 						'options' => $cantidad_de_cajas,
-						'name' => 'cantidad['.$a['id'].']'
+						'name' => 'cantidad['.$a['id'].']',
+						'label' => 'Cantidad: '
 					));
 					//echo '<br>';
 					if (!empty($acabado_articulo[$a['id']])){
 						echo $this->Form->input('acabado_id',array(
 							'name' => 'acabado['.$a['id'].']',
 							'type' => 'select',
-							'label' => false,
+							'label' => 'Acabado: ',
 							'options' => $acabado_articulo[$a['id']],
 							'id' => $a['id'],
 							'class' => 'acabados_catalogo'
 						));
-						echo '<span class="descripcion_acabado_'.$a['id'].'">'.$acabado_descripcion[$a['id']].'</span>';
+						echo '<span class="descripcion_acabado_'.$a['id'].'"><br> Descripción del acabado: '.$acabado_descripcion[$a['id']].'</span>';
 					} else {
 						echo 'No hay acabados asociados';
 					}
@@ -62,19 +62,18 @@ foreach ($info_articulos as $a) { ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>">
-					<?php 
+				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>" style = "width: 100px;">
+					<?php
+					echo 'Precio de caja';
 					if (!empty($precio[$a['id']])){?>
 						<?php echo $this->Herra->format_number($precio[$a['id']]*$a['cantidad_por_caja']);
 					} else { ?>
 						<?php echo $this->Herra->format_number($a['precio']*$a['cantidad_por_caja']);
 					}
-					echo '<br>';
-					echo 'Precio de caja';
 					
 					?>
 				</td>
-				<td>
+				<td style = "width: 100px;">
 					<?php echo $a['cantidad_por_caja'];
 					echo '<br>';
 					echo 'Pz. caja';
@@ -88,9 +87,9 @@ foreach ($info_articulos as $a) { ?>
 							'name' => 'activo['.$a['id'].']',
 							'id' => 'activo_'.$a['id'],
 						));
+						echo '<span class="descripcion_catalogo"> Descripción artículo: ' .$a['articulo']. '</span>';
 						echo $this->Form->submit('Pedir',array('class' => 'button boton_catalogo', 'onclick' => 'activar('.$a['id'].')'));
 						echo $this->Form->end();
-						echo '<span class="descripcion_catalogo">' .$a['articulo']. '</span>';	
 					?>
 				</td>
 			</tr>

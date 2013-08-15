@@ -17,6 +17,8 @@ body {
 	padding:20px;
 	margin-top: 40px;
 	overflow: hidden;
+	
+
 }
 
 label {
@@ -240,12 +242,24 @@ table.tabla_ver td, table.tabla_ver th{
 .articulo_catalogo {
 	width:795px;
 	overflow: hidden;
-	border:1px solid black;
+	border: 1px solid #00A8D3;
 	margin-top:15px;
+	border-radius: 3px;
+	box-shadow: 3px 3px 5px #00A8D3;
+}
+.info_catalogo{
+	padding: 20px;
 }
 
+
 .info_catalogo td {
-	padding:20px;
+	padding-left :15px;
+	border: 0px;
+}
+
+.imagen_catalogo img{
+	width: 120px;
+	height: 120px;
 }
 
 .mensaje_vacio {
@@ -274,12 +288,20 @@ td.titulo_tabla {
 }
 
 input.boton_catalogo {
-	float:left;
+	float:right;
+	background: none;
+	border: none;
+	cursor: pointer;
+	border-radius: 3px;
+	padding: 10px;
+	color: white;
+	font-size: 14px;	
+	background: #00A8D3; /* Old browsers */	
 }
 
 span.descripcion_catalogo{
-	font-weight:bold;
-	margin:15px;
+/*	font-weight:bold; */
+	margin:0px;
 }
 
 .agregar_inventario {

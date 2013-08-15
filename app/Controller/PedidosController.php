@@ -10,9 +10,18 @@ class PedidosController extends AppController {
 
 	
     function admin_index() {
-		$pedidos = $this->Pedido->find('all',array(
-			'recursive' => 2
-		));
+	
+		$this->Prg->commonProcess();
+		$parametros = $this->Prg->parsedParams();
+		if ($parametros){
+			$this->paginate['conditions'] = $this->Pedido->parseCriteria($this->Prg->parsedParams());
+			$this->paginate['recursive'] = 2;
+			$pedidos = $this->paginate();
+		}else{
+			$pedidos = $this->Pedido->find('all',array(
+				'recursive' => 2
+			));
+		}
 		$count = 0;
 		foreach ($pedidos as $p) {
 			$entradas = 0;
@@ -44,7 +53,12 @@ class PedidosController extends AppController {
 			}
 			$count++;
 		}
-		$this->set(compact('status','pedidos'));
+		$this->loadModel('Acabado');
+		$acabados = $this->Acabado->find('list', array(
+			'fields' => array('Acabado.acabado', 'Acabado.acabado')
+		));
+		$acabados = array_merge(array('Todos'), $acabados);
+		$this->set(compact('status','pedidos', 'acabados'));
     }
 
 	
