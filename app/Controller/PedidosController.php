@@ -46,6 +46,7 @@ class PedidosController extends AppController {
 		}
 		$this->set(compact('status','pedidos'));
     }
+
 	
 	function admin_pedidos() {
 		
@@ -226,13 +227,22 @@ class PedidosController extends AppController {
 					)
 				);
 				$this->Pedido->save($update_pedido);
-				$this->redirect(array('action' => 'admin_pedidos'));	
+				$this->redirect(array('action' => 'admin_info_despacho',$this->data['Pedido']['id']));	
 			} else {
 				$this->Session->setFlash('Se debe introducir un número de factura');
 			}
 		}
 		$pedido = $this->Pedido->findById($id);
 		$this->set(compact('pedido','id'));
+	}
+	
+	function admin_info_despacho($pedido_id) {
+		$pedido = $this->Pedido->findById($pedido_id);
+		$hoy = date('d/m/Y');
+		$this->layout = 'sin_menu';
+		$ano = $this->Config->obtenerAno($pedido['Pedido']['fecha']);
+		$pedido['Pedido']['num_pedido'] = $pedido['Pedido']['num_pedido'].$ano[2].$ano[3];
+		$this->set(compact('pedido','hoy'));
 	}
 	
 	function admin_pedido_terminado($id) {
@@ -255,7 +265,7 @@ class PedidosController extends AppController {
 		));
 		$this->Cuenta->save($cuenta);
 		$this->Session->setFlash('El pedido ha sido despachado y se creo una cuenta');
-		$this->redirect(array('action' => 'admin_pedidos'));	
+		$this->redirect(array('action' => 'admin_info_despacho',$id));	
 	}
 	
 	function admin_asignar_cajas($pedido_id) {
