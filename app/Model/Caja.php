@@ -17,6 +17,12 @@ class Caja extends AppModel {
                  'associationForeignKey'  => 'pedido_id',
             )
     );
+	public $hasMany = array(
+		'CajasPedido' => array(
+			'className'  => 'CajasPedido',
+			'foreignKey'    => 'caja_id',
+		),
+    );
 	
 	function generar_codigo() {
 	$codigo = '';

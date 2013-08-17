@@ -79,6 +79,8 @@
 	if ($rol == 'cliente') { ?>
 		<li class = "option"><?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'index')); ?>
 		</li>
+		<li class = "option"><?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'index')); ?>
+		</li>
 	<?php
 	}
 	?>

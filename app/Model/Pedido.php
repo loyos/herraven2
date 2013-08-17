@@ -19,6 +19,12 @@ class Pedido extends AppModel {
         ),
     );
 	
+	public $hasMany = array(
+		'CajasPedido' => array(
+			'className'  => 'CajasPedido',
+			'foreignKey'    => 'pedido_id',
+		),
+    );
 	
 	var $hasAndBelongsToMany = array(
         'Caja' =>

@@ -4,7 +4,7 @@ class PedidosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','Search.Prg');
-	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja','Cuenta');
+	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja','Cuenta','Almacencliente');
     public $presetVars = true; // using the model configuration
 	public $paginate = array();
 
@@ -269,6 +269,17 @@ class PedidosController extends AppController {
 				'fecha' => $hoy
 			)
 		);
+		$data = array(
+			'Almacencliente' => array(
+				'tipo' => 'entrada',
+				'articulo_id'=> $pedido['Articulo']['id'],
+				'cajas' => $pedido['Pedido']['cantidad_cajas'],
+				'acabado_id' => $pedido['Pedido']['acabado_id'],
+				'pedido_id' => $id,
+				'mes' => $this->Config->obtenerMes($hoy),
+			)
+		);
+		$this->Almacencliente->save($data);
 		$this->Pedido->save($update_pedido);
 		
 		//Crear cuenta
