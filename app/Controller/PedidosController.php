@@ -396,6 +396,14 @@ class PedidosController extends AppController {
 		));
 		$this->Pedido->save($update);
 		$this->CajasPedido->deleteAll(array('CajasPedido.pedido_id' => $id),false);
+		$cuenta = $this->Cuenta->find('first',array(
+			'conditions' => array('Cuenta.pedido_id' => $id)
+		));
+		$update = array('Cuenta' => array(
+			'id' => $cuenta['Cuenta']['id'],
+			'status' => 'Cancelada' 
+		));
+		$this->Cuenta->save($update);
 		$this->Session->setFlash('El pedido se canceló con éxito');
 		$this->redirect(array('action' =>$action));
 	}
