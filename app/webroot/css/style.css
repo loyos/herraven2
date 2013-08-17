@@ -289,6 +289,11 @@ table.tabla_ver td, table.tabla_ver th{
 	margin-left: 25px;
 }
 
+.imagen_catalogo img{
+	border: 3px solid rgb(0, 168, 211);
+	padding: 2px;
+}
+
 .articulo_catalogo {
 	width:795px;
 	overflow: hidden;
