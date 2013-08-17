@@ -44,7 +44,7 @@ class PreciosController extends AppController {
 		$acabados = $this->Acabado->find('list',array(
 			'fields' => array('id','acabado')
 		));
-		$acabados[0]= '';
+		$acabados['Nada']= 'Sin acabado';
 		if (!empty($this->data['Precio']['acabado_id'])) {
 			$acabado_seleccionado = $this->data['Precio']['acabado_id'];
 			$materias = $this->Materiasprima->find('all');
@@ -62,20 +62,30 @@ class PreciosController extends AppController {
 			));
 			if ($id == 1) {
 				foreach ($articulos as $a) {
-					$existe_acabado =  $this->AcabadosMateriasprima->find('all',array(
-						'conditions' => array(
-							'AcabadosMateriasprima.acabado_id' => $this->data['Precio']['acabado_id'],
-							'AcabadosMateriasprima.articulo_id' => $a['Articulo']['id']
-						)
-					));
-					if (!empty($existe_acabado)){
-						$acum_precio = $this->Articulo->calcular_costo_total($a['Articulo']['id'],$this->data['Precio']['acabado_id']);
+					if ($this->data['Precio']['acabado_id'] == 'Nada') {
+						$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id']);
 						$precio_articulo[] = array (
 							'articulo' => $a['Articulo']['descripcion'],
 							'precio' => $acum_precio,
 							'codigo' => $a['Articulo']['codigo'],
 							'cantidad' => $a['Articulo']['cantidad_por_caja']
 						);
+					} else {
+						$existe_acabado =  $this->AcabadosMateriasprima->find('all',array(
+							'conditions' => array(
+								'AcabadosMateriasprima.acabado_id' => $this->data['Precio']['acabado_id'],
+								'AcabadosMateriasprima.articulo_id' => $a['Articulo']['id']
+							)
+						));
+						if (!empty($existe_acabado)){
+							$acum_precio = $this->Articulo->calcular_costo_total($a['Articulo']['id'],$this->data['Precio']['acabado_id']);
+							$precio_articulo[] = array (
+								'articulo' => $a['Articulo']['descripcion'],
+								'precio' => $acum_precio,
+								'codigo' => $a['Articulo']['codigo'],
+								'cantidad' => $a['Articulo']['cantidad_por_caja']
+							);
+						}
 					}
 				};
 				
@@ -84,20 +94,30 @@ class PreciosController extends AppController {
 				
 				$ganancia = $precio['Precio']['ganancia'];
 				foreach ($articulos as $a) {
-					$existe_acabado =  $this->AcabadosMateriasprima->find('all',array(
-						'conditions' => array(
-							'AcabadosMateriasprima.acabado_id' => $this->data['Precio']['acabado_id'],
-							'AcabadosMateriasprima.articulo_id' => $a['Articulo']['id']
-						)
-					));
-					if (!empty($existe_acabado)){
-						$acum_precio = $this->Articulo->calcular_costo_total($a['Articulo']['id'], $this->data['Precio']['acabado_id'],$ganancia);
+					if ($this->data['Precio']['acabado_id'] == 'Nada') {
+						$acum_precio = $this->Articulo->calcular_precio($a['Articulo']['id'],$ganancia);
 						$precio_articulo[] = array (
 							'articulo' => $a['Articulo']['descripcion'],
-							'codigo' => $a['Articulo']['codigo'],
 							'precio' => $acum_precio,
+							'codigo' => $a['Articulo']['codigo'],
 							'cantidad' => $a['Articulo']['cantidad_por_caja']
 						);
+					} else {
+						$existe_acabado =  $this->AcabadosMateriasprima->find('all',array(
+							'conditions' => array(
+								'AcabadosMateriasprima.acabado_id' => $this->data['Precio']['acabado_id'],
+								'AcabadosMateriasprima.articulo_id' => $a['Articulo']['id']
+							)
+						));
+						if (!empty($existe_acabado)){
+							$acum_precio = $this->Articulo->calcular_costo_total($a['Articulo']['id'], $this->data['Precio']['acabado_id'],$ganancia);
+							$precio_articulo[] = array (
+								'articulo' => $a['Articulo']['descripcion'],
+								'codigo' => $a['Articulo']['codigo'],
+								'precio' => $acum_precio,
+								'cantidad' => $a['Articulo']['cantidad_por_caja']
+							);
+						}
 					}
 				};
 			}
