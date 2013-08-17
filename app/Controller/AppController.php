@@ -61,43 +61,45 @@ class AppController extends Controller {
 		$cliente_perfil = false;
 		$cliente_almacen = false;
 		$cliente_catalogo = false;
-		
-		if ($this->Auth->user('admin_usuario') == 1) {
-			$admin_usuario = true;
-		} 
-		if ($this->Auth->user('admin_catalogo') == 1) {
-			$admin_catalogo = true;
-		} 
-		if ($this->Auth->user('admin_materia_prima') == 1) {
-			$admin_materia_prima = true;
-		} 
-		if ($this->Auth->user('admin_almacen') == 1) {
-			$admin_almacen = true;
-		} 
-		if ($this->Auth->user('admin_pedidos') == 1) {
-			$admin_pedidos = true;
-		} 
-		if ($this->Auth->user('admin_despachos') == 1) {
-			$admin_despachos = true;
-		} 
-		if ($this->Auth->user('admin_cuentas') == 1) {
-			$admin_cuentas = true;
-		} 
-		if ($this->Auth->user('admin_almacenes_clientes') == 1) {
-			$admin_almacenes_clientes = true;
-		} 
-		if ($this->Auth->user('admin_reportes') == 1) {
-			$admin_reportes = true;
-		} 
-		if ($this->Auth->user('cliente_perfil') == 1) {
-			$cliente_perfil = true;
-		} 
-		if ($this->Auth->user('cliente_almacen') == 1) {
-			$cliente_almacen = true;
-		} 
-		if ($this->Auth->user('cliente_catalogo') == 1) {
-			$cliente_catalogo = true;
-		} 
+		if (!empty($user_id)) {
+			$user = $this->User->findById($user_id);
+			if ($user['User']['admin_usuario'] == 1) {
+				$admin_usuario = true;
+			} 
+			if ($user['User']['admin_catalogo'] == 1) {
+				$admin_catalogo = true;
+			} 
+			if ($user['User']['admin_materia_prima'] == 1) {
+				$admin_materia_prima = true;
+			} 
+			if ($user['User']['admin_almacen'] == 1) {
+				$admin_almacen = true;
+			} 
+			if ($user['User']['admin_pedidos'] == 1) {
+				$admin_pedidos = true;
+			} 
+			if ($user['User']['admin_despachos'] == 1) {
+				$admin_despachos = true;
+			} 
+			if ($user['User']['admin_cuentas'] == 1) {
+				$admin_cuentas = true;
+			} 
+			if ($user['User']['admin_almacenes_clientes'] == 1) {
+				$admin_almacenes_clientes = true;
+			} 
+			if ($user['User']['admin_reportes'] == 1) {
+				$admin_reportes = true;
+			} 
+			if ($user['User']['cliente_perfil'] == 1) {
+				$cliente_perfil = true;
+			} 
+			if ($user['User']['cliente_almacen'] == 1) {
+				$cliente_almacen = true;
+			} 
+			if ($user['User']['cliente_catalogo'] == 1) {
+				$cliente_catalogo = true;
+			} 
+		}
 		$this->set(compact('admin_usuario','admin_catalogo','admin_materia_prima','admin_almacen','admin_pedidos','admin_despachos','admin_cuentas','admin_almacenes_clientes','admin_reportes','cliente_perfil','cliente_almacen','cliente_catalogo','user_id','rol'));
 		
 	}

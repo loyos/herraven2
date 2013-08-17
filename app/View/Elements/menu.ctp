@@ -60,10 +60,6 @@
 		</ul>
 	</li>
 	<?php } ?>
-	<li class = "option"><?php echo $this->Html->link('Catálogo',array('controller' => 'articulos', 'action' => 'subcategoria_catalogo')); ?></li>
-	<ul>
-			<li class = "children"></li>
-	</ul>
 	<?php
 	}
 	?>
@@ -77,10 +73,15 @@
 	<?php
 		}
 	if ($rol == 'cliente') { ?>
+		<?php if ($cliente_catalogo) { ?>
+			<li class = "option"><?php echo $this->Html->link('Catálogo',array('controller' => 'articulos', 'action' => 'subcategoria_catalogo')); ?></li>
+		<?php }?>
 		<li class = "option"><?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'index')); ?>
 		</li>
+		<?php if ($cliente_almacen) { ?>
 		<li class = "option"><?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'index')); ?>
 		</li>
+		<?php }?>
 	<?php
 	}
 	?>
