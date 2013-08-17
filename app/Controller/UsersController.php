@@ -53,12 +53,20 @@ class UsersController extends AppController {
 				if ($this->JqImgcrop->uploadImage($this->data['User']['Foto'], 'img/users', '')) {
 					$data['User']['imagen'] = $this->data['User']['Foto']['name'];
 				}
+			} elseif (!empty($id)) {
+				$u = $this->User->findById($id);
+				$data['User']['imagen'] = $u['User']['imagen'];
 			}
-			if ($this->User->save($data,array('validate' => 'first'))) {
-				$this->Session->setFlash("Los datos se guardaron con éxito");
-				$this->redirect(array('action' => 'admin_index'));
+			if (!empty($data['User']['imagen'])) {
+				if ($this->User->save($data,array('validate' => 'first'))) {
+					$this->Session->setFlash("Los datos se guardaron con éxito");
+					$this->redirect(array('action' => 'admin_index'));
+				} else {
+					$titulo = '';
+				}
 			} else {
-				$titulo = '';
+				$this->Session->setFlash("Debes seleccionar una foto");
+				$this->redirect(array('action' => 'admin_editar',$id));
 			}
 		} elseif (!empty($id)) {
 			$this->data = $this->User->findById($id);

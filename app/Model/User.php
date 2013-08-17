@@ -56,6 +56,10 @@ class User extends AppModel {
 			'rule' => 'notEmpty_f',
 			'message' => 'Este campo no puede quedar vacío.'
 		),
+		'imagen' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Este campo no puede quedar vacío.'
+		),
     );
 	
 	function notEmpty_f($field){
