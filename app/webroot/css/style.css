@@ -17,8 +17,58 @@ body {
 	padding:20px;
 	margin-top: 40px;
 	overflow: hidden;
-	
+}
 
+.editar_perfil a{
+	float: right;
+	text-decoration: none;
+	font-size: 14px;
+	margin-top: 100px;
+}
+
+.foto{
+	float: left;
+	padding: 3px;
+	border: 4px solid #D7E4E8;
+	padding-bottom: 0px;
+	height: 103px;
+}
+
+.username {
+	color: #009FC5;
+	font-size: 30px;
+	font-weight: bold;
+	margin-top: 40px;
+	margin-left: 20px;
+	float: left;
+}
+
+.perfil_arriba{
+	margin-top: 20px;
+	padding-left: 40px;
+	border-bottom: 3px solid #D7E4E8;
+	height: 140px;
+}
+
+.username span{
+	font-size: 34px;
+	color: #454441;
+}
+
+.perfil_abajo{
+	color: #009FC5;
+	padding-left: 40px;
+	padding-top: 20px;
+	/*border-bottom: 2px solid #D7E4E8; */
+}
+
+.perfil_abajo td{
+	padding-left: 40px;
+}
+
+.perfil_abajo span{
+	color: #454441;
+	font-weight: bold;
 }
 
 label {
