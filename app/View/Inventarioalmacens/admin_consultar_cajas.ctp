@@ -1,6 +1,7 @@
 <div class="wrap">
 <?php 
 echo $this->Html->link('<<Regresar',array('action' => 'admin_inventario'));
+echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el almacén<br>';
 ?>
 <div class="info_izquierda">
 	<table>
@@ -31,7 +32,11 @@ foreach ($cajas as $c){
 	echo '<tr>';
 	echo '<td>'.$count.'</td>';
 	echo '<td>'.$c['Inventarioalmacen']['fecha'].'</td>';
-	echo '<td style="font-weight:bold">'.$c['Caja']['codigo'].'</td>';
+	if (empty($c['Pedido'])){
+		echo '<td style="font-weight:bold; color:red;">'.$c['Caja']['codigo'].'</td>';
+	} else{
+		echo '<td style="font-weight:bold">'.$c['Caja']['codigo'].'</td>';
+	}
 	echo '</tr>';
 	$count++;
 }
