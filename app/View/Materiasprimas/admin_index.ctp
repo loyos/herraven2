@@ -17,7 +17,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<tr>';
 			echo '<td>'.$m['Materiasprima']['descripcion'].'</td>';
 			echo '<td>'.$m['Materiasprima']['unidad'].'</td>';
-			echo '<td>'.$m['Materiasprima']['precio'].'</td>';
+			echo '<td>'.$this->Herra->format_number($m['Materiasprima']['precio']).'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
 				'action' => 'admin_editar',$m['Materiasprima']['id'])).'<br>';
 			if($borrar[$m['Materiasprima']['id']]==1){
