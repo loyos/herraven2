@@ -263,8 +263,8 @@ class ArticulosController extends AppController {
 			$data = $this->data;
 			$entro = false;
 			foreach ($data['cantidad'] as $key => $value){
-				$acabado = $this->Acabado->findById($data['acabados'][$key]);
 				if ($value == 1){
+					$acabado = $this->Acabado->findById($data['acabados'][$key]);
 					$entro = true;
 					$cajas = $data['cajas'][$key];
 					if (empty($cajas) || $cajas < 0) {
@@ -310,10 +310,11 @@ class ArticulosController extends AppController {
 				$this->Session->setFlash("Debes escoger mínimo un artículo");
 				$this->redirect(array('action' => 'admin_forecast'));
 			}
+			$this->layout = "sin_menu";
 			$this->set(compact('articulos_mp'));
 		}
 	}
-	
+
 	function admin_forecast(){
 		
 		// debug($this->Articulo);

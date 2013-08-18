@@ -2,8 +2,7 @@
 <?php 
 if (!empty($articulos_mp)) {
 		echo $this->Html->link('Regresar',array('action' => 'admin_forecast'));
-		echo '<br>';
-		echo $this->Form->button('Ver pdf',array('onclick' => 'window.print()', 'class' => 'link'));
+		echo $this->Html->link('Ver reporte',array('action' => 'admin_ver_forecast','ext' => 'pdf'),array('target'=>'_blank'));
 		foreach ($articulos_mp as $a_mp) {
 			?>
 			<h2><?php echo $a_mp[0]['Articulo'].'  '.$a_mp[0]['acabado'].'  '.$a_mp[0]['cajas'].'cajas  '.$a_mp[0]['piezas'],'pz';?></h2>
@@ -24,8 +23,3 @@ if (!empty($articulos_mp)) {
 	}
 ?>
 </div>
-<script>
-  function imprimir() {
-  window.print()
-});
-</script>
