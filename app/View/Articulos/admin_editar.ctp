@@ -138,7 +138,7 @@ $materias = array();
 	echo '<td class="titulo_tabla">';
 	echo '</td>';
 	echo '</tr>';
-	for ($i=0;$i<=3;$i++){
+	for ($i=0;$i<=($numero_materias-1);$i++){
 		echo '<tr>';
 		echo '<td>';
 		echo $this->Form->input('materiasprima_id',array(
@@ -170,7 +170,7 @@ $materias = array();
 			echo $m_a['acabado'][0];
 			echo '</td>';
 			echo '</tr>';
-			for ($i=0;$i<=3;$i++){
+			for ($i=0;$i<=($numero_materias-1);$i++){
 				if (!empty($m_a['id'][$i])) {
 					$valor_m = $m_a['id'][$i];
 				} else {
