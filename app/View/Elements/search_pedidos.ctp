@@ -16,7 +16,8 @@
 			echo "<td>";
 			echo $this->Form->select('Pedido.status', array(
 				'pendiente' => 'No disponible',
-				'cancelado' => 'Cancelado'
+				'cancelado' => 'Cancelado',
+				'disponible' => 'Disponible'
 			));
 			// echo $this->Form->input('wachu', array('div' => false, 'label' => false));
 			echo "</td></tr>";

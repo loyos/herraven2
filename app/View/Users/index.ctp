@@ -15,64 +15,73 @@
 			</div>
 		</div>
 		<div class = "perfil_abajo">
-			<table>
-				<tr>
-					<td>
-						<span> Denominación Legal: </span>
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['denominacion_legal']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span> RIF: </span>
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['rif']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span> Representante: </span> 
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['representante']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span> Ciudad: </span> 
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['ciudad']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span>Dirección:</span> 
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['direccion']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span>Teléfonos: </span>
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['telefono_uno'].' / '. $usuario['Cliente']['telefono_uno']; ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span>Email Representante: </span>
-					</td>
-					<td>
-						<?php echo $usuario['Cliente']['email_representante']; ?>
-					</td>
-				</tr>
-			</table>
+			<?php //debug($usuario);
+				if($usuario['User']['rol'] != 'admin') {
+			?>
+				<table>
+					<tr>
+						<td>
+							<span> Denominación Legal: </span>
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['denominacion_legal']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span> RIF: </span>
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['rif']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span> Representante: </span> 
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['representante']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span> Ciudad: </span> 
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['ciudad']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>Dirección:</span> 
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['direccion']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>Teléfonos: </span>
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['telefono_uno'].' / '. $usuario['Cliente']['telefono_uno']; ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>Email Representante: </span>
+						</td>
+						<td>
+							<?php echo $usuario['Cliente']['email_representante']; ?>
+						</td>
+					</tr>
+				</table>
+			<?php
+				}else{
+					echo '<span> Email:  </span>' . $usuario['User']['email'];
+				}
+			?>
+				
 		</div>
 	</div>
 </div>

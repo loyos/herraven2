@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'admin_index'));
+echo $this->Html->link('Regresar',array('action' => 'index'));
 ?>
 <h1><?php echo $titulo ?></h1>
 <div id="cambiar_pass" style="text-decoration:underline; cursor:pointer">
