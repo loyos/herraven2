@@ -1,17 +1,17 @@
-<div class="wrap">
+<div class="wrap ingresos">
 	<?php
-	if (!empty($articulos)) { 
-		echo '<table style="margin-left:35px;">';
+	if (!empty($articulos)) {
+		echo '<table style="margin-left:35px;"  cellspacing="20px">';
 		$i = 1;
 		foreach ($articulos as $a) {
 			if ($i ==1 || ($i-1)%2 == 0 ){
 				echo '<tr>';
 			}
 		?>
-		<td style="width:420px;">
+		<td class= "polaroid" style="width:380px;">
 			<table>
 				<tr>
-					<td><?php echo $this->Html->image('articulos/'.$a['Articulo']['imagen'],array('width' => '150px')); ?></td>
+					<td class="fotos"><?php echo $this->Html->image('articulos/'.$a['Articulo']['imagen'],array('width' => '150px', 'height' => '150px')); ?></td>
 					<td style="text-align:center">
 						<span style="font-weight:bold"><?php echo $a['Articulo']['codigo']; ?></span>
 						<br>

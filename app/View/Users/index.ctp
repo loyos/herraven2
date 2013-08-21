@@ -15,6 +15,7 @@
 			</div>
 		</div>
 		<div class = "perfil_abajo">
+			<?php // echo $this->Herra->format_number(100); ?>
 			<?php //debug($usuario);
 				if($usuario['User']['rol'] != 'admin') {
 			?>

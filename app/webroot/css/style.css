@@ -294,6 +294,21 @@ table.tabla_ver td, table.tabla_ver th{
 	padding: 2px;
 }
 
+.ingresos span{
+	padding: 10px;
+}
+
+.ingresos .polaroid {
+	padding: 10px;
+	border: 1px solid #00A8D3;
+	border-radius: 3px;
+	box-shadow: 3px 3px 5px #00A8D3;
+}
+
+.polaroid img{
+	border: 2px solid #00A8D3;
+}
+
 .articulo_catalogo {
 	width:795px;
 	overflow: hidden;
