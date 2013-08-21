@@ -51,6 +51,11 @@ class PedidosController extends AppController {
 					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
 				}
 			}
+			$update = array('Pedido' => array(
+				'id' => $p['Pedido']['id'],
+				'status' => $status[$p['Pedido']['id']],
+			));
+			$this->Pedido->save($update);
 			$count++;
 		}
 		$this->loadModel('Acabado');
@@ -109,6 +114,11 @@ class PedidosController extends AppController {
 				} else {
 					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
 				}
+				$update = array('Pedido' => array(
+					'id' => $p['Pedido']['id'],
+					'status' => $status[$p['Pedido']['id']],
+				));
+			$this->Pedido->save($update);
 				$count++;
 			}
 			

@@ -7,7 +7,7 @@ echo $this->Html->link('Regresar',array('action' => 'index'));
 	Cambiar password
 </div>
 <?php 
-	echo $this->Form->create('User',array('type' => 'file'));
+	echo $this->Form->create('User',array('type' => 'file','onSubmit' => 'return checkSize();'));
 	echo '<table>';
 	echo '<tr>';
 	echo '<td>Usuario</td>';
@@ -77,7 +77,8 @@ echo $this->Html->link('Regresar',array('action' => 'index'));
 	echo '<td>';
 	echo $this->Form->input('Foto',array(
 		'label' => false,
-		'type' => 'file'
+		'type' => 'file',
+		'id' => 'upload_imagen'
 	));
 	echo '</td>';
 	echo '</tr>';
@@ -95,4 +96,21 @@ $('#cambiar_pass').click(function() {
     // Animation complete.
   });
 });
+function checkSize() {
+	var max_img_size = 1803600;
+	var input2 = document.getElementById("upload_imagen");
+  
+    if(input2.files && input2.files.length == 1)
+    {           
+        if (input2.files[0].size > max_img_size) 
+        {
+			var clon = $("#upload_imagen").clone(); 
+			$("#upload_imagen").replaceWith(clon);
+            alert("Las imágenes no pueden superar 1.8 MB");
+            return false;
+        }
+    }
+	
+    
+}
 </script>
