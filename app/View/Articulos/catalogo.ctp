@@ -23,10 +23,13 @@ foreach ($info_articulos as $a) { ?>
 	<div class="info_catalogo">
 		<table style="width: 80%;">
 			<tr>
-				<td class="precio_<?php echo $a['id']?>" style = "width: 100px;">
+				<td style = "width: 100px;">
 					<?php 
 					
 					echo  '<b> Código ' .$a['codigo']. '</b><br><br>';
+					?>
+					<span class="precio_<?php echo $a['id']?>" >
+					<?php
 					echo 'Precio unitario';
 					if (!empty($precio[$a['id']])){?>
 						<?php echo $this->Herra->format_number($precio[$a['id']]);
@@ -34,6 +37,7 @@ foreach ($info_articulos as $a) { ?>
 						<?php echo $this->Herra->format_number($a['precio']);
 					}
 					?>
+					</span>
 				</td>
 				<td style = "width: 100px;"></td>
 				<td style = "width: 400px;">
@@ -134,7 +138,7 @@ function calcula_precio_acabado(acabado_id,id) {
 		data: {id:id,acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
-		$('td.precio_'+id).html('Bs.'+msg+'<br>Precio unitario');
+		$('span.precio_'+id).html('Bs.'+msg+'<br>Precio unitario');
 		cajas = $('td.precio_caja_'+id).attr('name');
 		$('td.precio_caja_'+id).html('Bs.'+msg*cajas+'<br>Precio caja');
 	});
