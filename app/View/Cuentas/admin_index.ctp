@@ -27,13 +27,13 @@
 			echo '<td>'.$c['Pedido']['num_pedido'].'</td>';
 			echo '<td>'.$c['Pedido']['factura'].'</td>';
 			echo '<td>'.$c['Pedido']['Cliente']['denominacion_legal'].'</td>';
-			echo '<td>'.$c['Pedido']['cuenta'].'</td>';
+			echo '<td>'.$this->Herra->format_number($c['Pedido']['cuenta']).'</td>';
 			if(!empty($c['Cuenta']['deposito'])){
 				$saldo = $c['Pedido']['cuenta']-$c['Cuenta']['deposito'];
 			} else {
 				$saldo = $c['Pedido']['cuenta'];
 			}
-			echo '<td>'.$saldo.'</td>';
+			echo '<td>'.$this->Herra->format_number($saldo).'</td>';
 			echo '<td>'.$c['Cuenta']['status'].'</td>';
 			echo '</tr>';
 		}
