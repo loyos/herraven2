@@ -432,9 +432,13 @@ class ArticulosController extends AppController {
 				$ano_pedido = $this->Config->obtenerAno($ultimo_pedido['Pedido']['fecha']);
 			}
 			if ($ano_hoy == $ano_pedido) {
-				$num_pedido = $ultimo_pedido['Pedido']['num_pedido']+1;
+				if (!empty($ultimo_pedido['Pedido']['num_pedido'])) {
+					$num_pedido = $ultimo_pedido['Pedido']['num_pedido']+1;
+				} else {
+					$num_pedido = 1;
+				}
 			} else {
-				$num_pedido = 1;
+					$num_pedido = 1;
 			}
 			$precio_id = $this->Auth->User('Cliente.precio_id');
 			$lista_precio = $this->Precio->findById($precio_id);
