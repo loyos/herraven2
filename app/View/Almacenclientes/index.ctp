@@ -1,7 +1,7 @@
 <div class="wrap">
 <h1>Inventario Almacén</h1>
 <?php 
-	if (!empty($articulos)) {
+	if (!empty($articulos) && !empty($entradas_articulo)) {
 		?>
 		<table class="tabla_index">
 		<tr>
@@ -44,6 +44,8 @@
 			}
 		}
 		echo '</table>';
+	} else {
+		echo 'No hay articulos en el almacén';
 	}
 ?>
 </div>

@@ -18,6 +18,7 @@ class AlmacenclientesController extends AppController {
 		foreach ($almacen as $a) {
 			$articulos_almacen[] = $a['Almacencliente']['articulo_id']; 
 		}
+		if (!empty($articulos_almacen)) {
 		$articulos = $this->Articulo->find('all',array(
 			'conditions' => array('Articulo.id' => $articulos_almacen)
 		));
@@ -45,6 +46,7 @@ class AlmacenclientesController extends AppController {
 			'fields' => array('id','cantidad_por_caja')
 		));
 		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados'));
+		}
 	}
 	
 	function egreso($articulo_id, $acabado_id) {
