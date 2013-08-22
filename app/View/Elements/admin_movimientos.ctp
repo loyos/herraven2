@@ -14,14 +14,18 @@ if (!empty($entradas)) {
 	<?php
 	foreach($entradas as $key => $m) {
 		if (!empty($m[0]['SUM(`Inventariomaterial`.`cantidad`)'])) {
-			$entrada = $m[0]['SUM(`Inventariomaterial`.`cantidad`)'];
+			$entrada1 = $m[0]['SUM(`Inventariomaterial`.`cantidad`)'];
+			$entrada = number_format($entrada1,2,',','.');
 		} else {
 			$entrada = 0;
+			$entrada1 = 0;
 		}
 		if (!empty($salidas[$key][0]['SUM(`Inventariomaterial`.`cantidad`)'])) {
-			$salida = $salidas[$key][0]['SUM(`Inventariomaterial`.`cantidad`)'];
+			$salida1 = $salidas[$key][0]['SUM(`Inventariomaterial`.`cantidad`)'];
+			$salida = number_format($salida1,2,',','.');
 		} else {
 			$salida = 0;
+			$salida1 = 0;
 		}
 		if (!empty($entradas[$key-1])) {
 			
@@ -36,14 +40,18 @@ if (!empty($entradas)) {
 				$s_inicial = 0;
 			}
 			$saldo_inicial = floatval($e_inicial)-floatval($s_inicial);
+			$saldo_inicial = number_format($saldo_inicial,2,',','.');
 		} else {
 			$saldo_inicial = 'Sin registrar';
 		}
 		if ($m['Inventariomaterial']['trimestre'] == $trimestre) {
-			$saldo = $entrada-$salida;
+			$saldo = $entrada1-$salida1;
+			$saldo = number_format($saldo,2,',','.');
 			$saldo = $saldo.' (Trimestre en curso)';
+		} else {
+			$saldo = $entrada-$salida;
+			$saldo = number_format($saldo,2,',','.');
 		}
-		$saldo = $entrada-$salida;
 		echo '<tr>';
 		echo '<td>'.$m['Inventariomaterial']['trimestre'].'</td>';
 		echo '<td>'.$saldo_inicial.'</td>';

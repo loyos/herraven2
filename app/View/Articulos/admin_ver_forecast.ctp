@@ -1,5 +1,6 @@
 <div class="wrap">
 <?php 
+echo '<h1>Forecast</h1>';
 if (!empty($articulos_mp)) {
 		echo $this->Html->link('Regresar',array('action' => 'admin_forecast'));
 		echo '<br>';
@@ -13,7 +14,7 @@ if (!empty($articulos_mp)) {
 				?>
 				<tr>
 					<td><?php echo $a['Materiasprima'] ?></td>
-					<td><?php echo $a['cantidad'].$a['unidad'] ?></td>
+					<td><?php echo number_format($a['cantidad'],2,',','.').' '.$a['unidad'] ?></td>
 				</tr>
 				<?php
 			}
