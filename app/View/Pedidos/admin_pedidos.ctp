@@ -21,8 +21,10 @@
 			<tr>
 				<td>
 				<?php 
-				echo $this->Html->link('Cancelar/',array('action' => 'admin_cancelar',$p['Pedido']['id'],'admin_pedidos'));
-				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$p['Pedido']['id'],'admin_pedidos'));
+				if ($status[$p['Pedido']['id']] != 'Despachado') {
+					echo $this->Html->link('Cancelar/',array('action' => 'admin_cancelar',$p['Pedido']['id'],'admin_pedidos'));
+					echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$p['Pedido']['id'],'admin_pedidos'));
+				}
 				if ($status[$p['Pedido']['id']] == 'Preparado') {
 					echo '<br>'.$this->Html->link('/Ejecutar',array('action' => 'admin_ejecutar_despacho',$p['Pedido']['id']));
 				} 
