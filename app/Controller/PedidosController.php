@@ -300,7 +300,7 @@ class PedidosController extends AppController {
 		));
 		$this->Cuenta->save($cuenta);
 		$this->Session->setFlash('El pedido ha sido despachado y se creo una cuenta');
-		$this->redirect(array('action' => 'admin_info_despacho',$id));	
+		$this->redirect(array('action' => 'admin_pedidos'));	
 	}
 	
 	function admin_asignar_cajas($pedido_id) {
