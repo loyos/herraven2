@@ -442,6 +442,7 @@ class ArticulosController extends AppController {
 			$cuenta = $this->Articulo->calcular_costo_total($articulo_id,$acabado,$ganancia);
 			$articulo = $this->Articulo->findById($articulo_id);
 			$cuenta = $cuenta * $cantidad * $articulo['Articulo']['cantidad_por_caja'];
+			$cuenta = round($cuenta,2);
 			$nuevo_pedido = array('Pedido' => array(
 				'cliente_id' => $cliente_id,
 				'status' => 'pendiente',

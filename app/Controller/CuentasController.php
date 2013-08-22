@@ -42,7 +42,7 @@ class CuentasController extends AppController {
 			$cuenta = $this->Cuenta->findById($id);
 			$deposito = $this->data['Cuenta']['monto']+$cuenta['Cuenta']['deposito'];
 			$total = $cuenta['Pedido']['cuenta'];
-			if ($total <= $deposito) {
+			if ($total == $deposito) {
 				$update = array(
 				'Cuenta' => array(
 					'id' => $id,
@@ -50,6 +50,9 @@ class CuentasController extends AppController {
 					'status' => 'Pagado'
 				)
 			);
+			} elseif ($deposito > $total) {
+				$this->Session->setFlash('El pago supera el monto restante');
+				$this->redirect(array('action' => 'admin_pagar',$id));
 			} else {
 				$update = array(
 					'Cuenta' => array(
