@@ -13,7 +13,7 @@ echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el alma
 		</tr>
 		<tr>
 			<td><?php echo $num_cajas ?></td>
-			<td><?php echo $articulo['Articulo']['descripcion'] ?></td>
+			<td><?php echo $articulo['Articulo']['codigo'] ?></td>
 			<td><?php echo $acabado['Acabado']['acabado'] ?></td>
 			<td><?php echo $articulo['Articulo']['cantidad_por_caja'] ?></td>
 		</tr>
