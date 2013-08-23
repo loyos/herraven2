@@ -25,7 +25,13 @@
 				<td><?php echo $p['Pedido']['num_pedido'] ?></td>
 				<td><?php echo $p['Cliente']['denominacion_legal'] ?></td>
 				<td><?php echo $p['Articulo']['codigo'] ?></td>
-				<td><?php echo $p['Acabado']['acabado'] ?></td>
+				<?php if (!empty($p['Acabado']['acabado'])) { 
+					$a =$p['Acabado']['acabado'];
+					} else {
+						$a = 'Sin acabado';
+					}
+				?>
+				<td><?php echo $a ?></td>
 				<td><?php echo $p['Pedido']['cantidad_cajas'] ?></td>
 				<td><?php echo $p['Pedido']['cantidad_cajas'] * $p['Articulo']['cantidad_por_caja'] ?></td>
 				<td><?php echo $status[$p['Pedido']['id']] ?></td>

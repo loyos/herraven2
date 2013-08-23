@@ -539,6 +539,7 @@ class ArticulosController extends AppController {
 				}
 				$count++;
 			}
+			$acabado_articulo[$a][0] = 'Sin acabado';
 		}
 		// fin algoritmo de busqueda de acabados
 		for ($count=1; $count<=25; $count++){

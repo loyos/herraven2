@@ -14,7 +14,11 @@ echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el alma
 		<tr>
 			<td><?php echo $num_cajas ?></td>
 			<td><?php echo $articulo['Articulo']['codigo'] ?></td>
+			<?php if (!empty($acabado['Acabado']['acabado'])) { ?>
 			<td><?php echo $acabado['Acabado']['acabado'] ?></td>
+			<?php } else { ?>
+				<td>Sin acabado</td>
+			<?php }?>
 			<td><?php echo $articulo['Articulo']['cantidad_por_caja'] ?></td>
 		</tr>
 	</table>
