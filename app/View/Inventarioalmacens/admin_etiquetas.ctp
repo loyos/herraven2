@@ -33,7 +33,9 @@
 					echo '<div class="codigo_caja">';
 					echo $a['Inventarioalmacen']['Articulo']['codigo'];
 					echo '<br>';
-					echo $a['Inventarioalmacen']['Acabado']['acabado'];
+					if (!empty($a['Inventarioalmacen']['Acabado']['acabado'])){
+						echo $a['Inventarioalmacen']['Acabado']['acabado'];
+					}
 					echo '</div>';
 					?>
 				</td>

@@ -82,6 +82,7 @@ class InventarioalmacensController extends AppController {
 		$acabados = $this->Acabado->find('list',array(
 			'fields' => array('Acabado.id','Acabado.acabado')
 		));
+		$acabados[0] = 'Sin acabado';
 		$this->set(compact('acabados','articulo'));
 	}
 	

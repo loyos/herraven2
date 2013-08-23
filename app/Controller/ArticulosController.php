@@ -418,7 +418,11 @@ class ArticulosController extends AppController {
 				}
 			}
 			$cantidad = $data['cantidad'][$articulo_id];
-			$acabado = $data['acabado'][$articulo_id]; 
+			if (!empty($data['acabado'][$articulo_id])) {
+				$acabado = $data['acabado'][$articulo_id]; 
+			} else {
+				$acabado = 0;
+			}
 			$cliente_id = $this->User->findById($this->Auth->User('id'));
 			$cliente_id = $cliente_id['User']['cliente_id'];
 			$ultimo_pedido = $this->Pedido->find('first',array(
@@ -443,7 +447,11 @@ class ArticulosController extends AppController {
 			$precio_id = $this->Auth->User('Cliente.precio_id');
 			$lista_precio = $this->Precio->findById($precio_id);
 			$ganancia = $lista_precio['Precio']['ganancia'];
-			$cuenta = $this->Articulo->calcular_costo_total($articulo_id,$acabado,$ganancia);
+			if (!empty($acabado)) {
+				$cuenta = $this->Articulo->calcular_costo_total($articulo_id,$acabado,$ganancia);
+			} else {
+				$cuenta = $this->Articulo->calcular_precio($articulo_id,$ganancia);
+			}
 			$articulo = $this->Articulo->findById($articulo_id);
 			$cuenta = $cuenta * $cantidad * $articulo['Articulo']['cantidad_por_caja'];
 			$cuenta = round($cuenta,2);
