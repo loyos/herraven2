@@ -1,8 +1,5 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'admin_index'));
-?>
-<?php
 foreach ($categorias as $cat) {
 	echo '<div class="listado_categoria">';
 		echo $this->Html->link($cat['Categoria']['descripcion'], array('action' => 'admin_ver',$id,$cat['Categoria']['id']));
