@@ -438,3 +438,7 @@ input#codigo {
 .consulta_cajas th, .consulta_cajas td {
 	padding:5px;
 }
+
+.tres_espacios {
+	margin-left:25px;
+}

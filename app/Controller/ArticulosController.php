@@ -239,6 +239,7 @@ class ArticulosController extends AppController {
 	}
 	
 	function admin_ver($id,$cat_id,$sub_id=null) {
+		$hoy = date('d-m-Y');
 		$articulo = $this->Articulo->findById($id);
 		$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
 			'conditions' => array('articulo_id' => $id),
@@ -257,9 +258,9 @@ class ArticulosController extends AppController {
 		}
 		$ganancia = $articulo['Articulo']['margen_ganancia'];
 		$produccion = $articulo['Articulo']['costo_produccion'];
-		$this->set(compact('articulo','cat_id','sub_id','acabados','costo_materiaprima','costo_acabado','ganancia','produccion'));
+		$this->set(compact('articulo','cat_id','sub_id','acabados','costo_materiaprima','costo_acabado','ganancia','produccion','id','hoy'));
 	}
-	
+		
 	function admin_ver_forecast(){
 		if (!empty($this->data)) {
 			$data = $this->data;
@@ -317,6 +318,7 @@ class ArticulosController extends AppController {
 		}
 	}
 
+	
 	function admin_forecast(){
 		
 		// debug($this->Articulo);
