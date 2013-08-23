@@ -244,6 +244,8 @@ class ArticulosController extends AppController {
 			'conditions' => array('articulo_id' => $id),
 		));
 		$costo_materiaprima = $this->Articulo->calcular_costo_materiaprima($id);
+		$costo_acabado[0]['acabado'] = 'Sin acabado asociado';
+		$costo_acabado[0]['monto'] = 0;
 		foreach ($busca_acabados as $a){
 			$costo_acabado[$a['AcabadosMateriasprima']['acabado_id']]['monto'] = $this->Articulo->calcular_costo_acabado($id,$a['AcabadosMateriasprima']['acabado_id']);
 			$acabado = $this->Acabado->findById($a['AcabadosMateriasprima']['acabado_id']);
