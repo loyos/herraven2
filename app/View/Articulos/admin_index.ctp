@@ -1,7 +1,5 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('<<Regresar',array('action' => 'subcategoria_articulo'));
-echo '<br>';
 echo $this->Html->link('Agregar',array('action' => 'admin_editar',$cat_id,null,$sub_id));
 ?>
 <h1>Artículos</h1>
