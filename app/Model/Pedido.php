@@ -36,7 +36,7 @@ class Pedido extends AppModel {
     );
 	
 	public $filterArgs = array(
-		'status' => array('type' => 'like', 'field' => 'Pedido.status'),
+		'status' => array('type' => 'value', 'field' => 'Pedido.status'),
 		'denominacion_legal' => array('type' => 'like', 'field' => 'Cliente.denominacion_legal'),
 		'acabado' => array('type' => 'like', 'field' => 'Acabado.acabado'),
 	);

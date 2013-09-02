@@ -1,17 +1,21 @@
 <div class="wrap">
-<h1>Movimientos de Materia Prima</h1>
+
 <?php 
-	echo $this->Form->create('Inventariomaterial');
-	if (!empty($id_m)) {
-		$value = $id_m;
-	} else {
-		$value = 0;
-	}
-	echo $this->Form->input('materiasprima_id',array(
-		'value' => $value
-	));
-	echo $this->Form->submit('Buscar',array('class' => 'button'));
-	echo $this->Form->end();
+	echo '<div class = "search">';
+		echo $this->Form->create('Inventariomaterial');
+		if (!empty($id_m)) {
+			$value = $id_m;
+		} else {
+			$value = 0;
+		}
+		echo $this->Form->input('materiasprima_id',array(
+			'value' => $value
+		));
+		echo $this->Form->submit('Buscar',array('class' => 'button'));
+		echo $this->Form->end();
+	echo '</div>';
+	
+	echo '<h1>Movimientos de Materia Prima</h1>';
 	if (!empty($id_m)) {
 		if (!empty($entradas)){
 		?>

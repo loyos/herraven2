@@ -166,8 +166,8 @@ table.tabla_ver td, table.tabla_ver th{
 	cursor: pointer;
 }
 
-.menu li:hover{
-	
+.menu ul li a:hover{
+	color: #d7e4e8;
 }
 
 .menu ul{
@@ -189,9 +189,9 @@ table.tabla_ver td, table.tabla_ver th{
 	font-size: 16px;
 }
 
-.menu a {
-	color: white;
+.menu a{
 	text-decoration: none;
+	color: white;
 }
 
 .option:hover {
@@ -202,11 +202,20 @@ table.tabla_ver td, table.tabla_ver th{
 	color: #d7e4e8;
 }
 
-.children a:hover{
+.active{
 	color: #d7e4e8;
 }
 
-.children{
+.inactive a{
+	color: white;
+}
+
+.inactive a:hover{
+	color: #d7e4e8;
+}
+
+.children a:hover{
+	color: #d7e4e8;
 }
 
 .articulos_almacen {

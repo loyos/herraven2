@@ -1,15 +1,17 @@
 <div class="wrap">
-<?php
-echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id']));
-echo $this->Form->create('Precio');
-if (!empty($this->data['Precio']['acabado_id'])) {
-	$value = $this->data['Precio']['acabado_id'];
-} else {
-	$value = 0;
-}
-echo $this->Form->input('acabado_id',array('value' => $value));
-echo $this->Form->submit('Buscar',array('class' => 'button'));
-?>
+	<div class = "search">
+		<?php
+			echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id']));
+			echo $this->Form->create('Precio');
+			if (!empty($this->data['Precio']['acabado_id'])) {
+				$value = $this->data['Precio']['acabado_id'];
+			} else {
+				$value = 0;
+			}
+			echo $this->Form->input('acabado_id',array('value' => $value));
+			echo $this->Form->submit('Buscar',array('class' => 'button'));
+		?>
+	</div>
 <h1><?php echo $precio['Precio']['descripcion']?></h1>
 <?php
 if (!empty($acabado_seleccionado)) {
