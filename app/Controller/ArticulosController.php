@@ -318,7 +318,7 @@ class ArticulosController extends AppController {
 		}
 	}
 
-	
+	/*
 	function admin_forecast(){
 		
 		// debug($this->Articulo);
@@ -397,6 +397,45 @@ class ArticulosController extends AppController {
 			}
 		}
 	}
+	*/
+	
+	function admin_forecast($cat_id, $sub_id = null){
+		if (empty($sub_id)) {
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array('Subcategoria.categoria_id' => $cat_id)
+			));
+			foreach ($subcategorias as $s){
+				$sub_id[]= $s['Subcategoria']['id'];
+			}
+			// debug($sub_id);
+		} else {
+			$subcategoria = $this->Subcategoria->findById($sub_id);
+		}
+		$linea = $this->Categoria->findById($cat_id);
+		$articulos = $this->Articulo->find('all',array(
+					'conditions' => array('Articulo.subcategoria_id' => $sub_id),
+					'recursive' => 2
+				));
+				// debug($articulos);
+				$articulos_con_acabado = $this->AcabadosMateriasprima->find('all',array(
+					'group' => array('AcabadosMateriasprima.articulo_id')
+				));
+				foreach ($articulos_con_acabado as $a_c_a) {
+					$busca_acabados = $this->AcabadosMateriasprima->find('all',array(
+						'conditions' => array('AcabadosMateriasprima.articulo_id' => $a_c_a['AcabadosMateriasprima']['articulo_id']),
+						'group' => array('AcabadosMateriasprima.acabado_id')
+					));
+					foreach($busca_acabados as $a) {
+						$acabados_array[] = $a['AcabadosMateriasprima']['acabado_id'];
+						//$arreglo_acabados[$a['AcabadosMateriasprima']['articulo_id']]
+					}
+					$acabados[$a_c_a['AcabadosMateriasprima']['articulo_id']] = $this->Acabado->find('list', array(
+						'fields' => array('id','acabado'),
+						'conditions' => array('Acabado.id' => $acabados_array)
+					));
+				}
+				$this->set(compact('articulos','acabados'));
+	}
 	
 	function subcategoria_catalogo(){
 		$categorias = $this->Categoria->find('all',array(
@@ -406,6 +445,13 @@ class ArticulosController extends AppController {
 	}
 	
 	function subcategoria_articulo(){
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias'));
+	}
+	
+	function subcategoria_forecast(){
 		$categorias = $this->Categoria->find('all',array(
 			'contain' => array('Subcategoria')
 		));

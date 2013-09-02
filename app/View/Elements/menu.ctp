@@ -47,12 +47,14 @@
 	<?php } ?>
 	<?php if ($admin_catalogo){ ?>
 	<li class = "option <?php if(($this->params['controller'] == 'articulos' && $this->params['action'] == 'subcategoria_articulo') || 
-								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index')
+								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index') ||
+								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_listar_subcategorias') ||
+								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_ver')
 		) echo 'active'; ?> " >
 	
 	Artículos
 		<ul>
-			<li class = "children <?php if($this->params['controller'] == 'articulos' && $this->params['action'] == 'subcategoria_articulo') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'subcategoria_articulo')); ?>
 			</li>
 			<li class = "children <?php if($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
@@ -65,7 +67,9 @@
 	<li class = "option <?php if(($this->params['controller'] == 'materiasprimas' && $this->params['action'] == 'admin_index') || 
 								 ($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_index') || 
 								 ($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_movimientos') ||
-								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_forecast')
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_forecast') ||
+								 ($this->params['controller'] == 'materiasprimas' && $this->params['action'] == 'admin_editar') ||
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'subcategoria_forecast')
 		) echo 'active'; ?>">
 	
 	Materias prima
@@ -80,7 +84,7 @@
 				<?php echo $this->Html->link('Movimientos',array('controller' => 'inventariomaterials', 'action' => 'admin_movimientos')); ?>
 			</li>
 			<li class = "children <?php if($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_forecast') echo 'active'; else echo 'inactive'; ?>">
-				<?php echo $this->Html->link('Forecast',array('controller' => 'articulos', 'action' => 'admin_forecast')); ?>
+				<?php echo $this->Html->link('Forecast',array('controller' => 'articulos', 'action' => 'subcategoria_forecast')); ?>
 			</li>
 		</ul>
 	</li>
@@ -89,11 +93,12 @@
 	<li class = "option <?php if(($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_agregar') || 
 								 ($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_index') || 
 								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_inventario') ||
-								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_movimientos')
+								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_movimientos') ||
+								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_articulos')
 		) echo 'active'; ?>">
 	Almacén
 		<ul>
-			<li class = "children <?php if($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_agregar') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_articulos') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Ingreso',array('controller' => 'inventarioalmacens', 'action' => 'admin_agregar')); ?>
 			</li>
 			<li class = "children <?php if($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">

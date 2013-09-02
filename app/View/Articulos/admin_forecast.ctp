@@ -1,7 +1,7 @@
 <div class="wrap">
 <?php 
 	echo '<h1>Forecast</h1>';
-	echo $this->element('search');
+	// echo $this->element('search');  // esto es para el filtro interno, no hace falta ahorita ya que se colocara filtro previo por subcategoria
 	if (!empty($articulos)){
 		echo '<div class = "ejecutar">';
 		echo $this->Form->create('Articulo', array(

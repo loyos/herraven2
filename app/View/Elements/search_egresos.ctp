@@ -15,9 +15,11 @@
 			echo "</td>";
 			echo "<td>";
 			echo $this->Form->select('Pedido.status', array(
-				'pendiente' => 'No disponible',
+				'No disponible' => 'No disponible',
 				'cancelado' => 'Cancelado',
-				'disponible' => 'Disponible'
+				'Progreso-Despacho' => 'Progreso-Despacho',
+				'Despachado ' => 'Despachado',
+				'Disponible ' => 'Disponible'
 			));
 			// echo $this->Form->input('wachu', array('div' => false, 'label' => false));
 			echo "</td></tr>";
