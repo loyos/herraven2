@@ -138,9 +138,9 @@ function calcula_precio_acabado(acabado_id,id) {
 		data: {id:id,acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
-		$('span.precio_'+id).html('Bs.'+msg+'<br>Precio unitario');
+		$('span.precio_'+id).html('Bs.'+msg.toFixed(2);+'<br>Precio unitario');
 		cajas = $('td.precio_caja_'+id).attr('name');
-		$('td.precio_caja_'+id).html('Bs.'+msg*cajas+'<br>Precio caja');
+		$('td.precio_caja_'+id).html('Bs.'+(msg*cajas).toFixed(2);+'<br>Precio caja');
 	});
 }
 $(document).ready(function() {

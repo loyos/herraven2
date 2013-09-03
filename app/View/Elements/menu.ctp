@@ -49,7 +49,8 @@
 	<li class = "option <?php if(($this->params['controller'] == 'articulos' && $this->params['action'] == 'subcategoria_articulo') || 
 								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index') ||
 								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_listar_subcategorias') ||
-								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_ver')
+								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_ver') ||
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_index')
 		) echo 'active'; ?> " >
 	
 	Artículos

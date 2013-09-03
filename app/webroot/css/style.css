@@ -240,6 +240,11 @@ table.tabla_ver td, table.tabla_ver th{
 	float:right;
 }
 
+.egreso_derecha img{
+	height:130px;
+	width: 130px;
+}
+
 .boton_egreso {
 	float: right;
 	margin-top: -4px;
