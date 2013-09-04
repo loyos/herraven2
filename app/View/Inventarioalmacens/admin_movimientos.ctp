@@ -57,7 +57,7 @@
 	}
 	if (!empty($inventarios)){
 	?>
-	<table>
+	<table class = "tabla_index">
 		<tr>
 			<th>Fecha y hora</th>
 			<th>Articulo</th>

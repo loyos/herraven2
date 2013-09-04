@@ -11,8 +11,8 @@
 		foreach ($entradas as $e) {
 		?>
 			<tr>
-				<td><?php echo $e['Inventariomaterial']['fecha'] ?></td>
-				<td><?php echo $e['Inventariomaterial']['cantidad'] ?></td>
+				<td style= "padding-right: 40px;"><?php echo $e['Inventariomaterial']['fecha'] ?></td>
+				<td><?php echo number_format($e['Inventariomaterial']['cantidad'], 2, ',', '.'); ?></td>
 			</tr>
 		<?php
 		}
@@ -47,8 +47,8 @@
 						$dias = 'del 23 al 30 del mes '.$s['Inventariomaterial']['mes'];
 					}
 				?>
-				<td><?php echo $dias ?></td>
-				<td><?php echo $s[0]['SUM(`Inventariomaterial`.`cantidad`)']?></td>
+				<td  style= "padding-right: 40px;"><?php echo $dias ?></td>
+				<td><?php echo number_format($s[0]['SUM(`Inventariomaterial`.`cantidad`)'], 2, ',', '.'); ?></td>
 			</tr>
 		<?php
 		}

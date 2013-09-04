@@ -101,6 +101,8 @@ table.tabla_index th {
 
 table.tabla_index td {
 	padding: 5px;
+	width: 40px;
+	text-align: center;
 }
 
 table.tabla_ver td {

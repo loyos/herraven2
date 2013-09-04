@@ -2,7 +2,7 @@
 <?php
 echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 ?>
-<h1>Nuevo Cliente</h1>
+<h1><?php echo $titulo. ' ';  ?> Cliente</h1>
 <?php 
 	echo $this->Form->create('Cliente');
 	echo '<table>';

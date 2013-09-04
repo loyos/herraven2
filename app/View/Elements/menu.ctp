@@ -17,11 +17,21 @@
 			
 		</ul>
 	</li>
-	<li class = "option <?php if($this->params['controller'] == 'clientes') echo 'active'; ?>">
+	<li class = "option <?php if(($this->params['controller'] == 'clientes') ||
+								($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_pedidos') ||
+								($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index'))
+		echo 'active'; ?>">
+		
 		Clientes
 		<ul>
-			<li class = "children">
+			<li class = "children <?php if($this->params['controller'] == 'clientes' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Cliente',array('controller' => 'clientes', 'action' => 'admin_index')); ?>
+			</li>
+			<li class = "children <?php if($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_pedidos') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Pedidos',array('controller' => 'pedidos', 'action' => 'admin_pedidos')); ?>
+			</li>
+			<li class = "children <?php if($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'admin_index')); ?>
 			</li>
 		</ul>
 	</li>
@@ -117,12 +127,12 @@
 	<?php
 	}
 	?>
-	<?php if ($admin_despachos){ ?>
+	<?php if (false){// if ($admin_despachos){ ?>
 	<li class = "option <?php if(($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_pedidos')) echo 'active'; ?> ">
 		<?php echo $this->Html->link('Pedidos',array('controller' => 'pedidos', 'action' => 'admin_pedidos')); ?>
 	</li>
 	<?php } 
-	if ($admin_cuentas) { ?>
+	if (false){ //($admin_cuentas) { ?>
 		<li class = "option <?php if(($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index')) echo 'active'; ?>">
 			<?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'admin_index')); ?>
 		</li>
