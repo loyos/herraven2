@@ -1,6 +1,8 @@
 <div class="wrap">
 <h1>Cuentas</h1>
 <?php 
+	echo $this->element('search_cuentas');  // esto es para el filtro interno, no hace falta ahorita ya que se colocara filtro previo por subcategoria
+	// debug($clientes);
 	if (!empty($cuentas)) {
 		?>
 		<table class="tabla_index">

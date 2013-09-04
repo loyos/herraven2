@@ -4,18 +4,40 @@ class CuentasController extends AppController {
     
 	public $helpers = array ('Html','Form','Herra');
 	var $uses = array('Cuenta','Config','User');
+	public $components = array('Search.Prg');
+	public $presetVars = true; // using the model configuration
+	public $paginate = array();
+	
 	
     function admin_index() {
-		$cuentas = $this->Cuenta->find('all',array(
-			'recursive' => 2
-		));
-		$count = 0;
-		foreach ($cuentas as $c){
-			$ano = $this->Config->obtenerAno($c['Pedido']['fecha']);
-			$cuentas[$count]['Pedido']['num_pedido'] = $cuentas[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
-			$count++;
+	
+		$this->Prg->commonProcess();
+		$parametros = $this->Prg->parsedParams();
+		if($parametros){   // si viene con datos para el buscador, esto es para trabajar el buscador
+											// sin una vista auxiliar como viene en el manual!! parece que sirve
+		
+		$this->paginate['conditions'] = $this->Cuenta->parseCriteria($this->Prg->parsedParams());
+		$this->loadModel('Cuenta');
+		$this->paginate['recursive'] = 2;
+		$cuentas = $this->paginate();
+		
+		}else{
+		
+			$cuentas = $this->Cuenta->find('all',array(
+				'recursive' => 2
+			));
+			$count = 0;
+			foreach ($cuentas as $c){
+				$ano = $this->Config->obtenerAno($c['Pedido']['fecha']);
+				$cuentas[$count]['Pedido']['num_pedido'] = $cuentas[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
+				$count++;
+			}
 		}
-		$this->set(compact('cuentas'));
+		$this->loadModel('Cliente');
+		$clientes = $this->Cliente->find('list', array(
+			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
+		));
+		$this->set(compact('cuentas', 'clientes'));
     }
 	
 	 function index() {

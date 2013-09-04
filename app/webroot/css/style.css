@@ -90,6 +90,10 @@ label {
 	margin-bottom: 40px;
 }
 
+.tabla_index{
+	width: 100%;
+}
+
 table.tabla_index th {
 	border-bottom: 2px solid black;
 	padding: 5px;
