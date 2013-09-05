@@ -23,13 +23,13 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <html>
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title>
-		
-	</title>
+	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	<?php
 	echo $this->Html->meta('icon');
 	echo $this->Html->css('style');
+	echo $this->Html->css('bjqs');
+	echo $this->Html->css('demo');
 	echo $this->Html->css('fancybox/jquery.fancybox');
 	echo $this->Html->css('fancybox/jquery.fancybox-buttons');
 	echo $this->Html->css('fancybox/jquery.fancybox-thumbs');
@@ -39,6 +39,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	echo $this->Html->script('fancybox/jquery.fancybox-thumbs');	
 	echo $this->Html->script('fancybox/jquery.fancybox-media');	
 	echo $this->Html->script('fancybox/jquery.mousewheel-3.0.6.pack');
+	echo $this->Html->script('bjqs-1.3.min');
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');

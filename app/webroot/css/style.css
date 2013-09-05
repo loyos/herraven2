@@ -38,7 +38,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c2c2c', end
 
 .home_footer {
 	position: relative;
-	bottom: 60px;
+	bottom: 104px;
 	height: 60px;
 	background-color: black;
 }
@@ -132,6 +132,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c2c2c', end
 	background: url("../img/nav-hover.png") repeat-x left top;
 	color: white;
 	cursor: pointer;
+}
+
+#banner-fade {
+	width: 900px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 130px;
+}
+
+#banner-fade img{
+	border-radius : 10px;
 }
 
 .wrap {
