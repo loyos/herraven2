@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends AppController {
+class HomeController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('RequestHandler');
@@ -10,7 +10,9 @@ class IndexController extends AppController {
 		$this->Auth->allow('index'); // Letting users register themselves
 	}
 	
-    function index() {		
+    function index() {
+		// $debug($this->layout = 'hola');
+		$this->layout = 'home';
     }
 }
 
