@@ -17,7 +17,9 @@ jQuery(document).ready(function($) {
     $('#banner-fade').bjqs({
         'height' : 400,
         'width' : 700,
-        'responsive' : true
+        'responsive' : true,
+		'nexttext' : '',
+		'prevtext' : ''
     });
 });
 </script>
