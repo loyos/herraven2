@@ -46,6 +46,9 @@
 	echo $articulo['Subcategoria']['descripcion'];
 	echo '</td>';
 	echo '</tr>';
+	echo '</table>';
+	echo '<h3>Composición</h3>';
+	echo '<table class="tabla_ver">';
 	echo '<tr>';
 	echo '<th>Materias prima básicas</th>';
 	echo '<td>';
@@ -54,32 +57,19 @@
 	}
 	echo '</td>';
 	echo '</tr>';
-	echo '<tr>';
 	if (!empty($acabados)){
-		echo '<th>Acabados</th>';
-		echo '<td>';
 		foreach ($acabados as $a){
-			echo '<b>'.$a['acabado'].':</b><br>';
+			echo '<tr>';
+			echo '<th style="text-align:right">'.$a['acabado'].':</th>';
+			echo '<td>';	
 			foreach ($a['materia'] as $m) {
 				echo '<div class="tres_espacios">'.$m.'</div>';
 			}
-			
+			echo '</td>';
+			echo '</tr>';
 		}
-		echo '</td>';
-		echo '</tr>';
 		echo '<tr>';
 	}
-	echo '<th>Costo de producción</th>';
-	echo '<td>';
-	echo $articulo['Articulo']['costo_produccion'];
-	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
-	echo '<th>Margen de ganancia</th>';
-	echo '<td>';
-	echo $articulo['Articulo']['margen_ganancia'];
-	echo '</td>';
-	echo '</tr>';
 	echo '</table>';
 	echo '<h3>Costos</h2>';
 	echo '<table class="tabla_ver">';
@@ -87,31 +77,68 @@
 	echo '<th>Materias primas básicas</th>';
 	echo '<td>'.$this->Herra->format_number($costo_materiaprima).'</td>';
 	echo '</tr>';
-	echo '<tr>';
 	if (!empty($costo_acabado)) {
-		echo '<th>Acabados</th>';
-		echo '<td>';
 		foreach ($costo_acabado as $a) {
-			echo '<b>'.$a['acabado'].':</b><br>';
-			echo '<div class="tres_espacios">'.$a['monto'].'</div>';
+			if ($a['acabado'] != 'Sin acabado asociado') {
+				echo '<tr>';
+				echo '<th style="text-align:right">'.$a['acabado'].':</th>';
+				echo '<td>';
+				echo '<div>'.$this->Herra->format_number($a['monto']).'</div>';
+				echo '</td>';
+				echo '</tr>';
+			}
 		}
+		echo '</table>';
+		echo '</br>';
+		echo '<table class="tabla_ver">';
+		echo '<th>Costo de producción</th>';
+		echo '<td>';
+		echo $articulo['Articulo']['costo_produccion'].'%';
 		echo '</td>';
 		echo '</tr>';
 		echo '<tr>';
-		echo '<th>Precio de Venta</th>';
+		echo '<th>Margen de ganancia</th>';
 		echo '<td>';
+		echo $articulo['Articulo']['margen_ganancia'].'%';
+		echo '</td>';
+		echo '</tr>';
+		echo '</table>';
+		echo '<h3>Precio de venta</h2>';
+		echo '<table class="tabla_ver">';
 		foreach ($costo_acabado as $a) {
-			echo '<b>'.$a['acabado'].':</b><br>';
+			echo '<tr>';
+			echo '<th style="text-align:right">'.$a['acabado'].':</th>';
+			echo '<td>';
 			$precio_materias = $a['monto']+$costo_materiaprima;
 			$costo_produccion = ($a['monto']+$costo_materiaprima)*($produccion/100);
 			$costo_total = $precio_materias + $costo_produccion;
 			$margen_ganancia = $costo_total * ($ganancia/100);
 			$precio_total = $costo_total + $margen_ganancia;
-			echo '<div class="tres_espacios">'.$this->Herra->format_number($precio_total).'</div>';
+			echo '<div>'.$this->Herra->format_number($precio_total).'</div>';
+			echo '</td>';
+			echo '</tr>';
 		}
-		echo '</td>';
+		echo '</table>';
+		
 	} else {
-		echo '<th>Precio de Venta</th>';
+		echo '</table>';
+		echo '</br>';
+		echo '<table class="tabla_ver">';
+		echo '<th>Costo de producción</th>';
+		echo '<td>';
+		echo $articulo['Articulo']['costo_produccion'].'%';
+		echo '</td>';
+		echo '</tr>';
+		echo '<tr>';
+		echo '<th>Margen de ganancia</th>';
+		echo '<td>';
+		echo $articulo['Articulo']['margen_ganancia'].'%';
+		echo '</td>';
+		echo '</tr>';
+		echo '</table>';
+		echo '<h3>Precio de venta</h2>';
+		echo '<table class="tabla_ver">';
+		echo '<tr>';
 		echo '<td>';
 		$costo_produccion = ($costo_materiaprima)*($produccion/100);
 		$costo_total = $costo_materiaprima + $costo_produccion;
@@ -119,8 +146,9 @@
 		$precio_total = $costo_total + $margen_ganancia;
 		echo '<div class="tres_espacios">'.$this->Herra->format_number($precio_total).'</div>';
 		echo '</td>';
+		echo '</tr>';
+		echo '</table>';
 	}	
-	echo '</tr>';
 	echo '</table>';
 ?>
 </div>
