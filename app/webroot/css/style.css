@@ -16,6 +16,12 @@ html, body {
 	margin-top: -8px;
 }
 
+.chiclet{
+	display: block;
+	height: 1px;
+	margin-bottom: 104px;
+}
+
 .home_body{
 	/*background: url("../img/background.jpg") repeat; */
 	width: 100%;

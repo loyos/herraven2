@@ -64,6 +64,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
 			<?php echo $this->fetch('content'); ?>
 		</div>
+		<div class = "chiclet">
+		</div>
 	</div>
 	<div class="home_footer">
 		<div class = "footer_content">
