@@ -92,7 +92,7 @@ class InventariomaterialsController extends AppController {
 			'group' => array('Inventariomaterial.mes', 'Inventariomaterial.semana'),
 			'order' => array('Inventariomaterial.mes', 'Inventariomaterial.semana')
 		));
-		$this->set(compact('entradas','materiaprima','trimestre','salidas'));
+		$this->set(compact('entradas','materiaprima','trimestre','salidas','ano'));
 	}	
 	
 	function admin_editar() {
