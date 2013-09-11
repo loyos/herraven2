@@ -6,9 +6,9 @@
 			if (!empty($this->data['Precio']['acabado_id'])) {
 				$value = $this->data['Precio']['acabado_id'];
 			} else {
-				$value = 0;
+				$value = 'Nada';
 			}
-			echo $this->Form->input('acabado_id',array('value' => $value));
+			echo $this->Form->input('acabado_id',array('value' => $value,'label' => 'Selecciona un acabado'));
 			echo $this->Form->submit('Buscar',array('class' => 'button'));
 		?>
 	</div>
