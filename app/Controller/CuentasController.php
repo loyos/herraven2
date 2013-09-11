@@ -87,7 +87,12 @@ class CuentasController extends AppController {
 			$this->Session->setFlash('El pago se realizó con éxito');
 			$this->redirect(array('action' => 'admin_index'));
 		}
-		$this->set(compact('id'));
+		$cuenta_a_pagar= $this->Cuenta->find('first',array(
+			'conditions' => array('Cuenta.id' =>$id),
+			'recursive' => 2
+			)
+		);
+		$this->set(compact('id','cuenta_a_pagar'));
 	}
 }
 
