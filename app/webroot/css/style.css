@@ -605,3 +605,10 @@ input#codigo {
 .tres_espacios {
 	margin-left:25px;
 }
+
+button.link{
+	background: none;
+	border: none;
+	text-decoration: underline;
+	cursor: pointer;
+}
