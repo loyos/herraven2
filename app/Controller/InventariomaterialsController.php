@@ -176,6 +176,59 @@ class InventariomaterialsController extends AppController {
 		}
 		$this->set(compact('entradas','salidas'));
 	}
+	function admin_reporte_movimientos($id_materia) {
+		//Inventario de materias primas
+		$ano = date ("Y");
+		$trimestres = $this->Inventariomaterial->find('all',array(
+			'fields' => array('DISTINCT trimestre'),
+			'conditions' => array(
+				'Materiasprima.id' => $id_materia,
+			),
+			'order' => array('Inventariomaterial.trimestre DESC')
+		));
+		$materia_prima = $this->Materiasprima->findById($id_materia);
+		foreach ($trimestres as $t) { 
+			$entradas[$t['Inventariomaterial']['trimestre']] = $this->Inventariomaterial->find('all',array(
+				'conditions' => array(
+					'Materiasprima.id' => $id_materia,
+					'Inventariomaterial.tipo' => 'entrada',
+					'Inventariomaterial.ano' => $ano,
+					'Inventariomaterial.trimestre' => $t['Inventariomaterial']['trimestre']
+				),
+				'order' => array('Inventariomaterial.trimestre')
+			));
+			$salidas[$t['Inventariomaterial']['trimestre']] = $this->Inventariomaterial->find('all',array(
+				'fields' => array('Inventariomaterial.semana','Inventariomaterial.mes','SUM(Inventariomaterial.cantidad)'),
+				'conditions' => array(
+					'Materiasprima.id' => $id_materia,
+					'Inventariomaterial.tipo' => 'salida',
+					'Inventariomaterial.ano' => $ano,
+					'Inventariomaterial.trimestre' => $t['Inventariomaterial']['trimestre']
+				),
+				'group' => array('Inventariomaterial.mes', 'Inventariomaterial.semana'),
+				'order' => array('Inventariomaterial.trimestre','Inventariomaterial.mes', 'Inventariomaterial.semana')
+			));
+			
+		}
+		
+		foreach ($entradas as $key=>$entrada) {
+			$saldo_entradas = 0;
+			foreach ($entrada as $e) {
+				$saldo_entradas = $saldo_entradas + floatval($e['Inventariomaterial']['cantidad']);
+			}
+			$saldo_e[$key] = $saldo_entradas;
+		}
+		foreach ($salidas as $key2=>$salida) {
+			$saldo_salida = 0;
+			foreach ($salida as $s) {
+				$saldo_salida = $saldo_salida + floatval($s[0]['SUM(`Inventariomaterial`.`cantidad`)']);
+			}
+			$saldo_s[$key2] = $saldo_salida;
+		}
+		$hoy = date('Y-m-d H:i:s');
+		$trimestre_actual = $this->Config->obtenerTrimestre($hoy);
+		$this->set(compact('entradas','salidas','trimestres','materia_prima','saldo_e','saldo_s','trimestre_actual','ano'));
+	}
 }
 
 ?>

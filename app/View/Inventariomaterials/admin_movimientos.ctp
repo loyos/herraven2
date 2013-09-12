@@ -25,9 +25,10 @@
 			<div class="ano_movimientos">
 				<table>
 					<tr>
-						<td><b><u>Año</u></b></td><td><b><u>Unidad</b></u></td>
+						<td><?php echo $this->Html->link('Ver reporte',array('action' => 'admin_reporte_movimientos',$id_m,'ext' => 'pdf'),array('target'=>'_blank'));?></td><td><b><u>Año</u></b></td><td><b><u>Unidad</b></u></td>
 					</tr>
 					<tr>
+						<td></td>
 						<td style="text-align:center"><?php echo $ano?> </td>
 						<td style="text-align:center"><?php echo $entradas[0]['Materiasprima']['unidad'] ?></td>
 					</tr>
