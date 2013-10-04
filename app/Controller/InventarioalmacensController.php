@@ -127,8 +127,26 @@ class InventarioalmacensController extends AppController {
 		$this->set(compact('cajas','id_inventario'));
 	} 
 	
-	function admin_inventario(){
-		$articulos = $this->Articulo->find('all');
+	function admin_inventario($cat_id, $sub_id = null){
+		if (empty($sub_id)) {
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array ('Subcategoria.categoria_id' => $cat_id)
+			));
+			if (!empty($subcategorias)) {
+				foreach ($subcategorias as $s) {
+					$sub[] = $s['Subcategoria']['id'];
+				}
+			}
+			if (!empty($sub)) {
+				$articulos = $this->Articulo->find('all',array(
+					'conditions' => array('Articulo.subcategoria_id' => $sub)
+				));
+			} 
+		} else {
+			$articulos = $this->Articulo->find('all',array(
+					'conditions' => array('Articulo.subcategoria_id' => floor($sub_id))
+				));
+		}
 		$acabados = $this->Acabado->find('all');
 		$ano = date ("Y");
 		foreach ($articulos as $a) {
