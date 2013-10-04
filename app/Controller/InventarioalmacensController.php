@@ -14,6 +14,13 @@ class InventarioalmacensController extends AppController {
 		$this->set(compact('categorias'));
 	}
 	
+	function admin_listar_subcategorias($action){
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias','action'));
+	}
+	
 	function buscar_subcat() {
 		$this->loadModel('Subcategoria');
 		$subcat = $this->Subcategoria->find('all', array(
@@ -170,8 +177,22 @@ class InventarioalmacensController extends AppController {
 		$this->set(compact('cajas','num_cajas','articulo','acabado'));
 	}
 	
-	function admin_movimientos(){
-		$conditions = array();
+	function admin_movimientos($cat_id, $sub_id = null){
+		if (empty($sub_id)) {
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array ('Subcategoria.categoria_id' => $cat_id)
+			));
+			if (!empty($subcategorias)) {
+				foreach ($subcategorias as $s) {
+					$sub[] = $s['Subcategoria']['id'];
+				}
+			}
+			if (!empty($sub)) {
+				$conditions = array('Articulo.subcategoria_id' => $sub);
+			} 
+		} else {
+			$conditions = array('Articulo.subcategoria_id' => floor($sub_id));
+		}
 		if (!empty($this->data)){
 			if (!empty($this->data['Inventarioalmacen']['articulo_id'])) {
 				$conditions[] = array('Inventarioalmacen.articulo_id' => $this->data['Inventarioalmacen']['articulo_id']);
