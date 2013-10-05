@@ -5,10 +5,29 @@
 	echo '<th>Imagen</th>';
 	echo '<td>';
 	echo $this->Html->link(
-			$this->Html->image('articulos/'.$articulo['Articulo']['imagen'], array("width" => "100px",'class'=>'prim')),
+			$this->Html->image('articulos/'.$articulo['Articulo']['imagen'], array("width" => "100px",'class'=>'prim','data-fancybox-group' => '1')),
 			"../img/articulos/".$articulo['Articulo']['imagen'],
-			array('escape' => false, 'class="fancybox primera"')
+			array('escape' => false, 'class'=>"fancybox primera",'data-fancybox-group' => '1',)
 	);
+	
+	if(!empty($articulo['Articulo']['imagen1'])) { 
+		echo $this->Html->link(
+			$this->Html->image('articulos/'.$articulo['Articulo']['imagen1'], array('style'=>'display:none')),
+			"../img/articulos/".$articulo['Articulo']['imagen1'],
+			array('escape' => false, 'class'=>"fancybox",'data-fancybox-group' => '1',)
+		);?>
+
+		<?php
+	}
+	if(!empty($articulo['Articulo']['imagen2'])) { 
+		echo $this->Html->link(
+			$this->Html->image('articulos/'.$articulo['Articulo']['imagen2'], array('style'=>'display:none')),
+			"../img/articulos/".$articulo['Articulo']['imagen2'],
+			array('escape' => false, 'class'=>"fancybox",'data-fancybox-group' => '1',)
+		);?>
+
+		<?php
+	}
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';

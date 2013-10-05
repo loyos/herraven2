@@ -51,7 +51,7 @@ $materias = array();
 		'label' => false,
 	));
 	echo '</td>';
-	echo '<td>Imagen</td>';
+	echo '<td>Imagen principal</td>';
 	echo '<td>';
 	echo $this->Form->file('Foto',array(
 		'label' => false
@@ -64,6 +64,21 @@ $materias = array();
 	echo $this->Form->input('oculto',array(
 		'label' => false,
 		'type' => 'checkbox'
+	));
+	echo '</td>';
+	echo '<td>Imagen (opcional)</td>';
+	echo '<td>';
+	echo $this->Form->file('Foto1',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td></td><td></td>';
+	echo '<td>Imagen (opcional)</td>';
+	echo '<td>';
+	echo $this->Form->file('Foto2',array(
+		'label' => false
 	));
 	echo '</td>';
 	echo '</tr>';

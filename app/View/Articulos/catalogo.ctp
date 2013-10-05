@@ -16,8 +16,26 @@ foreach ($info_articulos as $a) { ?>
 		echo $this->Html->link(
 			$this->Html->image('articulos/'.$a['imagen'], array("height" => "120px",'class'=>'prim')),
 			"../img/articulos/".$a['imagen'],
-			array('escape' => false, 'class="fancybox primera"')
+			array('escape' => false, 'class="fancybox primera"','data-fancybox-group' => $a['imagen'])
 		);
+		if(!empty($a['imagen1'])) { 
+		echo $this->Html->link(
+			$this->Html->image('articulos/'.$a['imagen1'], array('style'=>'display:none')),
+			"../img/articulos/".$a['imagen1'],
+			array('escape' => false, 'class'=>"fancybox",'data-fancybox-group' => $a['imagen'],)
+		);?>
+
+		<?php
+		}
+		if(!empty($a['imagen2'])) { 
+			echo $this->Html->link(
+				$this->Html->image('articulos/'.$a['imagen2'], array('style'=>'display:none')),
+				"../img/articulos/".$a['imagen2'],
+				array('escape' => false, 'class'=>"fancybox",'data-fancybox-group' => $a['imagen'],)
+			);?>
+
+			<?php
+		}
 		?>
 	</div>
 	<div class="info_catalogo">
