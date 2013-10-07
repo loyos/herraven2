@@ -42,6 +42,16 @@ class ArticulosController extends AppController {
 					$data['Articulo']['imagen'] = $this->data['Articulo']['Foto']['name'];
 				}
 			}
+			if (!empty($this->data['Articulo']['Foto1']['name'])) {
+				if ($this->JqImgcrop->uploadImage($this->data['Articulo']['Foto1'], 'img/articulos', '')) {
+					$data['Articulo']['imagen1'] = $this->data['Articulo']['Foto1']['name'];
+				}
+			}
+			if (!empty($this->data['Articulo']['Foto2']['name'])) {
+				if ($this->JqImgcrop->uploadImage($this->data['Articulo']['Foto2'], 'img/articulos', '')) {
+					$data['Articulo']['imagen2'] = $this->data['Articulo']['Foto2']['name'];
+				}
+			}
 			$i = 0;
 			$a = 0;
 			$hay_materias = 0;
@@ -551,7 +561,9 @@ class ArticulosController extends AppController {
 				'articulo' => $a['Articulo']['descripcion'],
 				'codigo' => $a['Articulo']['codigo'],
 				'id' => $a['Articulo']['id'],
-				'imagen' =>	$a['Articulo']['imagen'],			
+				'imagen' =>	$a['Articulo']['imagen'],
+			   'imagen1' =>	$a['Articulo']['imagen1'],
+			   'imagen2' =>	$a['Articulo']['imagen2'],
 				'cantidad_por_caja' => $a['Articulo']['cantidad_por_caja'],
 				'fecha_despacho' => $despacho['Pedido']['fecha_despacho'],
 				'cantidad_despacho' => $despacho['Pedido']['cantidad_cajas'],

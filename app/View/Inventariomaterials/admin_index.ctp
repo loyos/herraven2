@@ -3,12 +3,22 @@
 	<?php
 	echo $this->Html->link('Ingreso de materia prima',array('action' => 'admin_editar'));
 	echo '<br>';
-	echo $this->Html->link('Ver reporte',array('action' => 'admin_reporte','ext' => 'pdf'),array('target'=>'_blank'));
 	?>
 </div>
 <div class="ano_inventario">
-	<b><u>Año</u></b><br>
+	<table>
+	<tr>
+	<td>
+	<?php echo $this->Html->link('Ver reporte',array('action' => 'admin_reporte','ext' => 'pdf'),array('target'=>'_blank')); ?>
+	</td>
+	<td>
+	<b><u>Año</u></b></td>
+	</tr>
+	<tr><td></td>
+	<td>
 	<?php echo $ano; ?>
+	</td>
+	</tr></table>
 </div>
 <br>
 <h1>Inventario Materias prima</h1>
