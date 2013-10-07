@@ -41,20 +41,25 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
+	
 	?>
 </head>
 <body>
 	<div class="header">
 		<div class = "title">
-			Herraven
+			
+		</div>
+		<div class = 'user-header'>
+			<?php echo $username; ?>
 		</div>
 		<div class="logout">
 		<?php 
 		if (!empty($user_id)) {
-			echo $this->Html->link('Cerrar sesión',array(
+			echo $this->Html->link($this->Html->image('close.png', array('width' => '30px')),array(
 				'controller' => 'users',
 				'action' => 'logout'
-			)); 
+			), array('escape' => false));
+			// echo $this->Html->image('close.png', array('width' => '30px'));
 		}
 		?>
 		</div>
