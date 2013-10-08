@@ -33,6 +33,9 @@
 			<li class = "children <?php if($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'admin_index')); ?>
 			</li>
+			<li class = "children <?php if($this->params['controller'] == 'almacenclientes' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'admin_listar_clientes')); ?>
+			</li>
 		</ul>
 	</li>
 	<?php } ?>

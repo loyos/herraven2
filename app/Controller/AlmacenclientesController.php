@@ -4,8 +4,7 @@ class AlmacenclientesController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	public $uses = array('Almacencliente','Inventarioalmacen','CajasPedido','Inventariomaterial','Config','Categoria','Articulo','Acabado','Caja','Subcategoria','User');
-	
+	public $uses = array('Almacencliente','Inventarioalmacen','CajasPedido','Inventariomaterial','Config','Categoria','Articulo','Acabado','Caja','Subcategoria','User','Cliente');
 	
 	function index(){
 		$user_id = $this->Auth->user('id');
@@ -106,6 +105,72 @@ class AlmacenclientesController extends AppController {
 		$this->set(compact('articulo_id','acabado_id'));
 	}
 
+	function admin_index($cliente_id,$cat_id,$sub_id = null){
+		if (empty($sub_id)) {
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array(
+					'Subcategoria.categoria_id' => $cat_id
+				)
+			));
+			foreach ($subcategorias as $s) {
+				$id_sub[] = $s['Subcategoria']['id'];
+			}
+		} else {
+			$id_sub = $sub_id;
+		}
+		$almacen = $this->Almacencliente->find('all',array(
+			'conditions' => array(
+				'Pedido.cliente_id' => $cliente_id,
+				'Articulo.subcategoria_id' => $id_sub
+			),
+
+		));
+		foreach ($almacen as $a) {
+			$articulos_almacen[] = $a['Almacencliente']['articulo_id']; 
+		}
+		if (!empty($articulos_almacen)) {
+		$articulos = $this->Articulo->find('all',array(
+			'conditions' => array('Articulo.id' => $articulos_almacen)
+		));
+		$acabados = $this->Acabado->find('all');
+		$ano = date ("Y");
+		foreach ($articulos as $a) {
+			$entradas_articulo[$a['Articulo']['codigo']] = $this->Almacencliente->find('all',array(
+				'fields' => array('SUM(Almacencliente.cajas)','acabado_id','Acabado.acabado','Almacencliente.articulo_id'),
+				'conditions' => array(
+					'Almacencliente.articulo_id' => $a['Articulo']['id'],
+					'Almacencliente.tipo' => 'entrada',
+				),
+				'group' => array('Almacencliente.acabado_id')
+			));
+			$salidas_articulo[$a['Articulo']['codigo']] = $this->Almacencliente->find('all',array(
+				'fields' => array('SUM(Almacencliente.cajas)','acabado_id'),
+				'conditions' => array(
+					'Almacencliente.articulo_id' => $a['Articulo']['id'],
+					'Almacencliente.tipo' => 'salida',
+				),
+				'group' => array('Almacencliente.acabado_id')
+			));
+		} 
+		$articulos = $this->Articulo->find('list',array(
+			'fields' => array('id','cantidad_por_caja')
+		));
+		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados'));
+		}
+	}
+	
+	function admin_listar_clientes() {
+		$clientes = $this->Cliente->find('all');
+		$action = 'admin_listar_subcategorias';
+		$this->set(compact('clientes','action'));
+	}
+	
+	function admin_listar_subcategorias($action,$cliente_id) {
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias','action','cliente_id'));
+	}
 }
 
 ?>
