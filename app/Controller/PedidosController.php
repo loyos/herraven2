@@ -262,7 +262,7 @@ class PedidosController extends AppController {
 	
 	function admin_info_despacho($pedido_id) {
 		$pedido = $this->Pedido->findById($pedido_id);
-		$hoy = date('d/m/Y');
+		$hoy = date('d-m-Y');
 		$this->layout = 'sin_menu';
 		$ano = $this->Config->obtenerAno($pedido['Pedido']['fecha']);
 		$pedido['Pedido']['num_pedido'] = $pedido['Pedido']['num_pedido'].$ano[2].$ano[3];
