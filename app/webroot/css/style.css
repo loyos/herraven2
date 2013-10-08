@@ -636,3 +636,64 @@ button.link{
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+.logo_izquierdo{
+	margin:20px;	
+}
+
+.titulo_nota{
+	font-weight: bold;
+	font-size: 22px;
+	margin-left: auto;
+	width: 215px;
+	margin-right: auto;
+}
+
+.titulos_notas {
+	font-weight: bold;
+}
+.info1_nota {
+	font-size:14px;
+	margin-top:30px;
+	height:15px;
+}
+
+.info1_izquierda {
+	float:left;
+	margin-left:20px;
+}
+
+.info1_derecha {
+	float:right;
+	margin-right:50px;
+}
+
+.info2_nota {
+	font-size:14px;
+	margin-top:55px;
+	height:150px;
+}
+
+.datos_nota {
+	margin-left: auto;
+	margin-right: auto;
+	width: 577px;
+}
+
+.datos_nota th {
+	padding:7px;
+	font-weight:bold;
+}
+
+.datos_nota td {
+	text-align:center;
+}
+
+.footer_nota_despacho {
+	margin-top:50px;
+	margin-left:20px;
+}
+
+.footer_nota {
+	text-align:center;
+}
