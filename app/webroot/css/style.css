@@ -248,6 +248,17 @@ table.tabla_index td {
 	text-align: center;
 }
 
+table.tabla_index_sin_width th {
+	border-bottom: 2px solid black;
+	padding: 5px;
+}
+
+table.tabla_index_sin_width td{
+	padding: 5px;
+	text-align: center;
+}
+
+
 table.tabla_ver td {
 	padding:10px;
 }

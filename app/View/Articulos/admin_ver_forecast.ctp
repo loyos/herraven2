@@ -10,19 +10,49 @@ echo '<h1>Forecast</h1>';
 if (!empty($articulos_mp)) {
 		foreach ($articulos_mp as $a_mp) {
 			?>
-			<h2><?php echo $a_mp[0]['Articulo'].'  '.$a_mp[0]['acabado'].'  '.$a_mp[0]['cajas'].'cajas  '.$a_mp[0]['piezas'],'pz';?></h2>
-			<table>
+			<table class="tabla_index_sin_width">
+				<tr>
+					<th>Artículo</th>
+					<?php
+					if (!empty($a_mp[0]['acabado'])) {
+						echo '<th>Acabado</th>';
+					}
+					?>
+					<th>Número de cajas</th>
+					<th>Pza. por caja</th>
+					<th>Total de pzas.</th>
+				</tr>
+				<tr>
+					<td><?php echo $a_mp[0]['Articulo']?></td>
+					<?php
+					if (!empty($a_mp[0]['acabado'])) {
+						echo '<td>'.$a_mp[0]['acabado'].'</td>';
+					}
+					?>
+					<td><?php echo $a_mp[0]['cajas'] ?></td>
+					<td><?php echo $a_mp[0]['piezas'] ?></td>
+					<td><?php echo $a_mp[0]['piezas']*$a_mp[0]['cajas'] ?></td>
+				</tr>
+			</table>
+			<table class="tabla_index_sin_width" >
+			<tr>
+				<th>Materia prima</th>
+				<th>Unidad</th>
+				<th>Cantidad</th>
+			</tr>
 			<?php
 			foreach ($a_mp as $a) {
 				?>
 				<tr>
 					<td><?php echo $a['Materiasprima'] ?></td>
-					<td><?php echo number_format($a['cantidad'],2,',','.').' '.$a['unidad'] ?></td>
+					<td><?php echo $a['unidad'] ?></td>
+					<td><?php echo number_format($a['cantidad'],2,',','.')?></td>
 				</tr>
 				<?php
 			}
 			?>
 			</table>
+			<br><br>
 			<?php
 		}
 	}

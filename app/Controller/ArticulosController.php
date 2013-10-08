@@ -278,6 +278,9 @@ class ArticulosController extends AppController {
 			foreach ($data['cantidad'] as $key => $value){
 				if ($value == 1){
 					$acabado = $this->Acabado->findById($data['acabados'][$key]);
+					if (empty($acabado)) {
+						$acabado['Acabado']['acabado'] = "";
+					}
 					$entro = true;
 					$cajas = $data['cajas'][$key];
 					if (empty($cajas) || $cajas < 0) {
