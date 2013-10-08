@@ -26,7 +26,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<title>
 		
 	</title>
-	<?php
+	<link href='http://fonts.googleapis.com/css?family=Kameron' rel='stylesheet' type='text/css'>
+	<?php	
 	echo $this->Html->meta('icon');
 	echo $this->Html->css('style');
 	echo $this->Html->css('fancybox/jquery.fancybox');
@@ -50,7 +51,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			
 		</div>
 		<div class = 'user-header'>
-			<?php echo $username; ?>
+			<?php echo $this->Html->link($username, array('controller' => 'users', 'action' => 'index'))  ?>
 		</div>
 		<div class="logout">
 		<?php 

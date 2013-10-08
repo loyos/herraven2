@@ -3,7 +3,7 @@ body {
     color: black;
 	height:100%;
 	width: 100%;
-	font-family: Oxygen;
+	font-family: 'Kameron', sans-serif;
 	padding-bottom:0px;
 	margin: 0px;
 	padding: 0px;
@@ -277,6 +277,16 @@ table.tabla_ver td, table.tabla_ver th{
 	text-transform: uppercase;
 }
 
+.user-header a{
+	color: #A8C7CB;
+	text-decoration: none;
+}
+
+.user-header a:hover{
+	color: white;
+	text-decoration: none;
+}
+
 .header{
 	width: 100%;
 	color: white;
@@ -307,9 +317,9 @@ table.tabla_ver td, table.tabla_ver th{
 	margin-right: auto;
 	font-size: 20px;
 	font-weight: bold; */
-	background: url("../img/icon_zoom.png");
-	height: 100px;
-	width: 100px;
+	background: url("../img/logo-herraven.jpg");
+	height: 92px;
+	width: 93px;
 	margin-left: 50px;
 }
 
@@ -533,7 +543,7 @@ td.titulo_tabla {
 	margin-left:90%;
 	margin-top: 2px;
 	position: relative;
-	top: -19px;
+	top: -13px;
 }
 
 .logout a {
