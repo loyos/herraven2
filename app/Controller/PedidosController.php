@@ -397,11 +397,14 @@ class PedidosController extends AppController {
 	
 	function admin_info_egreso($pedido_id) {
 		$pedido = $this->Pedido->findById($pedido_id);
-		$hoy = date('d/m/Y');
+		$hoy = date('d-m-Y');
 		$this->layout = 'sin_menu';
 		$ano = $this->Config->obtenerAno($pedido['Pedido']['fecha']);
 		$pedido['Pedido']['num_pedido'] = $pedido['Pedido']['num_pedido'].$ano[2].$ano[3];
-		$this->set(compact('pedido','hoy'));
+		$cajas = $this->CajasPedido->find('all',array(
+			'conditions' => array('CajasPedido.pedido_id' => $pedido_id)
+		));
+		$this->set(compact('pedido','hoy','cajas'));
 	}
 	
 	function admin_eliminar($id,$action) {
