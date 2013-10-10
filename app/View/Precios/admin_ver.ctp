@@ -1,7 +1,7 @@
 <div class="wrap">
+	<?php echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id'])); ?>
 	<div class = "search">
 		<?php
-			echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id']));
 			echo $this->Form->create('Precio');
 			if (!empty($this->data['Precio']['acabado_id'])) {
 				$value = $this->data['Precio']['acabado_id'];
