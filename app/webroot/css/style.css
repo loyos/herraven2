@@ -660,11 +660,19 @@ button.link{
 	margin-right: auto;
 }
 
+.titulos_notas_grandes {
+	font-size:25px;
+	font-weight: bold;
+	margin-left: auto;
+	width: 215px;
+	margin-right: auto;
+}
+
 .titulos_notas {
 	font-weight: bold;
 }
 .info1_nota {
-	font-size:14px;
+	font-size:23px;
 	margin-top:30px;
 	height:15px;
 }

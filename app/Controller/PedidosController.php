@@ -358,6 +358,17 @@ class PedidosController extends AppController {
 			if($this->CajasPedido->saveAll($cajas_pedidos)){
 				$pedido = $this->Pedido->findById($pedido_id);
 				$hoy = date('Y-m-d H:i:s');
+				$ultima_entrada = $this->Inventarioalmacen->find('first',array(
+					'conditions' => array(
+						'tipo' => 'salida'
+					),
+					'order' => array('Inventarioalmacen.id DESC')
+				));
+				if (!empty($ultima_entrada['Inventarioalmacen']['numero'])) {
+					$numero = 1+$ultima_entrada['Inventarioalmacen']['numero'];
+				} else {
+					$numero = 1;
+				}
 				$data = array(
 					'Inventarioalmacen' => array(
 						'tipo' => 'salida',
@@ -366,6 +377,7 @@ class PedidosController extends AppController {
 						'acabado_id' => $pedido['Pedido']['acabado_id'],
 						'pedido_id' => $pedido_id,
 						'mes' => $this->Config->obtenerMes($hoy),
+						'numero' => $numero
 					)
 				);
 				$this->Inventarioalmacen->save($data);

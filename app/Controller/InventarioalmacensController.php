@@ -53,6 +53,17 @@ class InventarioalmacensController extends AppController {
 				$this->Inventariomaterial->create();
 				$this->Inventariomaterial->save($inventario_materia);	
 			}
+			$ultima_entrada = $this->Inventarioalmacen->find('first',array(
+				'conditions' => array(
+					'tipo' => 'entrada'
+				),
+				'order' => array('Inventarioalmacen.id DESC')
+			));
+			if (!empty($ultima_entrada['Inventarioalmacen']['numero'])) {
+				$numero = 1+$ultima_entrada['Inventarioalmacen']['numero'];
+			} else {
+				$numero = 1;
+			}
 			$inventario_almacen = array(
 				'Inventarioalmacen' => array(
 					'tipo' => 'entrada',
@@ -61,6 +72,7 @@ class InventarioalmacensController extends AppController {
 					'mes' => $this->Config->obtenerMes($hoy),
 					'cajas' => $data['Inventarioalmacen']['cajas'],
 					'acabado_id' => $data['Inventarioalmacen']['acabado_id'],
+					'numero' => $numero
 				)
 			);
 			if ($this->Inventarioalmacen->save($inventario_almacen)) {
@@ -275,6 +287,19 @@ class InventarioalmacensController extends AppController {
 			'salida' => 'Egreso'
 		);
 		$this->set(compact('meses','articulos','tipos','inventarios','saldo'));
+	}
+	
+	function admin_nota_entrada($id_inventario){
+		$cajas = $this->Caja->find('all', array(
+			'conditions' => array(
+				'inventarioalmacen_id' => $id_inventario
+			),
+			'recursive' => 2
+		));
+		$hoy = date('d-m-Y H:i:s');
+		$this->set(compact('cajas','hoy'));
+		$this->layout = 'sin_menu';
+		//var_dump($cajas);die();
 	}
 }
 
