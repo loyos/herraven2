@@ -63,7 +63,7 @@
 	<table border="1" cellpadding="0" cellspacing="1" bordercolor="#000000" style="border-collapse:collapse;">
 		<?php
 			$i = 0;
-			foreach (($pedido['Caja'] as $caja)) {
+			foreach ($pedido['Caja'] as $caja) {
 				if ($i == 0 || $i+1 % 5 == 0) {
 					echo '<tr>';
 				}
