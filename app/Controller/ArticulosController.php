@@ -326,7 +326,7 @@ class ArticulosController extends AppController {
 				$this->Session->setFlash("Debes escoger mínimo un artículo");
 				$this->redirect(array('action' => 'admin_forecast'));
 			}
-			$this->layout = "sin_menu";
+			//$this->layout = "sin_menu";
 			$this->set(compact('articulos_mp'));
 		}
 		$this->set(compact('cat_id','sub_id'));
