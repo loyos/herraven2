@@ -4,7 +4,7 @@ if (empty($sub_id)) {
 	$sub_id = null;
 }
 echo $this->Html->link('<<Regresar',array('action' => 'admin_inventario',$cat_id,$sub_id));
-echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el almacén<br>';
+//echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el almacén<br>';
 ?>
 <div class="info_izquierda">
 	<table>
@@ -15,7 +15,7 @@ echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el alma
 			<th>Pz. por caja</th>
 		</tr>
 		<tr>
-			<td><?php echo $num_cajas ?></td>
+			<td><?php echo $saldo ?></td>
 			<td><?php echo $articulo['Articulo']['codigo'] ?></td>
 			<?php if (!empty($acabado['Acabado']['acabado'])) { ?>
 			<td><?php echo $acabado['Acabado']['acabado'] ?></td>
@@ -36,16 +36,14 @@ echo '<th>Código</th>';
 echo '</tr>';
 $count = 1;
 foreach ($cajas as $c){
-	echo '<tr>';
-	echo '<td>'.$count.'</td>';
-	echo '<td>'.$c['Inventarioalmacen']['fecha'].'</td>';
 	if (empty($c['Pedido'])){
+		echo '<tr>';
+		echo '<td>'.$count.'</td>';
+		echo '<td>'.$c['Inventarioalmacen']['fecha'].'</td>';
 		echo '<td style="font-weight:bold; color:red;">'.$c['Caja']['codigo'].'</td>';
-	} else{
-		echo '<td style="font-weight:bold">'.$c['Caja']['codigo'].'</td>';
+		echo '</tr>';
+		$count++;
 	}
-	echo '</tr>';
-	$count++;
 }
 ?>
 </div>

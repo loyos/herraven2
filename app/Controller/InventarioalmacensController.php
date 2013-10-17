@@ -185,13 +185,14 @@ class InventarioalmacensController extends AppController {
 		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados','cat_id','sub_id'));
 	}
 	
-	function admin_consultar_cajas($articulo_id,$acabado_id,$cat_id,$sub_id=null) {
+	function admin_consultar_cajas($articulo_id,$acabado_id,$saldo,$cat_id,$sub_id=null) {
 		$articulo = $this->Articulo->findById($articulo_id);
 		$acabado = $this->Acabado->findById($acabado_id);
 		$entradas = $this->Inventarioalmacen->find('all',array(
 			'conditions' => array(
 				'Inventarioalmacen.articulo_id' => $articulo_id,
-				'Inventarioalmacen.acabado_id' => $acabado_id
+				'Inventarioalmacen.acabado_id' => $acabado_id,
+			
 			)
 		));
 		foreach ($entradas as $e){
@@ -204,7 +205,7 @@ class InventarioalmacensController extends AppController {
 			'order' => array('Caja.id')
 		));
 		$num_cajas = count($cajas);
-		$this->set(compact('cajas','num_cajas','articulo','acabado','cat_id','sub_id'));
+		$this->set(compact('cajas','num_cajas','articulo','acabado','cat_id','sub_id','saldo'));
 	}
 	
 	function admin_movimientos($cat_id, $sub_id = null){
