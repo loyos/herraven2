@@ -1,7 +1,7 @@
 <div class="wrap">
 <?php 
 echo '<div style="float:left">';
-echo $this->Html->link('Regresar',array('action' => 'admin_forecast'));
+echo $this->Html->link('Regresar',array('action' => 'admin_forecast',$cat_id,$sub_id));
 echo '</div>';
 echo '<div style="float:right">';
 echo $this->Form->button('Ver reporte',array('onclick' => 'window.print()', 'class' => 'link'));

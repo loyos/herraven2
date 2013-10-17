@@ -271,7 +271,7 @@ class ArticulosController extends AppController {
 		$this->set(compact('articulo','cat_id','sub_id','acabados','costo_materiaprima','costo_acabado','ganancia','produccion','id','hoy'));
 	}
 		
-	function admin_ver_forecast(){
+	function admin_ver_forecast($cat_id, $sub_id = null){
 		if (!empty($this->data)) {
 			$data = $this->data;
 			$entro = false;
@@ -329,6 +329,7 @@ class ArticulosController extends AppController {
 			$this->layout = "sin_menu";
 			$this->set(compact('articulos_mp'));
 		}
+		$this->set(compact('cat_id','sub_id'));
 	}
 
 	/*
@@ -447,7 +448,7 @@ class ArticulosController extends AppController {
 						'conditions' => array('Acabado.id' => $acabados_array)
 					));
 				}
-				$this->set(compact('articulos','acabados'));
+				$this->set(compact('articulos','acabados','cat_id','sub_id'));
 	}
 	
 	function subcategoria_catalogo(){
