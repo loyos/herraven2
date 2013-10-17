@@ -98,9 +98,7 @@ class InventariomaterialsController extends AppController {
 	function admin_editar() {
 		if (!empty($this->data)) {
 			$data = $this->data;
-			$hoy = '2013-08-17 14:47:08';
-			//$hoy = date('Y-m-d H:i:s');
-			//var_dump($hoy); die();
+			$hoy = date('Y-m-d H:i:s');
 			$data['Inventariomaterial']['trimestre'] = $this->Config->obtenerTrimestre($hoy);
 			$data['Inventariomaterial']['ano'] = $this->Config->obtenerAno($hoy);
 			$data['Inventariomaterial']['semana'] = $this->Config->obtenerSemana($hoy);
