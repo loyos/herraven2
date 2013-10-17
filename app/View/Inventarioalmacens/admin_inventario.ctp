@@ -39,7 +39,7 @@
 				echo '<td>'.$salida.'</td>';
 				echo '<td>'.$saldo.'</td>';
 				echo '<td>'.$saldo*$articulos[$a['Inventarioalmacen']['articulo_id']].'</td>';
-				echo '<td>'.$this->Html->link('Consultar',array('action' => 'admin_consultar_cajas',$a['Inventarioalmacen']['articulo_id'],$a['Inventarioalmacen']['acabado_id'])).'</td>';
+				echo '<td>'.$this->Html->link('Consultar',array('action' => 'admin_consultar_cajas',$a['Inventarioalmacen']['articulo_id'],$a['Inventarioalmacen']['acabado_id'],$cat_id,$sub_id)).'</td>';
 				echo '</tr>';
 			}
 		}

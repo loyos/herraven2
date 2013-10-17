@@ -182,10 +182,10 @@ class InventarioalmacensController extends AppController {
 		$articulos = $this->Articulo->find('list',array(
 			'fields' => array('id','cantidad_por_caja')
 		));
-		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados'));
+		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados','cat_id','sub_id'));
 	}
 	
-	function admin_consultar_cajas($articulo_id,$acabado_id) {
+	function admin_consultar_cajas($articulo_id,$acabado_id,$cat_id,$sub_id=null) {
 		$articulo = $this->Articulo->findById($articulo_id);
 		$acabado = $this->Acabado->findById($acabado_id);
 		$entradas = $this->Inventarioalmacen->find('all',array(
@@ -204,7 +204,7 @@ class InventarioalmacensController extends AppController {
 			'order' => array('Caja.id')
 		));
 		$num_cajas = count($cajas);
-		$this->set(compact('cajas','num_cajas','articulo','acabado'));
+		$this->set(compact('cajas','num_cajas','articulo','acabado','cat_id','sub_id'));
 	}
 	
 	function admin_movimientos($cat_id, $sub_id = null){
