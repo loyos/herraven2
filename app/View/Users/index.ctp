@@ -6,7 +6,7 @@
 				<?php echo $this->Html->image('users/'. $usuario['User']['imagen'], array('width' => '120px;', 'height' => '100px;')); ?>
 			</div>
 			<div class = "username">
-				<?php echo $usuario['User']['nombre'].' '. $usuario['User']['apellido'].' <span>('. $usuario['User']['username']. ')</span> '; ?>
+				<?php echo $usuario['User']['nombre'].' '. $usuario['User']['apellido']; ?>
 			</div>
 			<div class = "editar_perfil">
 			<?php 		
