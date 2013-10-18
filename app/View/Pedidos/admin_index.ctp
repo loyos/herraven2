@@ -4,7 +4,7 @@
 
 <h2>Pedidos</h2>
 <?php if (!empty($pedidos)) { ?>
-	<table width= '100%'>
+	<table width= '100%' class="tabla_index">
 		<tr>
 			<th></th>
 			<th>Fecha</th>
