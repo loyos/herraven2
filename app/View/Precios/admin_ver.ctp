@@ -18,7 +18,7 @@ if (!empty($acabado_seleccionado)) {
 ?>
 <?php 
 	if (!empty($precio_articulo)) {
-	echo '<table  class="tabla_ver">';
+	echo '<table  style="width:100%" class="tabla_index">';
 	echo '<tr>';
 		echo '<th>Codigo</th>';
 		echo '<th>Precio</th>';
@@ -27,7 +27,7 @@ if (!empty($acabado_seleccionado)) {
 	echo '</tr>';
 	foreach ($precio_articulo as $a){
 		echo '<tr>';
-		echo '<th>'.$a['codigo'].'</th>';
+		echo '<td>'.$a['codigo'].'</td>';
 		echo '<td>';
 		echo $this->Herra->format_number($a['precio']);
 		echo '</td>';
