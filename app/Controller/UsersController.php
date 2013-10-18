@@ -4,7 +4,7 @@ class UsersController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	var $uses = array('User','Cliente');
+	var $uses = array('User','Cliente','Pedido');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
@@ -34,6 +34,28 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('El o nombre de usuario o contraseña son invalidos, vuelve a intentarlo'));
 			}
 		}
+	}
+	
+	public function pedidos(){
+		$cliente_id = $this->Auth->user('cliente_id');
+		$pedidos = $this->Pedido->find('all', array(
+			'conditions' => array(
+				'cliente_id' => $cliente_id
+			)
+		));
+		$this->set(compact('pedidos'));
+	}
+	
+	public function despachos(){
+		$cliente_id = $this->Auth->user('cliente_id');
+		$pedidos = $this->Pedido->find('all', array(
+			'conditions' => array(
+				'cliente_id' => $cliente_id,
+				'status' => 'Despachado'
+			)
+		));
+		// debug($pedidos);
+		$this->set(compact('pedidos'));
 	}
 	
 	public function logout() {
