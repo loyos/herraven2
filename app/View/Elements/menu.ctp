@@ -151,6 +151,19 @@
 		<li class = "option"><?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'listar_subcategorias','index')); ?>
 		</li>
 		<?php }?>
+		<li class = "option <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'pedidos' || 
+									$this->params['controller'] == 'users' && $this->params['action'] == 'despachos'
+		) echo 'active'; ?>">
+		Mis Pedidos
+			<ul>
+				<li class = "children <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'pedidos') echo 'active'; else echo 'inactive'; ?>">
+					<?php echo $this->Html->link('Pedidos',array('controller' => 'users', 'action' => 'pedidos')); ?>
+				</li>
+				<li class = "children <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'despachos') echo 'active'; else echo 'inactive'; ?>">
+					<?php echo $this->Html->link('Despachos',array('controller' => 'users', 'action' => 'despachos')); ?>
+				</li>				
+			</ul>
+		</li>
 	<?php
 	}
 	
