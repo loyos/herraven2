@@ -35,7 +35,10 @@
 					echo $this->Html->link('Ejecutar despacho',array('action' => 'admin_pedido_terminado',$p['Pedido']['id']));
 				}
 				?></td>
-				<td><?php $fecha = explode(' ',$p['Pedido']['fecha']);echo $fecha[0]; ?></td>
+				<td><?php $fecha = explode(' ',$p['Pedido']['fecha']);
+				$date = date_create($fecha[0]);
+				echo date_format($date, 'd-m-Y'); ?></td>
+				
 				<td><?php echo $p['Pedido']['num_pedido'] ?></td>
 				<td><?php echo $p['Cliente']['denominacion_legal'] ?></td>
 				<td><?php echo $p['Articulo']['codigo'] ?></td>

@@ -22,7 +22,8 @@
 				$saldo = $c['Pedido']['cuenta'];
 			}
 			$fecha = explode(' ',$c['Pedido']['fecha']);
-			echo '<td>'.$fecha[0].'</td>';
+			$date = date_create($fecha[0]);
+			echo '<td>'.date_format($date, 'd-m-Y').'</td>';
 			echo '<td>'.$c['Pedido']['num_pedido'].'</td>';
 			echo '<td>'.$c['Pedido']['factura'].'</td>';
 			echo '<td>'.$this->Herra->format_number($c['Pedido']['cuenta']).'</td>';

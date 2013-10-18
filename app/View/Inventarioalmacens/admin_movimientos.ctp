@@ -69,7 +69,8 @@
 		<?php 
 		foreach ($inventarios as $i) {
 			echo '<tr>';
-				echo '<td>'.$i['Inventarioalmacen']['fecha'].'</td>';
+				$date = date_create($i['Inventarioalmacen']['fecha']);
+				echo '<td>'.date_format($date, 'd-m-Y H:i:s').'</td>';
 				echo '<td>'.$i['Articulo']['codigo'].'</td>';
 				echo '<td>'.$i['Acabado']['acabado'].'</td>';
 				echo '<td>'.$i['Inventarioalmacen']['cajas'].'</td>';

@@ -11,7 +11,8 @@
 		foreach ($entradas as $e) {
 		?>
 			<tr>
-				<td style= "padding-right: 40px;"><?php echo $e['Inventariomaterial']['fecha'] ?></td>
+			<?php $date = date_create($e['Inventariomaterial']['fecha']);?>
+				<td style= ""><?php echo date_format($date, 'd-m-Y') ?></td>
 				<td><?php echo number_format($e['Inventariomaterial']['cantidad'], 2, ',', '.'); ?></td>
 			</tr>
 		<?php

@@ -21,7 +21,9 @@
 				<td><?php if ($status[$p['Pedido']['id']] == 'Disponible') {
 					echo $this->Html->link('Ejecutar',array('action' => 'admin_ejecutar_pedido',$p['Pedido']['id']));
 				} ?></td>
-				<td><?php echo $p['Pedido']['fecha'] ?></td>
+				<td><?php 
+				$date = date_create( $p['Pedido']['fecha']);
+				echo date_format($date, 'd-m-Y') ?></td>
 				<td><?php echo $p['Pedido']['num_pedido'] ?></td>
 				<td><?php echo $p['Cliente']['denominacion_legal'] ?></td>
 				<td><?php echo $p['Articulo']['codigo'] ?></td>
