@@ -5,7 +5,7 @@
 	if (!empty($articulos)){
 		echo '<div class = "ejecutar">';
 		echo $this->Form->create('Articulo', array(
-				'url' => array('action' => 'admin_ver_forecast')
+				'url' => array('action' => 'admin_ver_forecast',$cat_id,$sub_id)
 			));
 		echo $this->Form->submit('Ejecutar', array('class' => 'button'));
 		echo $this->Form->end;

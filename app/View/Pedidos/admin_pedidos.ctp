@@ -22,7 +22,9 @@
 				<td>
 				<?php 
 				if ($status[$p['Pedido']['id']] != 'Despachado') {
-					echo $this->Html->link('Cancelar/',array('action' => 'admin_cancelar',$p['Pedido']['id'],'admin_pedidos'), array(), "¿Estas seguro que deseas cancelar el pedido?");
+					if ($status[$p['Pedido']['id']] != 'Cancelado') {
+						echo $this->Html->link('Cancelar/',array('action' => 'admin_cancelar',$p['Pedido']['id'],'admin_pedidos'), array(), "¿Estas seguro que deseas cancelar el pedido?");
+					}
 					echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$p['Pedido']['id'],'admin_pedidos'), array(), "¿Estas seguro que deseas eliminar el pedido?");
 				}
 				if ($status[$p['Pedido']['id']] == 'Preparado') {

@@ -156,11 +156,28 @@ function calcula_precio_acabado(acabado_id,id) {
 		data: {id:id,acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
-		$('span.precio_'+id).html('Precio unitario<br>' + 'Bs.'+msg.toFixed(2));
+		precio = addCommas(msg.toFixed(2));
+		$('span.precio_'+id).html('Precio unitario<br>' + 'Bs.'+precio);
 		cajas = $('td.precio_caja_'+id).attr('name');
-		$('td.precio_caja_'+id).html('Precio caja <br>' + 'Bs.'+(msg*cajas).toFixed(2));
+		n_cajas =  addCommas((msg*cajas).toFixed(2));
+		$('td.precio_caja_'+id).html('Precio caja <br>' + 'Bs.'+n_cajas);
 	});
 }
+
+function addCommas(nStr)
+{
+	nStr += '';
+	nStr = nStr.replace('.',',');
+	x = nStr.split(',');
+	x1 = x[0];
+	x2 = x.length > 1 ? ',' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + '.' + '$2');
+	}
+	return x1 + x2;
+}
+
 $(document).ready(function() {
 	var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 	var is_firefox = navigator.userAgent.indexOf("Firefox") != -1;

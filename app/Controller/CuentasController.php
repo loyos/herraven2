@@ -16,11 +16,16 @@ class CuentasController extends AppController {
 		if($parametros){   // si viene con datos para el buscador, esto es para trabajar el buscador
 											// sin una vista auxiliar como viene en el manual!! parece que sirve
 		
-		$this->paginate['conditions'] = $this->Cuenta->parseCriteria($this->Prg->parsedParams());
-		$this->loadModel('Cuenta');
-		$this->paginate['recursive'] = 2;
-		$cuentas = $this->paginate();
-		
+			$this->paginate['conditions'] = $this->Cuenta->parseCriteria($this->Prg->parsedParams());
+			$this->loadModel('Cuenta');
+			$this->paginate['recursive'] = 2;
+			$cuentas = $this->paginate();
+			$k = 0;
+			foreach ($cuentas as $cuenta) {
+				$ano = $this->Config->obtenerAno($cuenta['Pedido']['fecha']);
+				$cuentas[$k]['Pedido']['num_pedido'] = $cuenta['Pedido']['num_pedido'].$ano[2].$ano[3];
+				$k++;
+			}
 		}else{
 		
 			$cuentas = $this->Cuenta->find('all',array(

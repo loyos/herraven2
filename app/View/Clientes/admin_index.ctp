@@ -23,7 +23,8 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>'.$c['Cliente']['telefono_uno'].'</td>';
 			echo '<td>'.$c['Cliente']['email_representante'].'</td>';
 			echo '<td>'.$c['Precio']['descripcion'].'</td>';
-			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$c['Cliente']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Cliente']['id']),array(),'¿Estás seguro que deseas eliminar?').'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Cliente']['id'])).'</td>';
+			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$c['Cliente']['id'])).'<br>'.'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Cliente']['id'])).'</td>';
+			//.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Cliente']['id']),array(),'¿Estás seguro que deseas eliminar?')
 			echo '</tr>';
 		}
 		echo '</table>';
