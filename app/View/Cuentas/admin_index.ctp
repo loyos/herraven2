@@ -17,6 +17,7 @@
 		<th>Status</th>
 		</tr>
 		<?php
+		$cuenta = 0;
 		foreach($cuentas as $c) {
 			echo '<tr>';
 			if ($c['Cuenta']['status'] == 'Vigente') {
@@ -35,6 +36,7 @@
 			} else {
 				$saldo = $c['Pedido']['cuenta'];
 			}
+			$cuenta = $cuenta+$saldo;
 			echo '<td>'.$this->Herra->format_number($saldo).'</td>';
 			echo '<td>'.$c['Cuenta']['status'].'</td>';
 			echo '</tr>';
@@ -43,5 +45,6 @@
 	} else {
 		echo 'No hay cuentas pendientes';
 	}
+	echo '<h3> El monto total restante es de '.$this->Herra->format_number($cuenta).'</h3>';
 ?>
 </div>
