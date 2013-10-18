@@ -3,9 +3,9 @@
 	
 	<?php 
 	if (!empty($user_id)){?>
-	<li class = "option <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'index') echo 'active'; ?>">
-		<?php echo $this->Html->link('Perfil',array('controller' => 'users','action'=>'index')); ?>
-	</li>
+	<!-- <li class = "option <?php //if($this->params['controller'] == 'users' && $this->params['action'] == 'index') echo 'active'; ?>">
+		<?php //echo $this->Html->link('Perfil',array('controller' => 'users','action'=>'index')); ?>
+	</li> -->
 	<?php 
 	if ($admin_usuario){ ?>
 	<li class = "option <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'admin_index') echo 'active'; ?>">
