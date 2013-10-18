@@ -11,7 +11,7 @@
 		echo $this->Form->end;
 		echo '</div>';
 		?>
-		<table>
+		<table class="tabla_index">
 			<tr>
 			<th>Seleccionar</th>
 			<th>Articulo</th>

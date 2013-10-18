@@ -10,7 +10,7 @@ echo '<h1>Forecast</h1>';
 if (!empty($articulos_mp)) {
 		foreach ($articulos_mp as $a_mp) {
 			?>
-			<table class="tabla_index_sin_width">
+			<table class="tabla_index">
 				<tr>
 					<th>Artículo</th>
 					<?php
@@ -34,7 +34,9 @@ if (!empty($articulos_mp)) {
 					<td><?php echo $a_mp[0]['piezas']*$a_mp[0]['cajas'] ?></td>
 				</tr>
 			</table>
-			<table class="tabla_index_sin_width" >
+			<table class="tabla_index" >
+			<?php
+			//tabla_index_sin_width ?>
 			<tr>
 				<th>Materia prima</th>
 				<th>Unidad</th>
