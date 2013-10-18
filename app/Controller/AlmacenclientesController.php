@@ -6,14 +6,29 @@ class AlmacenclientesController extends AppController {
 	public $components = array('Session','JqImgcrop','RequestHandler');
 	public $uses = array('Almacencliente','Inventarioalmacen','CajasPedido','Inventariomaterial','Config','Categoria','Articulo','Acabado','Caja','Subcategoria','User','Cliente');
 	
-	function index(){
+	function index($cat_id, $sub_id = null){
 		$user_id = $this->Auth->user('id');
 		$user = $this->User->findById($user_id);
 		$cliente_id = $user['User']['cliente_id'];
+		if (empty($sub_id)) {
+			$subcategorias = $this->Subcategoria->find('all',array(
+				'conditions' => array('Subcategoria.categoria_id' => $cat_id)
+			));
+			foreach ($subcategorias as $s) {
+				$sub[] = $s['Subcategoria']['id'];
+			}
+		} else {
+			$sub = $sub_id;
+		}
 		$almacen = $this->Almacencliente->find('all',array(
-			'conditions' => array('Pedido.cliente_id' => $cliente_id),
+			'conditions' => array(
+				'Pedido.cliente_id' => $cliente_id,
+				'Articulo.subcategoria_id' => $sub
+			),
+			'recursive' => 2
 
 		));
+		
 		foreach ($almacen as $a) {
 			$articulos_almacen[] = $a['Almacencliente']['articulo_id']; 
 		}
@@ -170,6 +185,13 @@ class AlmacenclientesController extends AppController {
 			'contain' => array('Subcategoria')
 		));
 		$this->set(compact('categorias','action','cliente_id'));
+	}
+	
+	function listar_subcategorias($action) {
+		$categorias = $this->Categoria->find('all',array(
+			'contain' => array('Subcategoria')
+		));
+		$this->set(compact('categorias','action'));
 	}
 }
 

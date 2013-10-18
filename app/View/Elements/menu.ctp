@@ -148,7 +148,7 @@
 		<li class = "option"><?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'index')); ?>
 		</li>
 		<?php if ($cliente_almacen) { ?>
-		<li class = "option"><?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'index')); ?>
+		<li class = "option"><?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'listar_subcategorias','index')); ?>
 		</li>
 		<?php }?>
 	<?php
