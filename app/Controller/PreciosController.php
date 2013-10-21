@@ -48,6 +48,7 @@ class PreciosController extends AppController {
 		if (!empty($this->data['Precio']['acabado_id'])) {
 			$acabado_seleccionado = $this->data['Precio']['acabado_id'];
 			$materias = $this->Materiasprima->find('all');
+			$acabado = $this->Acabado->findById($acabado_seleccionado);
 			$ganancia = $precio['Precio']['ganancia'];
 			if (empty($subcat)){
 				$subcategorias = $this->Subcategoria->find('all',array(
@@ -122,7 +123,7 @@ class PreciosController extends AppController {
 				};
 			}
 			
-			$this->set(compact('precio','precio_materia','precio_articulo','acabado_seleccionado'));
+			$this->set(compact('precio','precio_materia','precio_articulo','acabado_seleccionado','acabado'));
 		}
 		$this->set(compact('precio','acabados'));
 	}
