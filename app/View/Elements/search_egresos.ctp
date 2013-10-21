@@ -19,7 +19,8 @@
 				'cancelado' => 'Cancelado',
 				'Progreso-Despacho' => 'Progreso-Despacho',
 				'Despachado ' => 'Despachado',
-				'Disponible ' => 'Disponible'
+				'Disponible ' => 'Disponible',
+				'Preparado' => 'Preparado'
 			));
 			// echo $this->Form->input('wachu', array('div' => false, 'label' => false));
 			echo "</td></tr>";
