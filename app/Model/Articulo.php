@@ -55,9 +55,16 @@ class Articulo extends AppModel {
 			'message' => 'Este campo no puede quedar vacío.'
 		),
 		'codigo' => array(
-			'rule' => 'notEmpty',
-			'message' => 'Este campo no puede quedar vacío.'
+			'not_empty_cod' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Este campo no puede quedar vacío.'
+			),
+			'unico' => array(
+				'rule' => 'isUnique',
+				'message' => 'El código debe ser único'
+			)
 		),
+		
     );
 	
 	// aqui se configura el filtro
