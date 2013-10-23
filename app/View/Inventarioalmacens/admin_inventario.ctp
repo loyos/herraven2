@@ -34,7 +34,12 @@
 				$saldo = $entrada -$salida;
 				echo '<tr>';
 				echo '<td>'.$key.'</td>';
-				echo '<td>'.$a['Acabado']['acabado'].'</td>';
+				if (!empty($a['Acabado']['acabado'])) {
+					$val = $a['Acabado']['acabado'];
+				} else {
+					$val = 'Sin Acabado';
+				}
+				echo '<td>'.$val.'</td>';
 				echo '<td>'.$entrada.'</td>';
 				echo '<td>'.$salida.'</td>';
 				echo '<td>'.$saldo.'</td>';
