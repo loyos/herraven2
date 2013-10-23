@@ -36,6 +36,7 @@ class InventarioalmacensController extends AppController {
 		if (!empty($this->data)) {
 			$data = $this->data;
 			$hoy = date('Y-m-d H:i:s');
+			//Materia prima que se gasta sin el acabado
 			foreach ($articulo['Materiasprima'] as $m) {
 				$cantidad_materia = $m['ArticulosMateriasprima']['cantidad'] * $data['Inventarioalmacen']['cajas'] *$articulo['Articulo']['cantidad_por_caja'];
 				$inventario_materia = array(
@@ -53,6 +54,34 @@ class InventarioalmacensController extends AppController {
 				$this->Inventariomaterial->create();
 				$this->Inventariomaterial->save($inventario_materia);	
 			}
+			//Materia prima que se gasta con el acabado
+			if (!empty($data['Inventarioalmacen']['acabado_id'])) {
+				$materias_prima = $this->AcabadosMateriasprima->find('all',array(
+					'conditions' => array(
+						'AcabadosMateriasprima.articulo_id' => $id,
+						'AcabadosMateriasprima.acabado_id' => $data['Inventarioalmacen']['acabado_id'],
+					)
+				));
+				foreach ($materias_prima as $m) {
+					$cantidad_materia = $m['AcabadosMateriasprima']['cantidad'] * $data['Inventarioalmacen']['cajas'] *$articulo['Articulo']['cantidad_por_caja'];
+					$inventario_materia = array(
+						'Inventariomaterial' => array(
+							'trimestre' => $this->Config->obtenerTrimestre($hoy),
+							'ano' => $this->Config->obtenerAno($hoy),
+							'semana' => $this->Config->obtenerSemana($hoy),
+							'mes' => $this->Config->obtenerMes($hoy),
+							'tipo' => 'salida',
+							'fecha' => $hoy,
+							'materiasprima_id' => $m['AcabadosMateriasprima']['materiasprima_id'],
+							'cantidad' => $cantidad_materia
+						)
+					);
+					$this->Inventariomaterial->create();
+					$this->Inventariomaterial->save($inventario_materia);	
+
+				}
+			}
+			//var_dump($materias_prima);die();
 			$ultima_entrada = $this->Inventarioalmacen->find('first',array(
 				'conditions' => array(
 					'tipo' => 'entrada'
