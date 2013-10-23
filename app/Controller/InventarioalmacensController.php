@@ -4,7 +4,7 @@ class InventarioalmacensController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	public $uses = array('Inventarioalmacen','Materiasprima','Inventariomaterial','Config','Categoria','Articulo','Acabado','Caja','Subcategoria');
+	public $uses = array('Inventarioalmacen','Materiasprima','Inventariomaterial','Config','Categoria','Articulo','Acabado','Caja','Subcategoria','AcabadosMateriasprima');
 	
 	
 	function admin_agregar(){
@@ -98,9 +98,20 @@ class InventarioalmacensController extends AppController {
 				$this->redirect(array('action' => 'admin_etiquetas',$id_inventario_almacen));
 			}
 		}
-		$acabados = $this->Acabado->find('list',array(
-			'fields' => array('Acabado.id','Acabado.acabado')
+		
+		$acabados_encontrados = $this->AcabadosMateriasprima->find('all', array (
+			'fields' => array(
+				'DISTINCT acabado_id'
+			),
+			'conditions' => array(
+				'articulo_id' => $id
+			),
+			'recursive' => 2
 		));
+		foreach ($acabados_encontrados as $a) {
+			$acabado = $this->Acabado->findById($a['AcabadosMateriasprima']['acabado_id']);
+			$acabados[$a['AcabadosMateriasprima']['acabado_id']] = $acabado['Acabado']['acabado'];
+		}
 		$acabados[0] = 'Sin acabado';
 		$this->set(compact('acabados','articulo'));
 	}
