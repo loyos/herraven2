@@ -37,6 +37,8 @@
 					echo '<br>';
 					if (!empty($a['Inventarioalmacen']['Acabado']['acabado'])){
 						echo $a['Inventarioalmacen']['Acabado']['acabado'];
+					} else {
+						echo 'Sin Acabado';
 					}
 					echo '</div>';
 					?>
