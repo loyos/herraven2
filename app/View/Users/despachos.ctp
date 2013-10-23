@@ -1,10 +1,12 @@
 <div class = "wrap">
 	<?php foreach($pedidos as $p){ ?>
 	<div class = "articulo_catalogo" style = " padding-bottom: 20px;">
-		<div class = "imagen_catalogo fotos">
+		<div class = "imagen_catalogo fotos" style="text-align:center">
 			<?php
 			// debug($pedidos);
-			
+				echo '<div class="codigo_pedido">';
+				echo $p['Articulo']['codigo'];
+				echo '</div>';
 				echo $this->Html->image('articulos/'.$p['Articulo']['imagen'], array("height" => "120px",'class'=>'prim'));
 			
 		?>
@@ -13,7 +15,7 @@
 			<table style = "width: 600px">
 				<tr>
 					<th>
-						Nombre
+						Descripción
 					</th>
 					<th>
 						Status
@@ -44,7 +46,13 @@
 						<?php echo $p['Pedido']['fecha'] ?>
 					</td>
 					<td style = "text-align: center">
-						<?php echo $p['Acabado']['acabado'] ?>
+						<?php 
+						if (!empty($p['Acabado']['acabado'])) {
+							echo $p['Acabado']['acabado'];
+						} else {
+							echo 'Sin acabado';
+						}
+						?>
 					</td>
 					<td style = "text-align: center">
 						<?php echo $p['Articulo']['cantidad_por_caja'] ?>

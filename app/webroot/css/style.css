@@ -480,7 +480,7 @@ table.tabla_ver td, table.tabla_ver th{
 
 .imagen_catalogo {
 	float:left;
-	margin-top: 28px;
+	margin-top: 13px;
 	margin-left: 25px;
 }
 
@@ -715,4 +715,9 @@ button.link{
 
 .footer_nota {
 	text-align:center;
+}
+
+.codigo_pedido {
+	font-weight:bold;
+	margin-bottom:6px;
 }
