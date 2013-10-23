@@ -1,6 +1,8 @@
 <div class = "wrap">
 	<h1>Pedidos realizados</h1>
-	<?php foreach($pedidos as $p){ ?>
+	<?php 
+	if (!empty($pedidos)) {
+	foreach($pedidos as $p){ ?>
 	<div class = "articulo_catalogo" style = " padding-bottom: 20px;">
 		<div class = "imagen_catalogo fotos" style="text-align:center">
 			<?php
@@ -62,5 +64,9 @@
 			</table>
 		</div>
 	</div>
-	<?php } ?>
+	<?php } 
+	} else {
+		echo 'No hay pedidos registrados';
+	}
+	?>
 </div>	
