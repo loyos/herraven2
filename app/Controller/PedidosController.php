@@ -37,9 +37,9 @@ class PedidosController extends AppController {
 					}
 				}
 				$saldo = $entradas - $salidas;
-				if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+				if ($saldo >= $p['Pedido']['cantidad_cajas'] && ($p['Pedido']['status'] == 'pendiente' || $p['Pedido']['status'] == 'No disponible')) {
 					$status[$p['Pedido']['id']] = 'Disponible';
-				} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+				} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && ($p['Pedido']['status'] == 'pendiente' || $p['Pedido']['status'] == 'Disponible')) {
 					$status[$p['Pedido']['id']] = 'No disponible';
 				} else {
 					$status[$p['Pedido']['id']] = $p['Pedido']['status'];
@@ -97,9 +97,9 @@ class PedidosController extends AppController {
 							}
 						}
 						$saldo = $entradas - $salidas;
-						if ($saldo >= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+						if ($saldo >= $p['Pedido']['cantidad_cajas'] && ($p['Pedido']['status'] == 'pendiente' || $p['Pedido']['status'] == 'No disponible')){
 							$status[$p['Pedido']['id']] = 'Disponible';
-						} elseif ($saldo <= $p['Pedido']['cantidad_cajas'] && $p['Pedido']['status'] == 'pendiente') {
+						} else if($saldo <= $p['Pedido']['cantidad_cajas'] && ($p['Pedido']['status'] == 'pendiente' || $p['Pedido']['status'] == 'Disponible')) {
 							$status[$p['Pedido']['id']] = 'No disponible';
 						} else {
 							$status[$p['Pedido']['id']] = $p['Pedido']['status'];

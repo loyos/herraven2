@@ -126,6 +126,7 @@ class InventarioalmacensController extends AppController {
 				$this->Session->setFlash("El ingreso al almacén se realizó con éxito");
 				$this->redirect(array('action' => 'admin_etiquetas',$id_inventario_almacen));
 			}
+			
 		}
 		
 		$acabados_encontrados = $this->AcabadosMateriasprima->find('all', array (
