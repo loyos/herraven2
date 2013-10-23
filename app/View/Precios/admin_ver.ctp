@@ -15,7 +15,11 @@
 <h1><?php echo $precio['Precio']['descripcion']?></h1>
 <?php
 if (!empty($acabado_seleccionado)) {
-	echo '<h3>('.$acabado['Acabado']['acabado'].')</h3><br>';
+	if (!empty($acabado['Acabado']['acabado'])) {
+		echo '<h3>('.$acabado['Acabado']['acabado'].')</h3><br>';
+	} else {
+		echo '<h3>(Sin Acabado)</h3><br>';
+	}
 ?>
 <?php 
 	if (!empty($precio_articulo)) {
