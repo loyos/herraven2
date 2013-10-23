@@ -76,7 +76,9 @@ foreach ($info_articulos as $a) { ?>
 							'id' => $a['id'],
 							'class' => 'acabados_catalogo'
 						));
-						echo '<span class="descripcion_acabado_'.$a['id'].'"><br> Descripción del acabado: '.$acabado_descripcion[$a['id']].'</span>';
+						if (!empty($acabado_descripcion[$a['id']])){
+							echo '<span class="descripcion_acabado_'.$a['id'].'"><br> Descripción del acabado: '.$acabado_descripcion[$a['id']].'</span>';
+						}
 					} else {
 						echo 'No hay acabados asociados';
 					}
@@ -144,7 +146,9 @@ $( ".acabados_catalogo" ).change(function() {
 		dataType: "json"
 	}).done(function( msg ) {
 		$('span.descripcion_acabado_'+id).html(msg);		
-	});
+	}). error(function( msg ) {
+		$('span.descripcion_acabado_'+id).html('');		
+	}) ;
 	calcula_precio_acabado(acabado_id,id);
 });
 
