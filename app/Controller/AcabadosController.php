@@ -22,7 +22,7 @@ class AcabadosController extends AppController {
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			if ($this->Acabado->save($this->data)) {
-				$this->Session->setFlash("Los datos se guardaron correctamente");
+				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			} else {
 				$titulo = "";
