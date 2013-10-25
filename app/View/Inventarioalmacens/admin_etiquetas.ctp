@@ -1,10 +1,12 @@
 <div class="wrap">
 	<?php
-	echo '<div>';
-	echo $this->Html->link('Finalizar ingreso',array('action' => 'admin_agregar'));
+	echo '<div style="float:left">';
+	echo $this->Html->link('Ver Nota de Ingreso',array('action' => 'admin_nota_entrada',$id_inventario),array('target' =>'_blank'));
 	echo '<br><br>';
 	echo $this->Html->link($this->Html->image('imprimir.jpg'),array(''.$id_inventario), array('onclick' => 'window.print()', 'escape' => false));
-	echo $this->Html->link('Nota de entrega',array('action' => 'admin_nota_entrada',$id_inventario),array('target' =>'_blank'));	
+	echo '</div>';
+	echo '<div style="text-align:right">';
+	echo $this->Html->link('Finalizar ingreso',array('action' => 'admin_agregar'));
 	echo '</div>';
 	$count = 1;
 	foreach ($cajas as $a) {
