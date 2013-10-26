@@ -176,7 +176,7 @@ class InventarioalmacensController extends AppController {
 			'recursive' => 2
 		));
 
-		$this->layout = 'sin_menu';
+		//$this->layout = 'sin_menu';
 		$this->set(compact('cajas','id_inventario'));
 	} 
 	

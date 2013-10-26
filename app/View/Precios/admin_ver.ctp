@@ -1,5 +1,16 @@
 <div class="wrap">
-	<?php echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id'])); ?>
+	<?php 
+	if (empty($subcat)) {
+		$subcat = 0;
+	}
+	echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id'])); 
+	if (empty($acabado_seleccionado)) {
+		$acabado_seleccionado = 10000;
+	}
+	echo '<br>';
+	echo $this->Html->link('Ver Reporte',array('action' => 'admin_ver',$id,$cat,$acabado_seleccionado,$subcat,'ext' => 'pdf'),array('target'=>'_blank'));
+	?>
+	
 	<div class = "search">
 		<?php
 			echo $this->Form->create('Precio');
