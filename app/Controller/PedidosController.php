@@ -4,7 +4,7 @@ class PedidosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','Search.Prg');
-	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja','Cuenta','Almacencliente');
+	public $uses = array('Pedido','Articulo','Subcategoria','Materiasprima','ArticulosMateriasprima','Config','Inventarioalmacen','CajasPedido','Caja','Cuenta','Almacencliente','Cliente');
     public $presetVars = true; // using the model configuration
 	public $paginate = array();
 
@@ -62,8 +62,11 @@ class PedidosController extends AppController {
 		$acabados = $this->Acabado->find('list', array(
 			'fields' => array('Acabado.acabado', 'Acabado.acabado')
 		));
+		$clientes = $this->Cliente->find('list', array(
+			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
+		));
 		$acabados = array_merge(array('Todos'), $acabados);
-		$this->set(compact('status','pedidos', 'acabados'));
+		$this->set(compact('status','pedidos', 'acabados','clientes'));
     }
 
 	
@@ -126,8 +129,11 @@ class PedidosController extends AppController {
 		$acabados = $this->Acabado->find('list', array(
 			'fields' => array('Acabado.acabado', 'Acabado.acabado')
 		));
+		$clientes = $this->Cliente->find('list', array(
+			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
+		));
 		$acabados = array_merge(array('Todos'), $acabados);
-		$this->set(compact('status','pedidos', 'acabados'));
+		$this->set(compact('status','pedidos', 'acabados','clientes'));
     }
 	
 	function admin_editar($id = null) {

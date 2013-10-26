@@ -11,9 +11,9 @@
 	$count = 1;
 	foreach ($cajas as $a) {
 		if ($count%10==0 || $count%9==0){
-			echo '<div class="etiqueta" style="margin-top:200px">';
+			echo '<div class="etiqueta" style="clear:left">';
 		} else {
-			echo '<div class="etiqueta">';
+			echo '<div class="etiqueta" style="clear:left">';
 		}
 		if ($count==10){
 			$count = 2;

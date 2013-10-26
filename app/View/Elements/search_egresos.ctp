@@ -8,7 +8,7 @@
 			echo "Cliente:";
 			echo "</td>";
 			echo "<td>";
-			echo $this->Form->input('denominacion_legal', array('div' => false, 'label' => false));
+			echo $this->Form->input('cliente', array('div' => false, 'label' => false, 'empty' => 'Todos'));
 			echo "</td></tr>";
 			echo "<tr><td>";
 			echo "Estatus:";
