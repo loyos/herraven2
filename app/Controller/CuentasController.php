@@ -3,7 +3,7 @@
 class CuentasController extends AppController {
     
 	public $helpers = array ('Html','Form','Herra');
-	var $uses = array('Cuenta','Config','User');
+	var $uses = array('Cuenta','Config','User','Abono');
 	public $components = array('Search.Prg');
 	public $presetVars = true; // using the model configuration
 	public $paginate = array();
@@ -67,6 +67,7 @@ class CuentasController extends AppController {
 		if (!empty($this->data)) {
 			$id = $this->data['Cuenta']['id'];
 			$cuenta = $this->Cuenta->findById($id);
+			$hoy = date('Y-m-d H:i:s');
 			$deposito = $this->data['Cuenta']['monto']+$cuenta['Cuenta']['deposito'];
 			$total = $cuenta['Pedido']['cuenta'];
 			if ($total == $deposito) {
@@ -74,7 +75,8 @@ class CuentasController extends AppController {
 				'Cuenta' => array(
 					'id' => $id,
 					'deposito' => $deposito,
-					'status' => 'Pagado'
+					'status' => 'Pagado',
+					'mes_pago' => $this->Config->obtenerMes($hoy),
 				)
 			);
 			} elseif ($deposito > $total) {
@@ -89,6 +91,15 @@ class CuentasController extends AppController {
 				);
 			}
 			$this->Cuenta->save($update);
+	
+			$abono = array(
+				'Abono' => array(
+					'cuenta_id' => $id,
+					'abono' => $this->data['Cuenta']['monto'],
+					'mes' => $this->Config->obtenerMes($hoy),
+				)
+			);
+			$this->Abono->save($abono);
 			$this->Session->setFlash('El pago se realizó con éxito');
 			$this->redirect(array('action' => 'admin_index'));
 		}

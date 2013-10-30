@@ -53,5 +53,7 @@ class Config extends AppModel {
 		
 		return $semana;
 	}
+	
+	
 }
 ?>

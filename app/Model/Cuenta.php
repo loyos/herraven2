@@ -10,6 +10,13 @@ class Cuenta extends AppModel {
         ),
     );
 	
+	public $hasMany = array(
+		'Abono' => array(
+			'className'  => 'Abono',
+			'foreignKey'    => 'cuenta_id',
+		),
+    );
+	
 	public $filterArgs = array(
 		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast')
 		'cliente' => array('type' => 'like', 'field' => 'Pedido.cliente_id'),

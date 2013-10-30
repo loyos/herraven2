@@ -2,7 +2,7 @@
 echo $hoy;
 ?>
 <h1>Artículo</h1>
-<?php 
+/* <?php  */
 	echo '<table  class="tabla_ver">';
 	echo '<tr>';
 	echo '<th style = "border-bottom: 1px solid black; padding-bottom:10px; padding-top:10px;">Imagen</th>';
