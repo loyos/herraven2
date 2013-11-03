@@ -155,6 +155,7 @@ class AlmacenclientesController extends AppController {
 				'conditions' => array(
 					'Almacencliente.articulo_id' => $a['Articulo']['id'],
 					'Almacencliente.tipo' => 'entrada',
+					'Pedido.cliente_id' => $cliente_id
 				),
 				'group' => array('Almacencliente.acabado_id')
 			));
@@ -163,6 +164,7 @@ class AlmacenclientesController extends AppController {
 				'conditions' => array(
 					'Almacencliente.articulo_id' => $a['Articulo']['id'],
 					'Almacencliente.tipo' => 'salida',
+					'Pedido.cliente_id' => $cliente_id
 				),
 				'group' => array('Almacencliente.acabado_id')
 			));
