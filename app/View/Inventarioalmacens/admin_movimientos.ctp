@@ -72,6 +72,9 @@
 				$date = date_create($i['Inventarioalmacen']['fecha']);
 				echo '<td>'.date_format($date, 'd-m-Y H:i:s').'</td>';
 				echo '<td>'.$i['Articulo']['codigo'].'</td>';
+				if (empty($i['Acabado']['acabado'])) {
+					$i['Acabado']['acabado'] = 'Sin Acabado';
+				}
 				echo '<td>'.$i['Acabado']['acabado'].'</td>';
 				echo '<td>'.$i['Inventarioalmacen']['cajas'].'</td>';
 				echo '<td>'.$i['Articulo']['cantidad_por_caja']*$i['Inventarioalmacen']['cajas'].'</td>';
