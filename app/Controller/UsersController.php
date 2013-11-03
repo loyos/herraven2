@@ -40,7 +40,8 @@ class UsersController extends AppController {
 		$cliente_id = $this->Auth->user('cliente_id');
 		$pedidos = $this->Pedido->find('all', array(
 			'conditions' => array(
-				'cliente_id' => $cliente_id
+				'cliente_id' => $cliente_id,
+				'status !=' => 'Despachado'
 			)
 		));
 		$this->set(compact('pedidos'));
