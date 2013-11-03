@@ -294,7 +294,7 @@ class ArticulosController extends AppController {
 							'Materiasprima' => $mp['descripcion'],
 							'acabado' => $acabado['Acabado']['acabado'],
 							'unidad' => $mp['unidad'],
-							'piezas' => $cajas*$articulo['Articulo']['cantidad_por_caja'],
+							'piezas' => $articulo['Articulo']['cantidad_por_caja'],
 							'cantidad' =>  $mp['ArticulosMateriasprima']['cantidad'] * $articulo['Articulo']['cantidad_por_caja'] * $cajas,
 							'cajas' => $cajas
 						);
