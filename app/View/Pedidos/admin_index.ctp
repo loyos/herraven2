@@ -40,5 +40,7 @@
 			</tr>
 		<?php } ?>
 	</table>
-<?php }?>
+<?php } else {
+	echo '<h3>No hay pedidos registrados</h3>';
+}?>
 </div>
