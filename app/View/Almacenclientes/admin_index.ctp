@@ -1,6 +1,7 @@
 <div class="wrap">
 <h1>Inventario Almacén</h1>
 <?php 
+	echo '<h3>'.$cliente['Cliente']['denominacion_legal'].'</h3>';
 	if (!empty($articulos) && !empty($entradas_articulo)) {
 		?>
 		<table class="tabla_index">

@@ -172,7 +172,8 @@ class AlmacenclientesController extends AppController {
 		$articulos = $this->Articulo->find('list',array(
 			'fields' => array('id','cantidad_por_caja')
 		));
-		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados'));
+		$cliente = $this->Cliente->findById($cliente_id);
+		$this->set(compact('entradas_articulo','salidas_articulo','articulos','acabados','cliente'));
 		}
 	}
 	
