@@ -36,5 +36,13 @@ class HerraHelper extends AppHelper {
 	public function format_number($cant){
 		return('Bs '. number_format($cant, 2, ',', '.'));
 	}
+	
+	
+	public function n_pedido($numero = 10, $ano = "2013-232-323"){
+		$fecha = explode("-", $ano);
+		$fecha = substr($fecha[0], -2);
+		$n_pedido = $numero.$fecha;
+		return($n_pedido); 
+	}
 
 }

@@ -39,7 +39,7 @@
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
-	echo $this->Form->submit('Buscar',array('class'=>'button'));
+	echo $this->Form->submit('Buscar',array('class'=>'button boton_busqueda boton_catalogo'));
 	echo $this->Form->end();
 	echo '<br>';
 	echo '</div>';

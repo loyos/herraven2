@@ -49,12 +49,16 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<div id="container" class = "home_body">
 		<div class = "main_header">
 			<div class = "home_menu">
-				<div class = "main_titulo">
+				<!-- <div class = "main_titulo">
 					Herraven
 				</div>
 				<div class = "main_subtitulo">
 					fábrica
-				</div>
+				</div> -->
+				<?php echo $this->Html->link($this->Html->image('logo-herraven.png', array('width' => '200px')),array(),
+				array('escape' => false,
+					'class' => 'logo_home'
+					)); ?>
 				<?php echo $this->element('home_menu'); ?>
 			</div>
 		</div>
@@ -63,15 +67,18 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
+		
 		</div>
-		<div class = "chiclet">
+		<div class = "footer_acomodado">		
 		</div>
+			
 	</div>
-	<div class="home_footer">
+
+	<!-- <div class="home_footer">
 		<div class = "footer_content">
 			Derechos reservados - Herraven 2013 - Política de Privacidad - Desarrollado por gente chévere
 		</div>
-	</div>
+	</div> -->
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

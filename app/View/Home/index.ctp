@@ -16,10 +16,11 @@
 jQuery(document).ready(function($) {
     $('#banner-fade').bjqs({
         'height' : 400,
-        'width' : 700,
+        'width' : 800,
         'responsive' : true,
 		'nexttext' : '',
-		'prevtext' : ''
+		'prevtext' : '',
+		'showmarkers' : false
     });
 });
 </script>

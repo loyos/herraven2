@@ -125,6 +125,12 @@ class PedidosController extends AppController {
 				$count++;
 			}
 			
+		$pedidos_pendientes = $this->Pedido->find('all', array(
+			'conditions' => array(
+				'status !=' => array('Despachado', 'Cancelado'),
+			)
+		));	
+			
 		$this->loadModel('Acabado');
 		$acabados = $this->Acabado->find('list', array(
 			'fields' => array('Acabado.acabado', 'Acabado.acabado')
@@ -133,7 +139,7 @@ class PedidosController extends AppController {
 			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
 		));
 		$acabados = array_merge(array('Todos'), $acabados);
-		$this->set(compact('status','pedidos', 'acabados','clientes'));
+		$this->set(compact('status','pedidos', 'acabados','clientes', 'pedidos_pendientes'));
     }
 	
 	function admin_editar($id = null) {

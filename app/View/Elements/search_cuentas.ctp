@@ -17,7 +17,7 @@
 			// echo $this->Form->input('wachu', array('div' => false, 'label' => false));
 			// echo "</td></tr>";
 			echo "</table>";			
-			echo $this->Form->submit(__('Buscar'), array('div' => 'search_button'));
+			echo $this->Form->submit(__('Buscar'), array('div' => 'search_button', 'class' => 'boton_busqueda boton_catalogo'));
 			echo $this->Form->end();
 	?>
 </div>

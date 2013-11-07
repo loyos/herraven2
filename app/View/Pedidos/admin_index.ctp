@@ -19,7 +19,7 @@
 		<?php foreach ($pedidos as $p) { ?>
 			<tr>
 				<td><?php if ($status[$p['Pedido']['id']] == 'Disponible') {
-					echo $this->Html->link('Ejecutar',array('action' => 'admin_ejecutar_pedido',$p['Pedido']['id']));
+					echo $this->Html->link('Ejecutar',array('action' => 'admin_ejecutar_pedido',$p['Pedido']['id']), array('class' => 'boton_accion'));
 				} ?></td>
 				<td><?php 
 				$date = date_create( $p['Pedido']['fecha']);

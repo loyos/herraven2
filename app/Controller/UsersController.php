@@ -31,7 +31,7 @@ class UsersController extends AppController {
 						'action' => 'index'
 					));
 			} else {
-				$this->Session->setFlash(__('El o nombre de usuario o contraseña son invalidos, vuelve a intentarlo'));
+				$this->Session->setFlash(__('El nombre de usuario o contraseña son invalidos, vuelve a intentarlo'));
 			}
 		}
 	}
@@ -44,7 +44,15 @@ class UsersController extends AppController {
 				'status !=' => 'Despachado'
 			)
 		));
-		$this->set(compact('pedidos'));
+		
+		$pedidos_pendientes = $this->Pedido->find('all', array(
+			'conditions' => array(
+				'cliente_id' => $cliente_id,
+				'status !=' => array('Despachado', 'Cancelado'),
+			)
+		));
+		
+		$this->set(compact('pedidos','pedidos_pendientes'));
 	}
 	
 	public function despachos(){
