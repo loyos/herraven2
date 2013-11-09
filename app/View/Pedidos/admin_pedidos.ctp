@@ -45,6 +45,11 @@
 				<td><?php echo $p['Pedido']['num_pedido'] ?></td>
 				<td><?php echo $p['Cliente']['denominacion_legal'] ?></td>
 				<td><?php echo $p['Articulo']['codigo'] ?></td>
+				<?php 
+					if (empty($p['Acabado']['acabado'])) {
+						$p['Acabado']['acabado'] = 'Sin Acabado';
+					}
+				?>
 				<td><?php echo $p['Acabado']['acabado'] ?></td>
 				<td><?php echo $p['Pedido']['cantidad_cajas'] ?></td>
 				<td><?php echo $p['Pedido']['cantidad_cajas'] * $p['Articulo']['cantidad_por_caja'] ?></td>
