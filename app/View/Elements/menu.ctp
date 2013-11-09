@@ -44,7 +44,7 @@
 								 ($this->params['controller'] == 'subcategorias' && $this->params['action'] == 'admin_index') || 
 								 ($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_index')
 		) echo 'active'; ?> ">
-		Lineas
+		Tablas
 		<ul>
 			<li class = "children <?php if($this->params['controller'] == 'categorias' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Linea',array('controller' => 'categorias', 'action' => 'admin_index')); ?>
