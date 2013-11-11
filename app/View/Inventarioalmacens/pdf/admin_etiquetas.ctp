@@ -3,7 +3,7 @@
 	$count = 1;
 	foreach ($cajas as $a) {
 		if ($count%5==0 ){
-			echo '<div class="etiqueta" style="clear:left; margin-top:108px; font-family: Kameron, sans-serif; border:1px solid black;">';
+			echo '<div class="etiqueta" style="clear:left; margin-top:110px; font-family: Kameron, sans-serif; border:1px solid black;">';
 		} else {
 			echo '<div class="etiqueta" style="clear:left;  margin-top:25px; font-family: Kameron, sans-serif; border:1px solid black;">';
 		}
