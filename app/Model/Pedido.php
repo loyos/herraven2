@@ -36,12 +36,25 @@ class Pedido extends AppModel {
     );
 	
 	public $filterArgs = array(
-		'status' => array('type' => 'value', 'field' => 'Pedido.status'),
+		'status' => array('type' => 'query', 'method' => 'orConditions'),
 		//'denominacion_legal' => array('type' => 'like', 'field' => 'Cliente.denominacion_legal'),
 		'acabado' => array('type' => 'like', 'field' => 'Acabado.acabado'),
 		'cliente' => array('type' => 'like', 'field' => 'Pedido.cliente_id'),
 	);
 	
+	public function orConditions($data = array()) {
+        $status = $data['status'];
+		if($status == 'Pendiente'){
+			$cond = array(
+					$this->alias . '.status !=' => array('Despachado', 'Cancelado'),
+				);
+		} else {
+			$cond = array(
+					$this->alias . '.status LIKE' => '%' . $status . '%',
+				);
+		}
+        return $cond;
+    }
 	
 }
 

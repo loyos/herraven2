@@ -66,7 +66,13 @@ class PedidosController extends AppController {
 			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
 		));
 		$acabados = array_merge(array('Todos'), $acabados);
-		$this->set(compact('status','pedidos', 'acabados','clientes'));
+		
+		$pedidos_pendientes = $this->Pedido->find('all', array(
+			'conditions' => array(
+				'status !=' => array('Despachado', 'Cancelado'),
+			)
+		));	
+		$this->set(compact('status','pedidos', 'acabados','clientes', 'pedidos_pendientes'));
     }
 
 	

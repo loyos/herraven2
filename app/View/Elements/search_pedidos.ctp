@@ -20,7 +20,8 @@
 				'Progreso-Despacho' => 'Progreso-Despacho',
 				'Despachado ' => 'Despachado',
 				'Disponible ' => 'Disponible',
-				'Preparado' => 'Preparado'
+				'Preparado' => 'Preparado',
+				'Pendiente' => 'Pendiente'
 			));
 			// echo $this->Form->input('wachu', array('div' => false, 'label' => false));
 			echo "</td></tr>";

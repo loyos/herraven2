@@ -8,7 +8,10 @@
 	</li> -->
 	<?php 
 	if ($admin_usuario){ ?>
-	<li class = "option <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'admin_index') echo 'active'; ?>">
+	<li class = "option <?php if(($this->params['controller'] == 'users' && $this->params['action'] == 'admin_index') ||
+									($this->params['controller'] == 'users' && $this->params['action'] == 'admin_editar')
+								)
+							echo 'active'; ?>">
 		Usuarios
 		<ul>
 			<li class = "children">
@@ -19,7 +22,8 @@
 	</li>
 	<li class = "option <?php if(($this->params['controller'] == 'clientes') ||
 								($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_pedidos') ||
-								($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index'))
+								($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index') ||
+								($this->params['controller'] == 'almacenclientes' && $this->params['action'] == 'admin_listar_clientes'))
 		echo 'active'; ?>">
 		
 		Clientes
@@ -33,7 +37,7 @@
 			<li class = "children <?php if($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Cuentas',array('controller' => 'cuentas', 'action' => 'admin_index')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'almacenclientes' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if($this->params['controller'] == 'almacenclientes' && $this->params['action'] == 'admin_listar_clientes') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Almacén',array('controller' => 'almacenclientes', 'action' => 'admin_listar_clientes')); ?>
 			</li>
 		</ul>
@@ -42,17 +46,26 @@
 	<?php if ($admin_catalogo){ ?>
 	<li class = "option <?php if(($this->params['controller'] == 'categorias' && $this->params['action'] == 'admin_index') || 
 								 ($this->params['controller'] == 'subcategorias' && $this->params['action'] == 'admin_index') || 
-								 ($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_index')
+								 ($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_index') ||
+								 ($this->params['controller'] == 'categorias' && $this->params['action'] == 'admin_editar') ||
+								 ($this->params['controller'] == 'subcategorias' && $this->params['action'] == 'admin_editar') ||
+								 ($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_editar')
 		) echo 'active'; ?> ">
 		Tablas
 		<ul>
-			<li class = "children <?php if($this->params['controller'] == 'categorias' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'categorias' && $this->params['action'] == 'admin_index') ||
+											($this->params['controller'] == 'categorias' && $this->params['action'] == 'admin_editar'))
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Linea',array('controller' => 'categorias', 'action' => 'admin_index')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'subcategorias' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'subcategorias' && $this->params['action'] == 'admin_index') ||
+											($this->params['controller'] == 'subcategorias' && $this->params['action'] == 'admin_editar'))
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Categorias',array('controller' => 'subcategorias', 'action' => 'admin_index')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_index') ||
+											($this->params['controller'] == 'acabados' && $this->params['action'] == 'admin_editar'))
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Acabados',array('controller' => 'acabados', 'action' => 'admin_index')); ?>
 			</li>
 		</ul>
@@ -63,15 +76,22 @@
 								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index') ||
 								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_listar_subcategorias') ||
 								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_ver') ||
-								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_index')
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_index') ||
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_editar') ||
+								 ($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_editar') ||
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_ver') 	
 		) echo 'active'; ?> " >
 	
 	Artículos
 		<ul>
-			<li class = "children <?php if($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_index') ||
+										($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_editar'))
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Articulos',array('controller' => 'articulos', 'action' => 'subcategoria_articulo')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_index') || 
+										($this->params['controller'] == 'precios' && $this->params['action'] == 'admin_editar'))
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Lista de precios',array('controller' => 'precios', 'action' => 'admin_index')); ?>
 			</li>
 		</ul>
@@ -83,7 +103,8 @@
 								 ($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_movimientos') ||
 								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'admin_forecast') ||
 								 ($this->params['controller'] == 'materiasprimas' && $this->params['action'] == 'admin_editar') ||
-								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'subcategoria_forecast')
+								 ($this->params['controller'] == 'articulos' && $this->params['action'] == 'subcategoria_forecast') ||
+								 ($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_editar')
 		) echo 'active'; ?>">
 	
 	Materias prima
@@ -91,7 +112,9 @@
 			<li class = "children <?php if($this->params['controller'] == 'materiasprimas' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Materia prima',array('controller' => 'materiasprimas', 'action' => 'admin_index')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_index') ||
+										   ($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_editar'))
+				echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Inventario',array('controller' => 'inventariomaterials', 'action' => 'admin_index')); ?>
 			</li>
 			<li class = "children <?php if($this->params['controller'] == 'inventariomaterials' && $this->params['action'] == 'admin_movimientos') echo 'active'; else echo 'inactive'; ?>">
@@ -108,7 +131,10 @@
 								 ($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_index') || 
 								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_listar_subcategorias/admin_inventario') ||
 								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_listar_subcategorias/admin_movimientos') ||
-								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_articulos')
+								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_articulos') ||
+								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_listar_subcategorias') ||
+								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_inventario') ||
+								 ($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_movimientos')
 		) echo 'active'; ?>">
 	Almacén
 		<ul>
@@ -118,10 +144,15 @@
 			<li class = "children <?php if($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Egresos',array('controller' => 'pedidos', 'action' => 'admin_index')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_listar_subcategorias/admin_inventario') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_listar_subcategorias/admin_inventario')||
+										$this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_inventario')
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Inventario',array('controller' => 'inventarioalmacens', 'action' => 'admin_listar_subcategorias/admin_inventario'));?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 'admin_listar_subcategorias/admin_movimientos') echo 'active'; else echo 'inactive'; ?>">
+			<li class = "children <?php if(($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 									'admin_listar_subcategorias/admin_movimientos') ||
+											($this->params['controller'] == 'inventarioalmacens' && $this->params['action'] == 									'admin_movimientos'))
+
+			echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Movimientos',array('controller' => 'inventarioalmacens', 'action' => 'admin_listar_subcategorias/admin_movimientos'));?>
 			</li>
 		</ul>

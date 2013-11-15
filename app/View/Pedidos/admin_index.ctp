@@ -3,6 +3,11 @@
 <?php echo $this->element('search_egresos'); ?>
 
 <h2>Pedidos</h2>
+
+<div class = "pedidos_pendientes">
+	Pedidos Pendientes de todos los clientes: <b> <?php echo count($pedidos_pendientes); ?> </b>
+</div>
+
 <?php if (!empty($pedidos)) { ?>
 	<table width= '100%' class="tabla_index">
 		<tr>
