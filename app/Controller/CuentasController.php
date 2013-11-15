@@ -22,6 +22,16 @@ class CuentasController extends AppController {
 			$cuentas = $this->paginate();
 			$k = 0;
 			foreach ($cuentas as $cuenta) {
+				$hoy = strtotime (date('Y-m-d H:i:s'));
+				$creada = strtotime ( '+30 day' , strtotime ( $cuenta['Cuenta']['fecha'] ) ) ;
+				if ($creada < $hoy && $cuenta['Cuenta']['status'] == 'Vigente') {
+					$cuentas[$k]['Cuenta']['status'] = 'Vencido';
+					$update = array('Cuenta'=>array(
+						'id' => $cuenta['Cuenta']['id'],
+						'status' => 'Vencido'
+					));
+					$this->Cuenta->save($update);
+				}
 				$ano = $this->Config->obtenerAno($cuenta['Pedido']['fecha']);
 				$cuentas[$k]['Pedido']['num_pedido'] = $cuenta['Pedido']['num_pedido'].$ano[2].$ano[3];
 				$k++;
@@ -33,6 +43,16 @@ class CuentasController extends AppController {
 			));
 			$count = 0;
 			foreach ($cuentas as $c){
+				$hoy = strtotime(date('Y-m-d H:i:s'));
+				$creada = strtotime ( '+30 day' , strtotime ( $c['Cuenta']['fecha'] ) ) ;
+				if ($creada < $hoy && $c['Cuenta']['status'] == 'Vigente') {
+					$cuentas[$count]['Cuenta']['status'] = 'Vencido';
+					$update = array('Cuenta'=>array(
+						'id' => $c['Cuenta']['id'],
+						'status' => 'Vencido'
+					));
+					$this->Cuenta->save($update);
+				}
 				$ano = $this->Config->obtenerAno($c['Pedido']['fecha']);
 				$cuentas[$count]['Pedido']['num_pedido'] = $cuentas[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
 				$count++;
@@ -58,6 +78,17 @@ class CuentasController extends AppController {
 		foreach ($cuentas as $c){
 			$ano = $this->Config->obtenerAno($c['Pedido']['fecha']);
 			$cuentas[$count]['Pedido']['num_pedido'] = $cuentas[$count]['Pedido']['num_pedido'].$ano[2].$ano[3];
+			$hoy = strtotime (date('Y-m-d H:i:s'));
+			$creada = strtotime ( '+30 day' , strtotime ( $c['Cuenta']['fecha'] ) ) ;
+			if ($creada < $hoy && $c['Cuenta']['status'] == 'Vigente') {
+				var_dump('fdfdf');
+				$cuentas[$count]['Cuenta']['status'] = 'Vencido';
+				$update = array('Cuenta'=>array(
+					'id' => $c['Cuenta']['id'],
+					'status' => 'Vencido'
+				));
+				$this->Cuenta->save($update);
+			}
 			$count++;
 		}
 		$this->set(compact('cuentas'));

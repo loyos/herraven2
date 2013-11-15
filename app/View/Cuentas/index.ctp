@@ -21,7 +21,7 @@
 			} else {
 				$saldo = $c['Pedido']['cuenta'];
 			}
-			$fecha = explode(' ',$c['Pedido']['fecha']);
+			$fecha = explode(' ',$c['Cuenta']['fecha']);
 			$date = date_create($fecha[0]);
 			echo '<td>'.date_format($date, 'd-m-Y').'</td>';
 			echo '<td>'.$c['Pedido']['num_pedido'].'</td>';
