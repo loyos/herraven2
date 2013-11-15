@@ -20,12 +20,12 @@
 		$cuenta = 0;
 		foreach($cuentas as $c) {
 			echo '<tr>';
-			if ($c['Cuenta']['status'] == 'Vigente') {
+			if ($c['Cuenta']['status'] != 'Pagado') {
 				echo '<td>'.$this->Html->link('Pagar',array('action' => 'admin_pagar',$c['Cuenta']['id'])).'</td>';
 			} else {
 				echo '<td></td>';
 			}
-			$fecha = explode(' ',$c['Pedido']['fecha']);
+			$fecha = explode(' ',$c['Cuenta']['fecha']);
 			$date = date_create($fecha[0]);
 			echo '<td>'.date_format($date, 'd-m-Y').'</td>';
 			echo '<td>'.$c['Pedido']['num_pedido'].'</td>';
