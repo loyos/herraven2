@@ -278,7 +278,7 @@ class ArticulosController extends AppController {
 			foreach ($data['cantidad'] as $key => $value){
 				if ($value == 1){
 					$acabado = $this->Acabado->findById($data['acabados'][$key]);
-					if (empty($acabado)) {
+					if (empty($acabado) || $acabado == 'Sin Acabado') {
 						$acabado['Acabado']['acabado'] = "";
 					}
 					$entro = true;
@@ -447,6 +447,7 @@ class ArticulosController extends AppController {
 						'fields' => array('id','acabado'),
 						'conditions' => array('Acabado.id' => $acabados_array)
 					));
+					$acabados[$a_c_a['AcabadosMateriasprima']['articulo_id']]['Sin Acabado'] = 'Sin Acabado';
 				}
 				$this->set(compact('articulos','acabados','cat_id','sub_id'));
 	}

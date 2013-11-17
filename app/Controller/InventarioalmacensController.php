@@ -275,6 +275,13 @@ class InventarioalmacensController extends AppController {
 			if (!empty($this->data['Inventarioalmacen']['mes'])) {
 				$conditions[] = array('Inventarioalmacen.mes' => $this->data['Inventarioalmacen']['mes']);
 			}
+			if (!empty($this->data['Inventarioalmacen']['acabado_id'])) {
+				if ($this->data['Inventarioalmacen']['acabado_id'] == 'Sin Acabado') {
+					$conditions[] = array('Pedido.acabado_id' => 0);
+				} else {
+					$conditions[] = array('Acabado.acabado LIKE' => $this->data['Inventarioalmacen']['acabado_id']);
+				}
+			}
 			if (!empty($this->data['Inventarioalmacen']['articulo_id'])) {
 				if (empty($this->data['Inventarioalmacen']['tipo'])) {
 					$cond1 = $conditions;
@@ -322,13 +329,18 @@ class InventarioalmacensController extends AppController {
 		$articulos = $this->Articulo->find('list',array(
 			'fields' => array('id','codigo')
 		));
+		$acabados = $this->Acabado->find('list', array(
+			'fields' => array('Acabado.acabado', 'Acabado.acabado')
+		));
+		$acabados['Sin Acabado'] = 'Sin Acabado';
+		$acabados = array_merge(array('Todos'), $acabados);
 		$articulos[0] = '';
 		$tipos = array(
 			'0' => '',
 			'entrada' => 'Ingreso',
 			'salida' => 'Egreso'
 		);
-		$this->set(compact('meses','articulos','tipos','inventarios','saldo'));
+		$this->set(compact('meses','articulos','tipos','inventarios','saldo','acabados'));
 	}
 	
 	function admin_nota_entrada($id_inventario){

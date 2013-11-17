@@ -19,6 +19,15 @@
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
+	echo '<td>Acabado</td>';
+	echo '<td>';
+	echo $this->Form->input('acabado_id',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '</tr>';
+
+	echo '<tr>';
 	echo '<td>Mes</td>';
 	echo '<td>';
 	echo $this->Form->input('mes',array(
