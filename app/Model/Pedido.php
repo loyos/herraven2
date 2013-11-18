@@ -38,7 +38,7 @@ class Pedido extends AppModel {
 	public $filterArgs = array(
 		'status' => array('type' => 'query', 'method' => 'orConditions'),
 		//'denominacion_legal' => array('type' => 'like', 'field' => 'Cliente.denominacion_legal'),
-		'acabado' => array('type' => 'like', 'field' => 'Acabado.acabado'),
+		'acabado' => array('type' => 'query', 'method' => 'acabado'),
 		'cliente' => array('type' => 'like', 'field' => 'Pedido.cliente_id'),
 	);
 	
@@ -72,7 +72,20 @@ class Pedido extends AppModel {
 		}
 		return $n_semana;
 	}
-	
+
+	public function acabado($data = array()) {
+        $acabado = $data['acabado'];
+		if($acabado == 'Sin Acabado'){
+			$cond = array(
+					$this->alias . '.acabado_id' => 0,
+				);
+		} else {
+			$cond = array(
+					'Acabado.acabado LIKE' => '%' . $acabado . '%',
+				);
+		}
+        return $cond;
+    }	
 }
 
 

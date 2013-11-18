@@ -65,6 +65,7 @@ class PedidosController extends AppController {
 		$clientes = $this->Cliente->find('list', array(
 			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
 		));
+		$acabados['Sin Acabado'] = 'Sin Acabado';
 		$acabados = array_merge(array('Todos'), $acabados);
 		
 		$pedidos_pendientes = $this->Pedido->find('all', array(
@@ -151,6 +152,7 @@ class PedidosController extends AppController {
 		$clientes = $this->Cliente->find('list', array(
 			'fields' => array('Cliente.id', 'Cliente.denominacion_legal')
 		));
+		$acabados['Sin Acabado'] = 'Sin Acabado';
 		$acabados = array_merge(array('Todos'), $acabados);
 		$this->set(compact('status','pedidos', 'acabados','clientes', 'pedidos_pendientes'));
     }
