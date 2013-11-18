@@ -75,6 +75,13 @@ class PedidosController extends AppController {
 		$this->set(compact('status','pedidos', 'acabados','clientes', 'pedidos_pendientes'));
     }
 
+	function prueba(){
+		
+		// funcion para conseguir el numero de la semana, empezando los jueves!
+		$fecha = $this->Pedido->find('first');
+		$n = $this->Pedido->numero_semana($fecha['Pedido']['fecha']);		
+		$this->set(compact('n'));
+	}
 	
 	function admin_pedidos() {
 		

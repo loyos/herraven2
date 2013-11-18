@@ -31,7 +31,7 @@
 					echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$p['Pedido']['id'],'admin_pedidos'), array('class' => 'boton_accion'), "¿Estas seguro que deseas eliminar el pedido?");
 				}
 				if ($status[$p['Pedido']['id']] == 'Preparado') {
-					echo '<br>'.$this->Html->link('Ejecutar',array('action' => 'admin_ejecutar_despacho',$p['Pedido']['id']));
+					echo '<br>'.$this->Html->link('Ejecutar',array('action' => 'admin_ejecutar_despacho',$p['Pedido']['id']), array('class' => 'boton_accion'));
 				} 
 				if ($status[$p['Pedido']['id']] == 'Progreso-Despacho') {
 					echo '<br>';

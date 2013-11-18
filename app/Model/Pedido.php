@@ -56,6 +56,23 @@ class Pedido extends AppModel {
         return $cond;
     }
 	
+	public function numero_semana($fecha = null){  // funcion que calcula semana del ano
+													// la semana empieza los jueves, termina los miercoles.
+		
+		// $fecha = $this->find('first');
+		// debug($fecha['Pedido']['fecha']);
+		// $fecha = strtotime($fecha['Pedido']['fecha']);
+		// $fecha = strtotime('2013-09-5');
+		
+		$fecha = strtotime($fecha);
+		$dia_semana = date( "N", $fecha);  // numero de dia en la semana
+		$n_semana = date( "W", $fecha);  // numero de la semana
+		if($dia_semana == '1' || $dia_semana == '2' || $dia_semana == '3'){
+			$n_semana = $n_semana - 1; 
+		}
+		return $n_semana;
+	}
+	
 }
 
 
