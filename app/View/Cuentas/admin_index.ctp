@@ -46,6 +46,7 @@
 	} else {
 		echo 'No hay cuentas pendientes';
 	}
+	if (empty($cuenta)) $cuenta= 0;
 	echo '<h3> El monto total restante es de '.$this->Herra->format_number($cuenta).'</h3>';
 ?>
 </div>

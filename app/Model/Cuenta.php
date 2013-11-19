@@ -20,6 +20,7 @@ class Cuenta extends AppModel {
 	public $filterArgs = array(
 		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast')
 		'cliente' => array('type' => 'like', 'field' => 'Pedido.cliente_id'),
+		'status' => array('type' => 'like', 'field' => 'Cuenta.status'),
 		// 'descripcion' => array('type' => 'subquery', 'method' => 'forecast', 'field' => 'descripcion'),
 		// 'wachu' => array('type' => 'like', 'field' => 'Categoria.descripcion'),
 	);

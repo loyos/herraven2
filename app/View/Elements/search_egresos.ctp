@@ -25,6 +25,13 @@
 			));
 			// echo $this->Form->input('wachu', array('div' => false, 'label' => false));
 			echo "</td></tr>";
+			echo "</td></tr>";
+			echo "<tr><td>";
+			echo "Nro de pedido:";
+			echo "</td><td>";
+			echo $this->Form->input('num_pedido', array('div' => false, 'label' => false));
+			echo "</td></tr>";
+			
 			echo "<tr><td>";
 			echo "Acabado:";
 			echo "</td><td>";

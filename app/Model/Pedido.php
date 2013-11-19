@@ -38,11 +38,23 @@ class Pedido extends AppModel {
 	public $filterArgs = array(
 		'status' => array('type' => 'query', 'method' => 'orConditions'),
 		//'denominacion_legal' => array('type' => 'like', 'field' => 'Cliente.denominacion_legal'),
+		'num_pedido' => array('type' => 'query', 'method' => 'num_pedido'),
 		'acabado' => array('type' => 'query', 'method' => 'acabado'),
 		'cliente' => array('type' => 'like', 'field' => 'Pedido.cliente_id'),
 	);
 	
-	public function orConditions($data = array()) {
+	public function num_pedido($data = array()){
+		$num_completo = $data['num_pedido'];
+		$num_pedido = substr($num_completo, 0, -2);
+		
+		$cond = array(
+					$this->alias . '.num_pedido LIKE' => '%' . $num_pedido . '%',
+				);
+		return $cond;		
+		
+	}
+	
+	public function orConditions($data = array()) { // funcion de busqueda especifica del plugin search
         $status = $data['status'];
 		if($status == 'Pendiente'){
 			$cond = array(
@@ -57,8 +69,7 @@ class Pedido extends AppModel {
     }
 	
 	public function numero_semana($fecha = null){  // funcion que calcula semana del ano
-													// la semana empieza los jueves, termina los miercoles.
-		
+													// la semana empieza los jueves, termina los miercoles.		
 		// $fecha = $this->find('first');
 		// debug($fecha['Pedido']['fecha']);
 		// $fecha = strtotime($fecha['Pedido']['fecha']);
@@ -73,11 +84,11 @@ class Pedido extends AppModel {
 		return $n_semana;
 	}
 
-	public function acabado($data = array()) {
+	public function acabado($data = array()) { // funcion de busqueda especifica del plugin search
         $acabado = $data['acabado'];
-		if($acabado == 'Sin Acabado'){
+		if($acabado == '0'){
 			$cond = array(
-					$this->alias . '.acabado_id' => 0,
+					$this->alias . '.acabado_id LIKE' => '%',
 				);
 		} else {
 			$cond = array(
