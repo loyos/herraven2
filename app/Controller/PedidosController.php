@@ -325,6 +325,7 @@ class PedidosController extends AppController {
 			'pedido_id' => $id,
 			'status' =>'Vigente',
 			'mes' => $this->Config->obtenerMes($hoy),
+			'semana' => $this->Pedido->numero_semana($hoy),
 		));
 		$this->Cuenta->save($cuenta);
 		$this->Session->setFlash('El pedido ha sido despachado y se creo una cuenta');

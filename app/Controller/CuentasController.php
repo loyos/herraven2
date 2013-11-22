@@ -3,7 +3,7 @@
 class CuentasController extends AppController {
     
 	public $helpers = array ('Html','Form','Herra');
-	var $uses = array('Cuenta','Config','User','Abono');
+	var $uses = array('Cuenta','Config','User','Abono','Pedido');
 	public $components = array('Search.Prg');
 	public $presetVars = true; // using the model configuration
 	public $paginate = array();
@@ -108,6 +108,7 @@ class CuentasController extends AppController {
 					'deposito' => $deposito,
 					'status' => 'Pagado',
 					'mes_pago' => $this->Config->obtenerMes($hoy),
+					'semana_pago' => $this->Pedido->numero_semana($hoy),
 				)
 			);
 			} elseif ($deposito > $total) {
@@ -128,6 +129,7 @@ class CuentasController extends AppController {
 					'cuenta_id' => $id,
 					'abono' => $this->data['Cuenta']['monto'],
 					'mes' => $this->Config->obtenerMes($hoy),
+					'semana' => $this->Pedido->numero_semana($hoy),
 				)
 			);
 			$this->Abono->save($abono);
