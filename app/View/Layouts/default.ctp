@@ -22,11 +22,20 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <!DOCTYPE html>
 <html>
 <head>
+
+<script>
+
+  </script>
+
 	<?php echo $this->Html->charset(); ?>
 	<title>
 		
 	</title>
 	<link href='http://fonts.googleapis.com/css?family=Kameron' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  
 	<?php	
 	echo $this->Html->meta('icon');
 	echo $this->Html->css('style');
@@ -39,11 +48,43 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	echo $this->Html->script('fancybox/jquery.fancybox-thumbs');	
 	echo $this->Html->script('fancybox/jquery.fancybox-media');	
 	echo $this->Html->script('fancybox/jquery.mousewheel-3.0.6.pack');
+	echo $this->Html->script('jquery-ui-1.10.3.custom.min');
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');
-	
 	?>
+	
+	<script>
+		
+		 // $(document).tooltip();
+		 
+		  $(function() {
+    $( document ).tooltip({
+      position: {
+        my: "center bottom+80",
+        at: "center top",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+        }
+      }
+    });
+  });
+	
+	</script>
+	
+	<style>
+ 
+  .ui-tooltip {
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+    font: bold 14px "Helvetica Neue", Sans-Serif;
+    // text-transform: uppercase;
+    box-shadow: 0 0 7px black;
+	background: #515669;
+  }
+  </style>
 </head>
 <body>
 	<div class="header">
@@ -51,14 +92,14 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			
 		</div>
 		<div class = 'user-header'>
-			<?php echo $this->Html->link($username, array('controller' => 'users', 'action' => 'index'))  ?>
+			<?php echo $this->Html->link($username, array('controller' => 'users', 'action' => 'index'), array('title' => 'Ver Perfil de Usuario'))  ?>
 		</div>
 		<div class="logout">
 		<?php 
 		if (!empty($user_id)) {
-			echo $this->Html->link($this->Html->image('close.png', array('width' => '30px')),array(
+			echo $this->Html->link($this->Html->image('close.png', array('width' => '30px', 'title' => 'Cerrar Sesión')),array(
 				'controller' => 'users',
-				'action' => 'logout'
+				'action' => 'logout',
 			), array('escape' => false));
 			// echo $this->Html->image('close.png', array('width' => '30px'));
 		}
@@ -76,10 +117,14 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		<div id="footer">
-		</div>
+		
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
+	<div id="footer" class = "footer_interno">
+		<div class = "footer_interno_content">
+			© Herrajes y Accesorios Herraven s.a. Todos los derechos reservados. RIF J-30800588-6
+ 		</div>
+	</div>
 </body>
 </html>
 <script>

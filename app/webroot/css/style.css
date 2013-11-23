@@ -120,6 +120,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c2c2c', end
 	margin-bottom: 40px;
 }
 
+.lol img{
+	color: blue;
+}
+
 .logo_home{
 	position: relative;
 	float: left;
@@ -211,6 +215,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', end
 	padding:20px;
 	margin-top: 40px;
 	overflow: hidden;
+	min-height: 222px;
 }
 
 .editar_perfil a{
@@ -783,6 +788,31 @@ button.link{
 
 .footer_nota {
 	text-align:center;
+}
+
+.push{
+	display: block;
+}
+
+.footer_interno {
+	position: relative;
+	bottom: -37px;
+	margin-top: 60px;
+	height: 55px;
+	width: 100%;
+	background: #515669;
+	color: #A8C7CA;
+}
+
+.footer_interno_content {
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	width: 600px;
+	padding-top: 20px;
+	font-size: 14px;
+	color: #A8C7CA;
 }
 
 .codigo_pedido {
