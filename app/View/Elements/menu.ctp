@@ -166,14 +166,11 @@
 	
 	CIO
 		<ul>
-			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cuentas_mensual') echo 'active'; else echo 'inactive'; ?>">
-				<?php echo $this->Html->link('Cuentas por cobrar',array('controller' => 'index', 'action' => 'admin_cuentas_mensual')); ?>
+			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_reportes_semanales') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Reportes semanales',array('controller' => 'index', 'action' => 'admin_reportes_semanales')); ?>
 			</li>
-			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_facturacion_mensual') echo 'active'; else echo 'inactive'; ?>">
-				<?php echo $this->Html->link('Facturación mensual',array('controller' => 'index', 'action' => 'admin_facturacion_mensual')); ?>
-			</li>
-			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cobranza_mensual') echo 'active'; else echo 'inactive'; ?>">
-				<?php echo $this->Html->link('Cobranza mensual',array('controller' => 'index', 'action' => 'admin_cobranza_mensual')); ?>
+			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_reportes_mensuales') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Reportes mensuales',array('controller' => 'index', 'action' => 'admin_reportes_mensuales')); ?>
 			</li>
 		</ul>
 	</li>

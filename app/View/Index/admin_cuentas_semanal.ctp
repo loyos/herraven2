@@ -1,5 +1,5 @@
 <div class="wrap">
-	<?php echo $this->Html->link('<<Regresar',array('action' => 'admin_reportes_mensuales')); ?>
+	<?php echo $this->Html->link('<<Regresar',array('action' => 'admin_reportes_semanales')); ?>
 	<h1>Cuentas por cobrar</h1>
 	
 	<div id="areawrapper" style="display: block; float: left; width:90%; text-align:center"></div>

@@ -88,8 +88,12 @@ class Pedido extends AppModel {
         $acabado = $data['acabado'];
 		if($acabado == '0'){
 			$cond = array(
-					$this->alias . '.acabado_id LIKE' => '%',
-				);
+				$this->alias . '.acabado_id LIKE' => '%',
+			);
+		} elseif($acabado == 'Sin Acabado'){
+			$cond = array(
+				$this->alias . '.acabado_id' => 0,
+			);	
 		} else {
 			$cond = array(
 					'Acabado.acabado LIKE' => '%' . $acabado . '%',
