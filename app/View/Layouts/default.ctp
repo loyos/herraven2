@@ -49,6 +49,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	echo $this->Html->script('fancybox/jquery.fancybox-media');	
 	echo $this->Html->script('fancybox/jquery.mousewheel-3.0.6.pack');
 	echo $this->Html->script('jquery-ui-1.10.3.custom.min');
+	echo $this->Html->script('tiny_mce');
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
 	echo $this->fetch('script');

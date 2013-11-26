@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_id));
+echo $this->Html->link('Regresar',array('action' => 'admin_index',$cat_id,$sub_id),array('class'=>'boton'));
 $materias = array();
 ?>
 <h1><?php echo $titulo?></h1>

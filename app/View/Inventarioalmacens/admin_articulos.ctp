@@ -17,7 +17,7 @@
 						<br>
 						<?php echo $a['Articulo']['cantidad_por_caja'].' pz'; ?>
 						<br>
-						<?php echo $this->Html->link('Ingreso',array('action' => 'admin_ingresar',$a['Articulo']['id']));?>
+						<?php echo $this->Html->link('Ingreso',array('action' => 'admin_ingresar',$a['Articulo']['id']),array('class'=>'boton_accion'));?>
 					</td>
 				</tr>
 			</table>

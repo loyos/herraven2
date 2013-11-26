@@ -3,12 +3,12 @@
 	if (empty($subcat)) {
 		$subcat = 0;
 	}
-	echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id'])); 
+	echo $this->Html->link('Regresar',array('action' => 'admin_listar_subcategorias',$precio['Precio']['id']),array('class'=>'boton')); 
 	if (empty($acabado_seleccionado)) {
 		$acabado_seleccionado = 10000;
 	}
-	echo '<br>';
-	echo $this->Html->link('Ver Reporte',array('action' => 'admin_ver',$id,$cat,$acabado_seleccionado,$subcat,'ext' => 'pdf'),array('target'=>'_blank'));
+	echo '  ';
+	echo $this->Html->link('Ver Reporte',array('action' => 'admin_ver',$id,$cat,$acabado_seleccionado,$subcat,'ext' => 'pdf'),array('target'=>'_blank','class'=>'boton'));
 	?>
 	
 	<div class = "search">
@@ -20,7 +20,7 @@
 				$value = 'Nada';
 			}
 			echo $this->Form->input('acabado_id',array('value' => $value,'label' => 'Selecciona un acabado'));
-			echo $this->Form->submit('Buscar',array('class' => 'button'));
+			echo $this->Form->submit('Buscar',array('class' => 'boton_busqueda'));
 		?>
 	</div>
 <h1><?php echo $precio['Precio']['descripcion']?></h1>

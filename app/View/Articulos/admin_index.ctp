@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'admin_editar',$cat_id,null,$sub_id));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar',$cat_id,null,$sub_id),array('class'=>'boton'));
 ?>
 <h1>Artículos</h1>
 <?php 
@@ -26,7 +26,7 @@ echo '<br>';
 			echo '<td>'.$c['Subcategoria']['Categoria']['descripcion'].'</td>';
 			echo '<td>'.$c['Subcategoria']['descripcion'].'</td>';
 			echo '<td>'.$c['Articulo']['descripcion'].'</td>';
-			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$cat_id,$c['Articulo']['id'],$sub_id)).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Articulo']['id'],$cat_id,$sub_id),array(),'¿Estás seguro que deseas eliminar?').'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Articulo']['id'],$cat_id,$sub_id)).'</td>';
+			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$cat_id,$c['Articulo']['id'],$sub_id),array('class'=>'boton_accion')).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Articulo']['id'],$cat_id,$sub_id),array('class'=>'boton_accion'),'¿Estás seguro que deseas eliminar?').'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Articulo']['id'],$cat_id,$sub_id),array('class'=>'boton_accion')).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';
