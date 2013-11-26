@@ -33,8 +33,12 @@ App::uses('AppHelper', 'View/Helper');
 class HerraHelper extends AppHelper {
 	
 	//Esta funcion agrega el string Bs, y los decimales a la cantidad que se le pase.
-	public function format_number($cant){
-		return('Bs '. number_format($cant, 2, ',', '.'));
+	public function format_number($cant,$bs = null){
+		if (empty($bs)) {
+			return('Bs '. number_format($cant, 2, ',', '.'));
+		} else {
+			return(number_format($cant, 2, ',', '.'));
+		}
 	}
 	
 	

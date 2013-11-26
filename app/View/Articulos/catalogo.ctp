@@ -36,88 +36,101 @@ foreach ($info_articulos as $a) { ?>
 
 			<?php
 		}
+		echo '<div style="text-align:center">';
+		echo $this->Form->submit('Pedir',array('class' => 'button', 'onclick' => 'activar('.$a['id'].')'));
+		echo $this->Form->end();
+		echo '</div>';
 		?>
 	</div>
 	<div class="info_catalogo">
-		<table style="width: 80%;">
+		<table style='float:left;'>
 			<tr>
-				<td style = "width: 100px;">
+				<td style="width:112px">
 					<?php 
 					
-					echo  '<b> Código ' .$a['codigo']. '</b><br><br>';
+					echo  'Código<br><b>' .$a['codigo']. '</b><br><br>';
 					?>
-					<span class="precio_<?php echo $a['id']?>" >
-					<?php
-					echo 'Precio unitario';
-					if (!empty($precio[$a['id']])){?>
-						<?php echo $this->Herra->format_number($precio[$a['id']]);
-					} else { ?>
-						<?php echo $this->Herra->format_number($a['precio']);
-					}
-					?>
-					</span>
 				</td>
-				<td style = "width: 100px;"></td>
-				<td style = "width: 400px;">
-					<?php					
+				<td style = "width:135px">
+				<?php
+				if (!empty($acabado_articulo[$a['id']])){
+					echo $this->Form->input('acabado_id',array(
+						'name' => 'acabado['.$a['id'].']',
+						'type' => 'select',
+						'label' => 'Acabado ',
+						'options' => $acabado_articulo[$a['id']],
+						'id' => $a['id'],
+						'class' => 'acabados_catalogo'
+					));
+				} else {
+					echo 'No hay acabados asociados';
+				}
+				?>
+				</td>
+			</tr>
+			<tr>
+				<td style="">
+					<?php 
+					echo 'Pz. caja';
+					echo '<br>';
+					echo '<b>'.$a['cantidad_por_caja'].'</b>';
+					?>
+				</td>
+				<td style="">
+					<?php
 					echo $this->Form->input('cantidad',array(
 						'type' => 'select',
 						'options' => $cantidad_de_cajas,
 						'name' => 'cantidad['.$a['id'].']',
-						'label' => 'Cantidad: '
+						'label' => 'Cantidad<br>'
 					));
-					//echo '<br>';
-					if (!empty($acabado_articulo[$a['id']])){
-						echo $this->Form->input('acabado_id',array(
-							'name' => 'acabado['.$a['id'].']',
-							'type' => 'select',
-							'label' => 'Acabado: ',
-							'options' => $acabado_articulo[$a['id']],
-							'id' => $a['id'],
-							'class' => 'acabados_catalogo'
-						));
-						if (!empty($acabado_descripcion[$a['id']])){
-							echo '<span class="descripcion_acabado_'.$a['id'].'"><br> Descripción del acabado: '.$acabado_descripcion[$a['id']].'</span>';
-						}
-					} else {
-						echo 'No hay acabados asociados';
-					}
 					?>
 				</td>
 			</tr>
 			<tr>
-				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>" style = "width: 100px;">
-					<?php
-					echo 'Precio de caja';
-					if (!empty($precio[$a['id']])){?>
-						<?php echo $this->Herra->format_number($precio[$a['id']]*$a['cantidad_por_caja']);
-					} else { ?>
-						<?php echo $this->Herra->format_number($a['precio']*$a['cantidad_por_caja']);
-					}
-					
-					?>
+				<td style="padding-top:10px">
+				<span class="precio_<?php echo $a['id']?>">
+				<?php
+				echo 'Precio unit <br>';
+				if (!empty($precio[$a['id']])){?>
+					<?php echo '<b>'.$this->Herra->format_number($precio[$a['id']],1).'</b> Bs.';
+				} else { ?>
+					<?php echo '<b>'.$this->Herra->format_number($a['precio'],1).'</b> Bs.';
+				}
+				?>
+				</span>
 				</td>
-				<td style = "width: 100px;">
-					<?php echo $a['cantidad_por_caja'];
-					echo '<br>';
-					echo 'Pz. caja';
-					?>
-				</td>
-				<td>
-					<?php
-						echo $this->Form->input('activo',array(
-							'value' => 0,
-							'type' => 'hidden',
-							'name' => 'activo['.$a['id'].']',
-							'id' => 'activo_'.$a['id'],
-						));
-						echo '<span class="descripcion_catalogo"> Descripción artículo: ' .$a['articulo']. '</span>';
-						echo $this->Form->submit('Pedir',array('class' => 'button boton_catalogo', 'onclick' => 'activar('.$a['id'].')'));
-						echo $this->Form->end();
-					?>
+				<td class="precio_caja_<?php echo $a['id']?>" name="<?php echo $a['cantidad_por_caja']?>" style="padding-top:10px">
+				<?php
+				echo 'Precio de caja<br>';
+				if (!empty($precio[$a['id']])){?>
+					<?php echo '<b>'.$this->Herra->format_number($precio[$a['id']]*$a['cantidad_por_caja'],1).'</b> Bs.';
+				} else { ?>
+					<?php echo '<b>'.$this->Herra->format_number($a['precio']*$a['cantidad_por_caja'],1).'</b> Bs.';
+				}
+				
+				?>
 				</td>
 			</tr>
 		</table>
+		<div style='margin-top:5px;'>
+		
+			<?php
+			if (!empty($acabado_descripcion[$a['id']])){
+				echo '<span class="descripcion_acabado_'.$a['id'].'"><u>Descripción del acabado:</u> <br>'.$acabado_descripcion[$a['id']].'</span>';
+			}
+			echo '<br><br>';
+			echo $this->Form->input('activo',array(
+				'value' => 0,
+				'type' => 'hidden',
+				'name' => 'activo['.$a['id'].']',
+				'id' => 'activo_'.$a['id'],
+			));
+			echo '<span class="descripcion_catalogo"> <u>Descripción artículo:</u> <br>' .$a['articulo']. '</span>';					
+			//echo '<br>';
+			
+			?>
+		</div>		
 	</div>
 
 </div>
@@ -140,12 +153,12 @@ $( ".acabados_catalogo" ).change(function() {
 	
 	$.ajax({
 		type: "POST",
-		url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
-		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/articulos/buscar_acabado.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/buscar_acabado.json' ?>',
 		data: { acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
-		$('span.descripcion_acabado_'+id).html(msg);		
+		$('span.descripcion_acabado_'+id).html('<u>Descripción del acabado:</u> <br>'+msg);		
 	}). error(function( msg ) {
 		$('span.descripcion_acabado_'+id).html('');		
 	}) ;
@@ -155,16 +168,16 @@ $( ".acabados_catalogo" ).change(function() {
 function calcula_precio_acabado(acabado_id,id) {
 	$.ajax({
 		type: "POST",
-		url: '<?php echo FULL_BASE_URL.'/articulos/precio_total.json' ?>',
-		//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/precio_total.json' ?>',
+		//url: '<?php echo FULL_BASE_URL.'/articulos/precio_total.json' ?>',
+		url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/articulos/precio_total.json' ?>',
 		data: {id:id,acabado_id: acabado_id },
 		dataType: "json"
 	}).done(function( msg ) {
 		precio = addCommas(msg.toFixed(2));
-		$('span.precio_'+id).html('Precio unitario<br>' + 'Bs.'+precio);
+		$('span.precio_'+id).html('Precio unit<br><b>'+precio + '</b> Bs.');
 		cajas = $('td.precio_caja_'+id).attr('name');
 		n_cajas =  addCommas((msg*cajas).toFixed(2));
-		$('td.precio_caja_'+id).html('Precio caja <br>' + 'Bs.'+n_cajas);
+		$('td.precio_caja_'+id).html('Precio de caja <br><b>'+n_cajas+ '</b> Bs.');
 	});
 }
 
