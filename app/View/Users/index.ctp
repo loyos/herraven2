@@ -10,7 +10,7 @@
 			</div>
 			<div class = "editar_perfil">
 			<?php 		
-				echo $this->Html->link('Editar',array('action' => 'editar',$usuario['User']['id']));
+				echo $this->Html->link('Editar',array('action' => 'editar',$usuario['User']['id']),array('class'=>'boton'));
 			?>
 			</div>
 		</div>
