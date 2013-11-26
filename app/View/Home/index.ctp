@@ -12,11 +12,14 @@
 <!-- end Basic jQuery Slider -->
 </div>
 
+<div class = "footer_acomodado">
+</div>
+
 <script>
 jQuery(document).ready(function($) {
     $('#banner-fade').bjqs({
         'height' : 400,
-        'width' : 800,
+        'width' : 900,
         'responsive' : true,
 		'nexttext' : '',
 		'prevtext' : '',

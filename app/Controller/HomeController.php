@@ -7,13 +7,17 @@ class HomeController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('index'); // Letting users register themselves
+		$this->Auth->allow('index', 'contenido'); // Letting users register themselves
 	}
 	
     function index() {
 		// $debug($this->layout = 'hola');
 		$this->layout = 'home';
     }
+	
+	function contenido($id){
+		$this->layout = 'home';
+	}
 }
 
 ?>

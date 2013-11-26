@@ -2,16 +2,16 @@
 
 <ul>
 	<li>
-		Home
+		<?php echo $this->Html->link('Home',array('controller' => 'home','action'=>'index')); ?>
 	</li>
 	<li>
-		Empresa
+		<?php echo $this->Html->link('Empresa',array('controller' => 'home','action'=>'contenido')); ?>
 	</li>
 	<li>
-		Proceso Productivo
+		<?php echo $this->Html->link('Proceso Productivo',array('controller' => 'home','action'=>'contenido')); ?>
 	</li>
 	<li>
-		Contacto
+		<?php echo $this->Html->link('Contacto',array('controller' => 'home','action'=>'contenido')); ?>
 	</li>
 	<li>
 		<?php echo $this->Html->link('Área Reservada',array('controller' => 'users','action'=>'login')); ?>

@@ -55,7 +55,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 				<div class = "main_subtitulo">
 					fábrica
 				</div> -->
-				<?php echo $this->Html->link($this->Html->image('logo-herraven.png', array('width' => '200px')),array(),
+				<?php echo $this->Html->link($this->Html->image('logo-herraven.png', array('width' => '220px')),array(),
 				array('escape' => false,
 					'class' => 'logo_home'
 					)); ?>
@@ -69,8 +69,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->fetch('content'); ?>
 		
 		</div>
-		<div class = "footer_acomodado">		
-		</div>
+		
 			
 	</div>
 
