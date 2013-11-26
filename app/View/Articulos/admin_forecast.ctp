@@ -54,6 +54,9 @@
 			</tr>
 			<?php
 		}
+		?>
+		</table>
+		<?php
 	} 
 ?>
 </div>
