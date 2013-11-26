@@ -211,7 +211,10 @@
 		</li>
 	<?php
 	}
-	
+	if ($admin_web) { ?>
+		<li class = "option <?php if($this->params['controller'] == 'contenidos') echo 'active'; ?>"><?php echo $this->Html->link('Web',array('controller' => 'contenidos', 'action' => 'admin_index')); ?></li>
+	<?php
+	}
 	// debug($this->params['controller']);
 	?>
 	

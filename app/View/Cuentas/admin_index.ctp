@@ -21,7 +21,7 @@
 		foreach($cuentas as $c) {
 			echo '<tr>';
 			if ($c['Cuenta']['status'] != 'Pagado') {
-				echo '<td>'.$this->Html->link('Pagar',array('action' => 'admin_pagar',$c['Cuenta']['id'])).'</td>';
+				echo '<td>'.$this->Html->link('Pagar',array('action' => 'admin_pagar',$c['Cuenta']['id']),array('class'=>'boton_accion')).'</td>';
 			} else {
 				echo '<td></td>';
 			}

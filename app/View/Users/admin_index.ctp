@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'=>'boton'));
 ?>
 <h1>Usuarios</h1>
 <?php 
@@ -24,8 +24,8 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>'.$u['User']['rol'].'</td>';
 			echo '<td>'.$u['Cliente']['denominacion_legal'].'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'admin_editar',$u['User']['id'])).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$u['User']['id']),array(),'¿Estás seguro que deseas eliminar?').'<br>'.
-				$this->Html->link('Ver',array('action' => 'admin_ver',$u['User']['id'])).'</td>';
+				'action' => 'admin_editar',$u['User']['id']),array('class'=>'boton_accion')).'<br>'.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$u['User']['id']),array('class'=>'boton_accion'),'¿Estás seguro que deseas eliminar?').'<br>'.
+				$this->Html->link('Ver',array('action' => 'admin_ver',$u['User']['id']),array('class'=>'boton_accion')).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';

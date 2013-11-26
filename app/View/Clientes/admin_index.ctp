@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'=>'boton'));
 ?>
 <h1>Clientes</h1>
 <?php 
@@ -23,7 +23,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>'.$c['Cliente']['telefono_uno'].'</td>';
 			echo '<td>'.$c['Cliente']['email_representante'].'</td>';
 			echo '<td>'.$c['Precio']['descripcion'].'</td>';
-			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$c['Cliente']['id'])).'<br>'.'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Cliente']['id'])).'</td>';
+			echo '<td>'.$this->Html->link('Editar',array('action' => 'admin_editar',$c['Cliente']['id']),array('class'=>'boton_accion')).'<br>'.'<br>'.$this->Html->link('Ver',array('action' => 'admin_ver',$c['Cliente']['id']),array('class'=>'boton_accion')).'</td>';
 			//.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Cliente']['id']),array(),'¿Estás seguro que deseas eliminar?')
 			echo '</tr>';
 		}

@@ -1,7 +1,7 @@
 <div class="wrap">
 <div class="agregar_inventario">
 	<?php
-	echo $this->Html->link('Ingreso de materia prima',array('action' => 'admin_editar'));
+	echo $this->Html->link('Ingreso de materia prima',array('action' => 'admin_editar'),array('class'=>'boton'));
 	echo '<br>';
 	?>
 </div>
@@ -9,7 +9,7 @@
 	<table>
 	<tr>
 	<td>
-	<?php echo $this->Html->link('Ver reporte',array('action' => 'admin_reporte','ext' => 'pdf'),array('target'=>'_blank')); ?>
+	<?php echo $this->Html->link('Ver reporte',array('action' => 'admin_reporte','ext' => 'pdf'),array('target'=>'_blank','class'=>'boton')); ?>
 	</td>
 	<td>
 	<b><u>Año</u></b></td>

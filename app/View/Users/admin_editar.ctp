@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'admin_index'));
+echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'=>'boton'));
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
@@ -130,6 +130,15 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'));
 		echo '<td>Admin reportes</td>';
 		echo '<td>';
 		echo $this->Form->input('admin_reportes',array(
+			'type' => 'checkbox',
+			'label' => false
+		));
+		echo '</td>';
+		echo '</tr>';
+		echo '<tr>';
+		echo '<td>Admin web</td>';
+		echo '<td>';
+		echo $this->Form->input('admin_web',array(
 			'type' => 'checkbox',
 			'label' => false
 		));

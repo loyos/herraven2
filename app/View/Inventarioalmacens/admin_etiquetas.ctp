@@ -1,13 +1,13 @@
 <div class="wrap">
 	<?php
 	echo '<div style="float:left">';
-	echo $this->Html->link('Ver Nota de Ingreso',array('action' => 'admin_nota_entrada',$id_inventario),array('target' =>'_blank'));
+	echo $this->Html->link('Ver Nota de Ingreso',array('action' => 'admin_nota_entrada',$id_inventario),array('target' =>'_blank','class'=>'boton'));
 	echo '<br><br>';
 	//echo $this->Html->link($this->Html->image('imprimir.jpg'),array(''.$id_inventario), array('onclick' => 'window.print()', 'escape' => false));
 	echo $this->Html->link($this->Html->image('imprimir.jpg'),array('action' => 'admin_etiquetas',$id_inventario,'ext' => 'pdf'),array('target'=>'_blank','escape' => false));
 	echo '</div>';
 	echo '<div style="text-align:right">';
-	echo $this->Html->link('Finalizar ingreso',array('action' => 'admin_agregar'));
+	echo $this->Html->link('Finalizar ingreso',array('action' => 'admin_agregar'),array('class'=>'boton'));
 	echo '</div>';
 	$count = 1;
 	foreach ($cajas as $a) {

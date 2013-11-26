@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'=>'boton'));
 ?>
 <h1>Lineas</h1>
 <?php 
@@ -25,10 +25,10 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '</td>';
 			echo '<td>'.$c['Categoria']['descripcion'].'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'admin_editar',$c['Categoria']['id'])).'<br>';
+				'action' => 'admin_editar',$c['Categoria']['id']),array('class'=>'boton_accion')).'<br>';
 			if ($eliminar_cat[$c['Categoria']['id']] == 0){
 				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$c['Categoria']['id']),
-					array(),
+					array('class'=>'boton_accion'),
 					'Estás seguro que deseas eliminar?').'<br>';
 			}
 			echo '</tr>';

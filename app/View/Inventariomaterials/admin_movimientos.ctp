@@ -11,7 +11,7 @@
 		echo $this->Form->input('materiasprima_id',array(
 			'value' => $value
 		));
-		echo $this->Form->submit('Buscar',array('class' => 'button'));
+		echo $this->Form->submit('Buscar',array('class' => 'boton_busqueda'));
 		echo $this->Form->end();
 	echo '</div>';
 	

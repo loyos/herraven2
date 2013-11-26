@@ -1,6 +1,6 @@
 <div class="wrap">
 <?php
-echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
+echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'=>'boton'));
 ?>
 <h1>Materias prima</h1>
 <?php 
@@ -19,10 +19,10 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'));
 			echo '<td>'.$m['Materiasprima']['unidad'].'</td>';
 			echo '<td>'.$this->Herra->format_number($m['Materiasprima']['precio']).'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
-				'action' => 'admin_editar',$m['Materiasprima']['id'])).'<br>';
+				'action' => 'admin_editar',$m['Materiasprima']['id']),array('class'=>'boton_accion')).'<br>';
 			if($borrar[$m['Materiasprima']['id']]==1){
-				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$m['Materiasprima']['id']),
-					array(),
+				echo $this->Html->link('Eliminar',array('action' => 'admin_eliminar',$m['Materiasprima']['id'])
+					,array('class'=>'boton_accion'),
 					'¿Estás seguro que deseas eliminar?');
 			}
 			echo '</td>';

@@ -634,7 +634,7 @@ td.titulo_tabla {
 	width: 30px;
 }
 
-input.boton_catalogo {
+input.boton_catalogo{
 	float:right;
 	border: none;
 	cursor: pointer;
@@ -645,8 +645,27 @@ input.boton_catalogo {
 	background: #00A8D3; /* Old browsers */	
 }
 
+
+.boton , .button,.boton_busqueda{
+	border: none;
+	cursor: pointer;
+	border-radius: 3px;
+	padding: 10px;
+	color: white;
+	font-size: 15px;	
+	text-decoration: none;
+	color: white;
+	background: #54939B; /* Old browsers */
+	box-shadow: 1px 0px 1px #888888;
+}
+
+.boton {
+	padding:8px;
+}
+
 .boton_busqueda{
 	margin-right: 72px;
+	float:right;
 }
 
 .boton_accion{
