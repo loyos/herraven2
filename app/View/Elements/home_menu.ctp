@@ -5,7 +5,6 @@
 			?><li><?php 
 			echo $this->Html->link($m['Contenido']['alias'],array('controller' => 'home','action'=>'index'));
 			?></li>
-			<li>
 			<?php
 		}else if($m['Contenido']['alias'] == 'contacto'){
 		?> <li><?php 

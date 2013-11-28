@@ -3,16 +3,22 @@
 <!-- start Basic Jquery Slider -->
 <ul class="bjqs">
 	<li>
-		<?php echo $this->Html->image('belt.jpg', array('width' => '120px;', 'height' => '100px;')); ?>
+		<?php echo $this->Html->image('fabrica1.jpg'); ?>
 	</li>
 	<li>
-		<?php echo $this->Html->image('loy.jpg', array('width' => '120px;', 'height' => '100px;')); ?>
+		<?php echo $this->Html->image('fabrica2.jpg'); ?>
+	</li>
+	<li>
+		<?php echo $this->Html->image('fabrica3.jpg'); ?>
 	</li>
 </ul>
 <!-- end Basic jQuery Slider -->
 </div>
 
 <div class = "footer_acomodado">
+	<div class = "texto_footer">
+		© Herrajes y Accesorios Herraven s.a. Todos los derechos reservados. RIF J-30800588-6
+	</div>
 </div>
 
 <script>
