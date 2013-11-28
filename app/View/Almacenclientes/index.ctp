@@ -42,7 +42,7 @@
 				echo '<td>'.$salida.'</td>';
 				echo '<td>'.$saldo.'</td>';
 				echo '<td>'.$saldo*$articulos[$a['Almacencliente']['articulo_id']].'</td>';
-				echo '<td>'.$this->Html->link('Egreso',array('action' => 'egreso',$a['Almacencliente']['articulo_id'],$a['Almacencliente']['acabado_id'])).'</td>';
+				echo '<td>'.$this->Html->link('Egreso',array('action' => 'egreso',$a['Almacencliente']['articulo_id'],$a['Almacencliente']['acabado_id']),array('class'=>'boton_accion')).'</td>';
 				echo '</tr>';
 			}
 		}

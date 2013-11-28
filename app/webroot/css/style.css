@@ -598,9 +598,11 @@ table.tabla_ver td, table.tabla_ver th{
 	margin-top:15px;
 	border-radius: 3px;
 	box-shadow: 3px 3px 5px #00A8D3;
+	padding-bottom:10px;
 }
 .info_catalogo{
-	padding: 20px;
+	padding:20px;
+	padding-top: 9px;
 }
 
 
@@ -869,4 +871,8 @@ button.link{
 .codigo_pedido {
 	font-weight:bold;
 	margin-bottom:6px;
+}
+
+.info_catalogo td {
+	vertical-align:top;
 }
