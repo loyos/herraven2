@@ -7,7 +7,7 @@
 
 <div class="wrap">
 <?php
-echo $this->Html->link('Regresar',array('action' => 'admin_index'));
+echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'=>'boton'));
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 

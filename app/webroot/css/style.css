@@ -876,3 +876,9 @@ button.link{
 .info_catalogo td {
 	vertical-align:top;
 }
+
+.boton_ingreso .boton_busqueda {
+	margin-right: -70px;
+	margin-top: 70px;
+	padding: 11px;
+}
