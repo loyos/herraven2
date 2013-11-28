@@ -212,7 +212,17 @@
 	<?php
 	}
 	if ($admin_web) { ?>
-		<li class = "option <?php if($this->params['controller'] == 'contenidos') echo 'active'; ?>"><?php echo $this->Html->link('Web',array('controller' => 'contenidos', 'action' => 'admin_index')); ?></li>
+		<li class = "option <?php if($this->params['controller'] == 'contenidos') echo 'active'; ?>">
+			Web
+			<ul>
+				<li class = "children <?php if($this->params['controller'] == 'contenidos' && ($this->params['action'] == 'admin_home' || $this->params['action'] == 'admin_agregar_imagen')) echo 'active'; else echo 'inactive'; ?>">
+					<?php echo $this->Html->link('Home',array('controller' => 'contenidos', 'action' => 'admin_home')); ?>
+				</li>
+				<li class = "children <?php if($this->params['controller'] == 'contenidos' && ($this->params['action'] == 'admin_index' || $this->params['action'] == 'admin_editar')) echo 'active'; else echo 'inactive'; ?>">
+					<?php echo $this->Html->link('Contenidos',array('controller' => 'contenidos', 'action' => 'admin_index')); ?>
+				</li>
+			</ul>
+		</li>
 	<?php
 	}
 	// debug($this->params['controller']);
