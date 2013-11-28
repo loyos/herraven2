@@ -1,10 +1,12 @@
 <script>
-	$('.footer_acomodado').css( "bottom", "0" );
+	// $('.footer_acomodado').css( "bottom", "0" );
 </script>
 
 <div class = "wrap_contenido">
 
-	asdkasdlasdjaklsdj
+	<?php
+		echo $contenido['Contenido']['contenido'];
+	?>
 
 </div>
 
