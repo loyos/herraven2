@@ -3,7 +3,8 @@
 class ContenidosController extends AppController {
     
 	public $helpers = array ('Html','Form','Herra');
-	var $uses = array('Contenido');
+	var $uses = array('Contenido','Imagen');
+	public $components = array('Session','JqImgcrop','RequestHandler', 'Search.Prg');
 	
     function admin_index() {
 		$contenidos = $this->Contenido->find('all');
@@ -30,6 +31,31 @@ class ContenidosController extends AppController {
 		$this->Contenido->delete($id);
 		$this->Session->setFlash("El contenido se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
+	}
+	
+	function admin_home() {
+		$imagenes = $this->Imagen->find('all');
+		$this->set(compact('imagenes'));
+	}
+	
+	function admin_agregar_imagen(){
+		if (!empty($this->data)) {
+			$data = $this->data;
+			if (!empty($this->data['Imagen']['Foto']['name'])) {
+				if ($this->JqImgcrop->uploadImage($this->data['Imagen']['Foto'], 'img/home', '')) {
+					$data['Imagen']['imagen'] = $this->data['Imagen']['Foto']['name'];
+					$this->Imagen->save($data);
+					$this->Session->setFlash("Se agrego una imagen con éxito");
+					$this->redirect(array('action' => 'admin_home'));
+				}
+			}
+		}
+	}
+	
+	function admin_eliminar_imagen($id) {
+		$this->Imagen->delete($id);
+		$this->Session->setFlash("La imagen eliminó con éxito");
+		$this->redirect(array('action' => 'admin_home'));
 	}
 }
 

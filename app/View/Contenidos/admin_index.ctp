@@ -7,7 +7,7 @@
 		echo '<tr>';
 			echo '<th>Pestaña</th>';
 			echo '<th>Título</th>';
-			echo '<th>Contenido</th>';
+			//echo '<th>Contenido</th>';
 			echo '<th>Video</th>';
 			echo '<th>Acciones</th>';
 		echo '</tr>';
@@ -15,10 +15,10 @@
 			echo '<tr>';
 				echo '<td>'.$cont['Contenido']['alias'].'</td>';
 				echo '<td>'.$cont['Contenido']['titulo'].'</td>';
-				$val = substr($cont['Contenido']['contenido'],0,30);
-				$sin_p = str_replace("<p>",' ',$val);
-				$sin_p = str_replace("</p>",' ',$sin_p);
-				echo '<td>'.$sin_p.'...</td>';
+				// $val = substr($cont['Contenido']['contenido'],0,30);
+				// $sin_p = str_replace("<p>",' ',$val);
+				// $sin_p = str_replace("</p>",' ',$sin_p);
+				//echo '<td>'.$sin_p.'...</td>';
 				echo '<td>'.$cont['Contenido']['video'].'</td>';
 				echo '<td>';
 				echo $this->Html->link('Editar',array('action' => 'admin_editar',$cont['Contenido']['id']),array('class' => 'boton_accion'));
