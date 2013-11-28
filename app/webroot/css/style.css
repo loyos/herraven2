@@ -50,14 +50,8 @@ html, body {
 	border-radius: 0px;
 	position: relative;
 	bottom: 0px;
-	background: #363636; /* Old browsers */
-background: -moz-linear-gradient(top,  #363636 1%, #141414 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#363636), color-stop(100%,#141414)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #363636 1%,#141414 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #363636 1%,#141414 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #363636 1%,#141414 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #363636 1%,#141414 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', endColorstr='#141414',GradientType=0 ); /* IE6-9 */
+	background: #000;
+	color: 
 }
 
 .home_body{
