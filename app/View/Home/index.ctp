@@ -5,7 +5,7 @@
 	<?php 
 		foreach($imagenes as $img){
 			echo "<li>";
-				 echo $this->Html->image($img['Imagen']['imagen']);
+				 echo $this->Html->image('home/'.$img['Imagen']['imagen']);
 			echo "</li>";
 		}
 	?>
