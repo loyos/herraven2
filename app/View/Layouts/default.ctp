@@ -120,7 +120,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		</div>
 		
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	<?php // echo $this->element('sql_dump'); ?>
 	<div id="footer" class = "footer_interno">
 		<div class = "footer_interno_content">
 			© Herrajes y Accesorios Herraven s.a. Todos los derechos reservados. RIF J-30800588-6

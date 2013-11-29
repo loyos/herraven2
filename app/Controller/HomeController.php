@@ -4,7 +4,7 @@ class HomeController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('RequestHandler');
-	var $uses = array('Contenido');
+	var $uses = array('Contenido','Imagen');
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -15,7 +15,8 @@ class HomeController extends AppController {
 		// $debug($this->layout = 'hola');
 		$this->layout = 'home';
 		$menu = $this->Contenido->find('all');
-		$this->set(compact('menu'));
+		$imagenes = $this->Imagen->find('all');
+		$this->set(compact('menu','imagenes'));
     }
 	
 	function contenido($id = null){

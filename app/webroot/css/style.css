@@ -166,7 +166,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', end
 	display: block;
 	text-decoration: none;
 	list-style: none;
-	margin-left: 335px;
+	margin-left: 315px;
 }
 
 .main_menu li{
@@ -183,7 +183,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', end
 	height: 36px;
 	background: url('../img/list.png') 5px 21px no-repeat;
 	background-size: 6px;
-	
+}
+
+.main_menu li:first-child{
+	background: none;	
 }
 
 .main_menu li a{
@@ -203,6 +206,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', end
 	cursor: pointer;
 	background: url('../img/list_hover.png') 5px 21px no-repeat;
 	background-size: 6px;
+}
+
+.main_menu li:hover:first-child{
+	background: none;
 }
 
 #banner-fade {
@@ -246,6 +253,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363636', end
 
 p{
 	margin: 0px;
+}
+
+.video{
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+	margin-top: 20px;
 }
 
 .editar_perfil a{

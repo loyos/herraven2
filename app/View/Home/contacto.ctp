@@ -5,7 +5,7 @@
 <div class = "wrap_contenido">
 
 	<p>
-	esto es el contacto
+	Proximamente el formulario de contacto!
 	</p>
 </div>
 

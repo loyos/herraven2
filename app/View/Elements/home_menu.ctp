@@ -6,11 +6,7 @@
 			echo $this->Html->link($m['Contenido']['alias'],array('controller' => 'home','action'=>'index'));
 			?></li>
 			<?php
-		}else if($m['Contenido']['alias'] == 'contacto'){
-		?> <li><?php 
-			echo $this->Html->link($m['Contenido']['alias'],array('controller' => 'home','action'=>'contacto'));
-			?></li><?php
-		}else{
+		}else {
 	?>
 		<li>
 			<?php echo $this->Html->link($m['Contenido']['alias'],array('controller' => 'home','action'=>'contenido', $m['Contenido']['id'])); ?>
@@ -19,12 +15,14 @@
 	}
 	?>
 	<li>
+		<?php echo $this->Html->link('Contacto',array('controller' => 'home','action'=>'contacto')); ?>
+	</li>
+	<li>
 		<?php echo $this->Html->link('Area Reservada',array('controller' => 'users','action'=>'login')); ?>
 	</li>
 	
 </ul>
 </div>
-
 <?php //debug($menu); ?>
 <script>
 	

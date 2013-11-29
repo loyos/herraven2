@@ -2,15 +2,13 @@
 
 <!-- start Basic Jquery Slider -->
 <ul class="bjqs">
-	<li>
-		<?php echo $this->Html->image('fabrica1.jpg'); ?>
-	</li>
-	<li>
-		<?php echo $this->Html->image('fabrica2.jpg'); ?>
-	</li>
-	<li>
-		<?php echo $this->Html->image('fabrica3.jpg'); ?>
-	</li>
+	<?php 
+		foreach($imagenes as $img){
+			echo "<li>";
+				 echo $this->Html->image($img['Imagen']['imagen']);
+			echo "</li>";
+		}
+	?>
 </ul>
 <!-- end Basic jQuery Slider -->
 </div>
