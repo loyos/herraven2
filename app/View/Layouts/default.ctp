@@ -59,18 +59,18 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		
 		 // $(document).tooltip();
 		 
-		  $(function() {
-    $( document ).tooltip({
-      position: {
-        my: "center bottom+80",
-        at: "center top",
-        using: function( position, feedback ) {
-          $( this ).css( position );
-          $( "<div>" )
-        }
-      }
-    });
-  });
+	$(function() {
+		$('.logout, .user-header').tooltip({
+		  position: {
+			my: "center bottom+80",
+			at: "center top",
+			using: function( position, feedback ) {
+			  $( this ).css( position );
+			  $( "<div>" )
+			}
+		  }
+		});
+	});
 	
 	</script>
 	
