@@ -60,7 +60,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		 // $(document).tooltip();
 		 
 		  $(function() {
-    $( document ).tooltip({
+    $( ".user-header, .logout").tooltip({
       position: {
         my: "center bottom+80",
         at: "center top",
