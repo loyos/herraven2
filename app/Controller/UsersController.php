@@ -4,7 +4,7 @@ class UsersController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	var $uses = array('User','Cliente','Pedido');
+	var $uses = array('User','Cliente','Pedido','Contenido');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
@@ -18,6 +18,10 @@ class UsersController extends AppController {
 	}
 	
 	public function login() {
+		$menu = $this->Contenido->find('all');
+		$this->set(compact('menu'));
+		
+		$this->layout = 'home';
 		if ($this->Auth->User('id')) {
 			$this->redirect(array(
 				'controller' => 'users',

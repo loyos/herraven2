@@ -55,7 +55,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 				<div class = "main_subtitulo">
 					fábrica
 				</div> -->
-				<?php echo $this->Html->link($this->Html->image('logo-herraven.png', array('width' => '260px')),array('action'=> 'index'),
+				<?php echo $this->Html->link($this->Html->image('logo-herraven.png', array('width' => '260px')),array('controller'=> 'home', 'action'=> 'index'),
 				array('escape' => false,
 					'class' => 'logo_home'
 					)); ?>
