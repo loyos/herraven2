@@ -11,7 +11,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
-	echo $this->Form->create('Contenido');
+	echo $this->Form->create('Contenido', array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
 	echo '<td>Pestaña</td>';
@@ -42,6 +42,14 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo '<td>';
 	echo $this->Form->input('video',array(
 		'label' => false
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Imagen</td>';
+	echo '<td>';
+	echo $this->Form->file('Imagen',array(
+		'label' => 'Imagen'
 	));
 	echo '</td>';
 	echo '</tr>';

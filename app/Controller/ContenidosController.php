@@ -13,7 +13,13 @@ class ContenidosController extends AppController {
 	
 	function admin_editar($id = null) {
 		if (!empty($this->data)){
-			$this->Contenido->save($this->data);
+			$data = $this->data;
+			if (!empty($this->data['Contenido']['Imagen']['name'])) {
+				if ($this->JqImgcrop->uploadImage($this->data['Contenido']['Imagen'], 'img/contenido', '')) {
+					$data['Contenido']['imagen'] = $this->data['Contenido']['Imagen']['name'];
+				}
+			}
+			$this->Contenido->save($data);
 			$this->Session->setFlash("El contenido se guardó con éxito");
 			$this->redirect(array('action' => 'admin_index'));
 		}
