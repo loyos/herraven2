@@ -3,7 +3,7 @@ class IndexController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('RequestHandler','HighCharts.HighCharts');
-	public $uses = array('Cuenta','Abono');
+	public $uses = array('Cuenta','Abono','Pedido','Config');
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -753,8 +753,222 @@ class IndexController extends AppController {
 		} 
 	}
 	
-	function admin_reportes_mensuales() {}
-	function admin_reportes_semanales() {}
-}
+	function admin_reportes_mensuales() {
+		$hoy = date('Y-m-d H:i:s');
+		$mes = $this->Config->obtenerMes($hoy);
+		$mes_pasado = intval($mes)-1 ;
+		// Para la facturación 
+		$facturaciones_actuales = count($this->Cuenta->find('all',array(
+			'conditions' => array('Cuenta.mes' => $mes)
+		)));
+		$facturaciones_pasadas = count($this->Cuenta->find('all',array(
+			'conditions' => array('Cuenta.mes' => $mes_pasado)
+		)));
+		if ($facturaciones_actuales <= $facturaciones_pasadas) {
+			$facturacion = 'menor';
+		} else {
+			$facturacion = 'mayor';
+		}
+		
+		//Para las cuentas
+		$cuentas_no_pagadas = $this->Cuenta->find('all',array(
+				'conditions' => array(
+					'Cuenta.mes <=' => $mes,
+					'OR' => array(
+						'Cuenta.mes_pago >' => $mes,
+						'Cuenta.mes_pago =' => 0,
+					)
+					
+				),
+			));
+		$sum_cuentas_no_pagadas = 0;
+		foreach ($cuentas_no_pagadas as $a) {
+			$abonos = $this->Abono->find('all',array(
+				'fields' => array('SUM(Abono.abono) as abono' ) ,
+				'conditions' => array(
+					'Abono.cuenta_id' => $a['Cuenta']['id'],
+					'Abono.mes <=' => $mes
+				),
+				
+			));
+			if (empty($abonos[0][0]['abono'])) {
+				$abonos[0][0]['abono'] = 0;
+			}
+			$sum_cuentas_no_pagadas = $sum_cuentas_no_pagadas+ ($a['Pedido']['cuenta']-$abonos[0][0]['abono']);
+		}
+		
+		$cuentas_no_pagadas_pasadas = $this->Cuenta->find('all',array(
+				'conditions' => array(
+					'Cuenta.mes <=' => $mes_pasado,
+					'OR' => array(
+						'Cuenta.mes_pago >' => $mes_pasado,
+						'Cuenta.mes_pago =' => 0,
+					)
+					
+				),
+			));
+		$sum_cuentas_no_pagadas_pasadas = 0;
+		foreach ($cuentas_no_pagadas_pasadas as $a) {
+			$abonos = $this->Abono->find('all',array(
+				'fields' => array('SUM(Abono.abono) as abono' ) ,
+				'conditions' => array(
+					'Abono.cuenta_id' => $a['Cuenta']['id'],
+					'Abono.mes <=' => $mes_pasado
+				),
+				
+			));
+			if (empty($abonos[0][0]['abono'])) {
+				$abonos[0][0]['abono'] = 0;
+			}
+			$sum_cuentas_no_pagadas_pasadas = $sum_cuentas_no_pagadas_pasadas+ ($a['Pedido']['cuenta']-$abonos[0][0]['abono']);
+		}
+		
+		if ($sum_cuentas_no_pagadas_pasadas >= $sum_cuentas_no_pagadas) {
+			$sum_cuentas = 'menor';
+		} else {
+			$sum_cuentas = 'mayor';
+		}
+		
+		//Para cobranza
+		$abonos_actuales = $this->Abono->find('all',array(
+			'fields' => array('SUM(Abono.abono) as abono'),
+			'conditions' => array(
+				'Abono.mes' => floatval($mes) 	
+			)
+		));
+		if (empty($abonos_actuales[0][0]['abono'])) {
+			$abonos_actuales = 0;
+		} else {
+			$abonos_actuales = $abonos_actuales[0][0]['abono'];
+		}
+		
+		$abonos_pasados = $this->Abono->find('all',array(
+			'fields' => array('SUM(Abono.abono) as abono'),
+			'conditions' => array(
+				'Abono.mes' => $mes_pasado 	
+			)
+		));
+		if (empty($abonos_pasados[0][0]['abono'])) {
+			$abonos_pasados = 0;
+		} else {
+			$abonos_pasados = $abonos_pasados[0][0]['abono'];
+		}
+		if ($abonos_pasados >= $abonos_actuales) {
+			$cobranza = 'menor';
+		} else {
+			$cobranza = 'mayor';
+		}
+		$this->set(compact('facturacion','facturaciones_actuales','sum_cuentas_no_pagadas','sum_cuentas','abonos_actuales','cobranza'));
+	}
+	
+	function admin_reportes_semanales() {
+		$hoy = date('Y-m-d H:i:s');
+		$semana = $this->Pedido->numero_semana($hoy);
+		$semana_pasada = intval($semana)-1 ;
+		// Para la facturación 
+		$facturaciones_actuales = count($this->Cuenta->find('all',array(
+			'conditions' => array('Cuenta.semana' => $semana)
+		)));
+		$facturaciones_pasadas = count($this->Cuenta->find('all',array(
+			'conditions' => array('Cuenta.semana' => $semana_pasada)
+		)));
+		if ($facturaciones_actuales <= $facturaciones_pasadas) {
+			$facturacion = 'menor';
+		} else {
+			$facturacion = 'mayor';
+		}
+		
+		//Para las cuentas
+		$cuentas_no_pagadas = $this->Cuenta->find('all',array(
+				'conditions' => array(
+					'Cuenta.semana <=' => $semana,
+					'OR' => array(
+						'Cuenta.semana_pago >' => $semana,
+						'Cuenta.semana_pago =' => 0,
+					)
+					
+				),
+			));
+		$sum_cuentas_no_pagadas = 0;
+		foreach ($cuentas_no_pagadas as $a) {
+			$abonos = $this->Abono->find('all',array(
+				'fields' => array('SUM(Abono.abono) as abono' ) ,
+				'conditions' => array(
+					'Abono.cuenta_id' => $a['Cuenta']['id'],
+					'Abono.semana <=' => $semana
+				),
+				
+			));
+			if (empty($abonos[0][0]['abono'])) {
+				$abonos[0][0]['abono'] = 0;
+			}
+			$sum_cuentas_no_pagadas = $sum_cuentas_no_pagadas+ ($a['Pedido']['cuenta']-$abonos[0][0]['abono']);
+		}
+		
+		$cuentas_no_pagadas_pasadas = $this->Cuenta->find('all',array(
+				'conditions' => array(
+					'Cuenta.semana <=' => $semana_pasada,
+					'OR' => array(
+						'Cuenta.semana_pago >' => $semana_pasada,
+						'Cuenta.semana_pago =' => 0,
+					)
+					
+				),
+			));
+		$sum_cuentas_no_pagadas_pasadas = 0;
+		foreach ($cuentas_no_pagadas_pasadas as $a) {
+			$abonos = $this->Abono->find('all',array(
+				'fields' => array('SUM(Abono.abono) as abono' ) ,
+				'conditions' => array(
+					'Abono.cuenta_id' => $a['Cuenta']['id'],
+					'Abono.semana <=' => $semana_pasada
+				),
+				
+			));
+			if (empty($abonos[0][0]['abono'])) {
+				$abonos[0][0]['abono'] = 0;
+			}
+			$sum_cuentas_no_pagadas_pasadas = $sum_cuentas_no_pagadas_pasadas+ ($a['Pedido']['cuenta']-$abonos[0][0]['abono']);
+		}
+		
+		if ($sum_cuentas_no_pagadas_pasadas >= $sum_cuentas_no_pagadas) {
+			$sum_cuentas = 'menor';
+		} else {
+			$sum_cuentas = 'mayor';
+		}
+		
+		//Para cobranza
+		$abonos_actuales = $this->Abono->find('all',array(
+			'fields' => array('SUM(Abono.abono) as abono'),
+			'conditions' => array(
+				'Abono.semana' => floatval($semana) 	
+			)
+		));
+		if (empty($abonos_actuales[0][0]['abono'])) {
+			$abonos_actuales = 0;
+		} else {
+			$abonos_actuales = $abonos_actuales[0][0]['abono'];
+		}
+		
+		$abonos_pasados = $this->Abono->find('all',array(
+			'fields' => array('SUM(Abono.abono) as abono'),
+			'conditions' => array(
+				'Abono.semana' => floatval($semana_pasada) 	
+			)
+		));
+		if (empty($abonos_pasados[0][0]['abono'])) {
+			$abonos_pasados = 0;
+		} else {
+			$abonos_pasados = $abonos_pasados[0][0]['abono'];
+		}
+		if ($abonos_pasados >= $abonos_actuales) {
+			$cobranza = 'menor';
+		} else {
+			$cobranza = 'mayor';
+		}
+		$this->set(compact('facturacion','facturaciones_actuales','sum_cuentas_no_pagadas','sum_cuentas','abonos_actuales','cobranza'));
+	
+	}
+}	
 
 ?>

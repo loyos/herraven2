@@ -1,7 +1,43 @@
 <div class="wrap">
+	<h1>Estadísticas Semanales</h1>
 	<?php
-	echo '<h3>'.$this->Html->link('Facturación',array('action' => 'admin_facturacion_semanal'), array('class' => 'boton')).'</h3>';
-	echo '<h3>'.$this->Html->link('Cuentas por cobrar',array('action' => 'admin_cuentas_semanal'), array('class' => 'boton')).'</h3>';
-	echo '<h3>'.$this->Html->link('Cobranza',array('action' => 'admin_cobranza_semanal'), array('class' => 'boton')).'</h3>';
+	echo $this->Html->link('Facturación',array('action' => 'admin_facturacion_semanal'), array('class' => 'boton')).'<b>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp';
+	if(!empty($facturaciones_actuales)) {
+		echo $faturaciones_actuales.'&nbsp&nbsp&nbsp</b>';
+	}else {
+		echo '0&nbsp&nbsp&nbsp</b>';
+	}
+	if ($facturacion == 'menor') {
+		$val = 'flecha_roja.PNG';
+	} else {
+		$val = 'flecha_verde.PNG';
+	}
+	echo $this->Html->image($val,array('width' => '20px'));
+	echo '<br><br><br>';
+	echo $this->Html->link('Cuentas por cobrar',array('action' => 'admin_cuentas_semanal'), array('class' => 'boton')).'<b>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp';
+	if(!empty($sum_cuentas_no_pagadas)) {
+		echo $sum_cuentas_no_pagadas.'&nbsp&nbsp&nbsp</b>';
+	}else {
+		echo '0&nbsp&nbsp&nbsp</b>';
+	}
+	if ($sum_cuentas == 'menor') {
+		$val = 'flecha_roja.PNG';
+	} else {
+		$val = 'flecha_verde.PNG';
+	}
+	echo $this->Html->image($val,array('width' => '20px'));
+	echo '<br><br><br>';
+	echo $this->Html->link('Cobranza',array('action' => 'admin_cobranza_semanal'), array('class' => 'boton')).'<b>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp';
+	if(!empty($abonos_actuales)) {
+		echo $abonos_actuales.'&nbsp&nbsp&nbsp</b>';
+	}else {
+		echo '0&nbsp&nbsp&nbsp</b>';
+	}
+	if ($cobranza == 'menor') {
+		$val = 'flecha_roja.PNG';
+	} else {
+		$val = 'flecha_verde.PNG';
+	}
+	echo $this->Html->image($val,array('width' => '20px'));
 	?>
 </div>
