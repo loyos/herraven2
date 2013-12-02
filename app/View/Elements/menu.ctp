@@ -167,10 +167,10 @@
 	CIO
 		<ul>
 			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_reportes_semanales') echo 'active'; else echo 'inactive'; ?>">
-				<?php echo $this->Html->link('Reportes semanales',array('controller' => 'index', 'action' => 'admin_reportes_semanales')); ?>
+				<?php echo $this->Html->link('Estadísticas semanales',array('controller' => 'index', 'action' => 'admin_reportes_semanales')); ?>
 			</li>
 			<li class = "children <?php if($this->params['controller'] == 'index' && $this->params['action'] == 'admin_reportes_mensuales') echo 'active'; else echo 'inactive'; ?>">
-				<?php echo $this->Html->link('Reportes mensuales',array('controller' => 'index', 'action' => 'admin_reportes_mensuales')); ?>
+				<?php echo $this->Html->link('Estadísticas mensuales',array('controller' => 'index', 'action' => 'admin_reportes_mensuales')); ?>
 			</li>
 		</ul>
 	</li>
