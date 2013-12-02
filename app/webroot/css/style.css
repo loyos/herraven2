@@ -578,6 +578,26 @@ table.tabla_ver td, table.tabla_ver th{
 	font-size: 20px;
 }
 
+.login_flash{
+	position: absolute;
+	left: 50%;
+	width: 400px;
+	text-align: center;
+}
+
+.flash_center{
+	position: relative;
+	left: -50%;
+	margin-top: 5px;
+	padding: 5px;
+    color: white;
+    border-radius: 10px;
+    font: bold 14px "Helvetica Neue", Sans-Serif;
+    // text-transform: uppercase;
+    box-shadow: 0 0 7px black;
+	background: #515669;
+}
+
 .listado_categoria {
 	font-size: 20px;
 	font-weight: bold;

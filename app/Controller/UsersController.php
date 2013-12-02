@@ -35,7 +35,7 @@ class UsersController extends AppController {
 						'action' => 'index'
 					));
 			} else {
-				$this->Session->setFlash(__('El nombre de usuario o contraseña son invalidos, vuelve a intentarlo'));
+				$this->Session->setFlash(__('El nombre de usuario o contraseña son inválidos, vuelve a intentarlo'), 'login_flash');
 			}
 		}
 	}
@@ -242,7 +242,7 @@ class UsersController extends AppController {
 				$this->Session->setFlash('En breve recibirás un correo para restablecer tu contraseña');
 				$this->redirect(array('controller'=>'users', 'action'=>'login'));
 			} else {
-				$this->Session->setFlash('No existe un usuario registrado con este username');
+				$this->Session->setFlash('No existe un usuario registrado con este username', 'login_flash');
 				$this->redirect(array('action' => 'reset_password'));
 			}
 		}
