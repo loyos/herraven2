@@ -96,45 +96,55 @@ class CuentasController extends AppController {
 	
 	function admin_pagar($id) {
 		if (!empty($this->data)) {
-			$id = $this->data['Cuenta']['id'];
-			$cuenta = $this->Cuenta->findById($id);
-			$hoy = date('Y-m-d H:i:s');
-			$deposito = $this->data['Cuenta']['monto']+$cuenta['Cuenta']['deposito'];
-			$total = $cuenta['Pedido']['cuenta'];
-			if ($total == $deposito) {
-				$update = array(
-				'Cuenta' => array(
-					'id' => $id,
-					'deposito' => $deposito,
-					'status' => 'Pagado',
-					'mes_pago' => $this->Config->obtenerMes($hoy),
-					'semana_pago' => $this->Pedido->numero_semana($hoy),
-				)
-			);
-			} elseif ($deposito > $total) {
-				$this->Session->setFlash('El pago supera el monto restante');
-				$this->redirect(array('action' => 'admin_pagar',$id));
+			if (!empty($this->data['Cuenta']['monto'])) {
+				if ($this->data['Cuenta']['monto'] > 0) {
+					$id = $this->data['Cuenta']['id'];
+					$cuenta = $this->Cuenta->findById($id);
+					$hoy = date('Y-m-d H:i:s');
+					$deposito = $this->data['Cuenta']['monto']+$cuenta['Cuenta']['deposito'];
+					$total = $cuenta['Pedido']['cuenta'];
+					if ($total == $deposito) {
+						$update = array(
+						'Cuenta' => array(
+							'id' => $id,
+							'deposito' => $deposito,
+							'status' => 'Pagado',
+							'mes_pago' => $this->Config->obtenerMes($hoy),
+							'semana_pago' => $this->Pedido->numero_semana($hoy),
+						)
+					);
+					} elseif ($deposito > $total) {
+						$this->Session->setFlash('El pago supera el monto restante');
+						$this->redirect(array('action' => 'admin_pagar',$id));
+					} else {
+						$update = array(
+							'Cuenta' => array(
+								'id' => $id,
+								'deposito' => $deposito
+							)
+						);
+					}
+					$this->Cuenta->save($update);
+			
+					$abono = array(
+						'Abono' => array(
+							'cuenta_id' => $id,
+							'abono' => $this->data['Cuenta']['monto'],
+							'mes' => $this->Config->obtenerMes($hoy),
+							'semana' => $this->Pedido->numero_semana($hoy),
+						)
+					);
+					$this->Abono->save($abono);
+					$this->Session->setFlash('El pago se realizó con éxito');
+					$this->redirect(array('action' => 'admin_index'));
+				} else {
+					$this->Session->setFlash('Monto no válido');
+					$this->redirect(array('action' => 'admin_pagar',$id));
+				}
 			} else {
-				$update = array(
-					'Cuenta' => array(
-						'id' => $id,
-						'deposito' => $deposito
-					)
-				);
+				$this->Session->setFlash('No se introdujo monto de pago');
+				$this->redirect(array('action' => 'admin_pagar',$id));
 			}
-			$this->Cuenta->save($update);
-	
-			$abono = array(
-				'Abono' => array(
-					'cuenta_id' => $id,
-					'abono' => $this->data['Cuenta']['monto'],
-					'mes' => $this->Config->obtenerMes($hoy),
-					'semana' => $this->Pedido->numero_semana($hoy),
-				)
-			);
-			$this->Abono->save($abono);
-			$this->Session->setFlash('El pago se realizó con éxito');
-			$this->redirect(array('action' => 'admin_index'));
 		}
 		$cuenta_a_pagar= $this->Cuenta->find('first',array(
 			'conditions' => array('Cuenta.id' =>$id),
