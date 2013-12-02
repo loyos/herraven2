@@ -19,9 +19,9 @@ class UsersController extends AppController {
 	
 	public function login() {
 		$menu = $this->Contenido->find('all');
-		$this->set(compact('menu'));
-		
+		$this->set(compact('menu'));		
 		$this->layout = 'home';
+		
 		if ($this->Auth->User('id')) {
 			$this->redirect(array(
 				'controller' => 'users',
@@ -213,6 +213,10 @@ class UsersController extends AppController {
 	}
 	
 	function reset_password(){
+		$menu = $this->Contenido->find('all');
+		$this->set(compact('menu'));		
+		$this->layout = 'home';
+		
 		if (!empty($this->data)) {
 			$existe = $this->User->find('first',array(
 				'conditions' => array('User.username' => $this->data['User']['username'])
