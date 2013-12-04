@@ -24,7 +24,11 @@
 
 	</div>
 	<div class = "video">
-		<iframe src="//player.vimeo.com/video/<?php echo $codigo_video;?>" width="300" height="180" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<?php if(!empty($contenido['Contenido']['video'])){ ?>
+			<iframe src="//player.vimeo.com/video/<?php echo $codigo_video;?>" width="300" height="180" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<?php }else if(!empty($contenido['Contenido']['imagen'])){
+			echo $this->Html->image(('contenido/'. $contenido['Contenido']['imagen']), array('width' => '300'));
+		} ?>
 	</div>
 	<div class = "push"> 	</div>
 </div>
