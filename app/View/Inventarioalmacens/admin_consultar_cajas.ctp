@@ -3,7 +3,7 @@
 if (empty($sub_id)) {
 	$sub_id = null;
 }
-echo $this->Html->link('Regresar',array('action' => 'admin_inventario',$cat_id,$sub_id), array('class' => 'boton_accion'));
+echo $this->Html->link('Regresar',array('action' => 'admin_inventario',$cat_id,$sub_id), array('class' => 'boton'));
 //echo '<br>Nota: los códigos en rojo son las cajas que todavia están en el almacén<br>';
 ?>
 <div class="info_izquierda">
