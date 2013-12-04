@@ -3,7 +3,7 @@
 	<?php
 	echo $this->Html->link('Facturación',array('action' => 'admin_facturacion_semanal'), array('class' => 'boton')).'<b>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp';
 	if(!empty($facturaciones_actuales)) {
-		echo $faturaciones_actuales.'&nbsp&nbsp&nbsp</b>';
+		echo $facturaciones_actuales.'&nbsp&nbsp&nbsp</b>';
 	}else {
 		echo '0&nbsp&nbsp&nbsp</b>';
 	}
