@@ -14,7 +14,10 @@
 			echo "Status:";
 			echo "</td>";
 			echo "<td>";
-			echo $this->Form->input('status', array('div' => false, 'label' => false));
+			echo $this->Form->select('status', array(
+				'Vigente' => 'Vigente',
+				'Pagado' => 'Pagado',
+			), array('empty' => 'Todos'));
 			echo "</td></tr>";
 			echo "</table>";			
 			echo $this->Form->submit(__('Buscar'), array('div' => 'search_button', 'class' => 'boton_busqueda'));

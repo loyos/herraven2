@@ -161,8 +161,12 @@
 	<?php
 	}
 	if ($admin_reportes){ ?>
-	<li class = "option <?php if(($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cuentas_mensual') || ($this->params['controller'] == 'index' && $this->params['action'] == 'admin_facturacion_mensual') || ($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cobranza_mensual') 
-		) echo 'active'; ?> " >
+	<li class = "option <?php if(($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cuentas_mensual') ||
+								($this->params['controller'] == 'index' && $this->params['action'] == 'admin_facturacion_mensual') ||
+								($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cobranza_mensual') || 
+								($this->params['controller'] == 'index' && $this->params['action'] == 'admin_reportes_semanales') ||
+								($this->params['controller'] == 'index' && $this->params['action'] == 'admin_reportes_mensuales'))
+								echo 'active'; ?> " >
 	
 	CIO
 		<ul>
