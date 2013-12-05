@@ -15,6 +15,12 @@ class Materiasprima extends AppModel {
                  'foreignKey'             => 'materiasprima_id',
                  'associationForeignKey'  => 'acabado_id',
         ),
+		'Proveedor' =>
+            array('className'            => 'Proveedor',
+                 'joinTable'              => 'materiasprimas_proveedors',
+                 'foreignKey'             => 'materiasprima_id',
+                 'associationForeignKey'  => 'proveedor_id',
+        ),
 		// 'Precio' =>
             // array('className'            => 'Precio',
                  // 'joinTable'              => 'materiasprimas_precios',
@@ -28,6 +34,13 @@ class Materiasprima extends AppModel {
             'className'  => 'Inventariomaterial',
 			'foreignKey'    => 'materiasprima_id',
         )
+    );
+	
+	public $belongsTo = array(
+        'Unidad' => array(
+            'className'    => 'Unidad',
+            'foreignKey'   => 'unidad_id'
+        ),
     );
 	
 	var $validate = array( 

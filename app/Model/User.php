@@ -9,6 +9,21 @@ class User extends AppModel {
         ),
     );
 	
+	public $hasMany = array(
+        'Unidad' => array(
+            'className'  => 'Unidad',
+			'foreignKey'    => 'user_id',
+        ),
+		'Departamento' => array(
+            'className'  => 'Departamento',
+			'foreignKey'    => 'user_id',
+        ),
+		'Division' => array(
+            'className'  => 'Division',
+			'foreignKey'    => 'user_id',
+        )
+    );
+	
 	public static $roles = array(
 		'cliente' => 'Cliente',
 		'admin' => 'Administrador'
