@@ -54,6 +54,46 @@ class Config extends AppModel {
 		return $semana;
 	}
 	
+	function obtenerIntervaloFechas($fecha_menor,$fecha_mayor = null) {
+		$fecha_menor = new DateTime($fecha_menor); 
+		if (empty($fecha_mayor)) {
+			$hoy = new DateTime("now");
+		} else {
+			$hoy = new DateTime($fecha_mayor);
+		}		
+		$intervalo = $fecha_menor->diff( $hoy );
+		$anios = $intervalo->format('%y'); 
+		$meses = $intervalo->format('%m'); 
+		$dias = $intervalo->format('%d'); 
+		$tiempo = '';
+		if ( $anios > 0 ) { 
+			$tiempo = $anios;
+			if ($anios > 1) { 
+				$tiempo.='años '; 
+			} else {
+				$tiempo.='año '; 
+			}
+        } 
+		if ( $meses > 0 ) { 
+			$tiempo.= $meses;
+			if($meses > 1) {
+				$tiempo.='meses ';
+			}else{
+				$tiempo.= 'mes ';
+			}
+		}
+		if ( $dias > 0 ) { 
+			$tiempo.= $dias;
+			
+			if ($dias > 1) {
+				$tiempo.='días';
+			} else {
+				$tiempo.='día';
+			}
+			 
+		}
+		return ($tiempo);
+	}
 	
 }
 ?>

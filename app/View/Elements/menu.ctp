@@ -9,15 +9,17 @@
 	<?php 
 	if ($admin_usuario){ ?>
 	<li class = "option <?php if(($this->params['controller'] == 'users' && $this->params['action'] == 'admin_index') ||
-									($this->params['controller'] == 'users' && $this->params['action'] == 'admin_editar')
+									($this->params['controller'] == 'users' && $this->params['action'] == 'admin_editar') || ($this->params['controller'] == 'miembros' && $this->params['action'] == 'admin_index')
 								)
 							echo 'active'; ?>">
 		Usuarios
 		<ul>
-			<li class = "children">
+			<li class = "children <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Usuario',array('controller' => 'users', 'action' => 'admin_index')); ?>
 			</li>
-			
+			<li class = "children <?php if($this->params['controller'] == 'miembros' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Personal',array('controller' => 'miembros', 'action' => 'admin_index')); ?>
+			</li>
 		</ul>
 	</li>
 	<li class = "option <?php if(($this->params['controller'] == 'clientes') ||
