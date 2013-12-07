@@ -240,6 +240,20 @@ function funciones_rol() {
 			$(this).val(0);
 			$(this).attr('checked',false);
 		});
+	} else {
+		$('#div_rol_admin').css('display','none');
+		$('#div_rol_cliente').css('display','none');
+		inputs = $('#div_rol_admin input');
+		$.each( inputs, function( key, value ) {
+			$(this).val(0);
+			$(this).attr('checked',false);
+		});
+		inputs = $('#div_rol_cliente input');
+		$('.cliente').val(0);
+		$.each( inputs, function( key, value ) {
+			$(this).val(0);
+			$(this).attr('checked',false);
+		});
 	}
 }
 

@@ -115,7 +115,10 @@ class UsersController extends AppController {
 		$clientes[0] = '';
 		$roles = array(
 			'cliente' => 'Cliente',
-			'admin' => 'Administrador'
+			'admin' => 'Administrador',
+			'jefe_unidad' => 'Jefe Unidad',
+			'jefe_departamento' => 'Jefe Departamento',
+			'jefe_division' => 'Jefe División',
 		);
 		$this->set(compact('id','titulo','clientes','roles'));
 	}
