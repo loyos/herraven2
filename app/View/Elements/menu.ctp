@@ -12,7 +12,7 @@
 									($this->params['controller'] == 'users' && $this->params['action'] == 'admin_editar') || ($this->params['controller'] == 'miembros' && $this->params['action'] == 'admin_index')
 								)
 							echo 'active'; ?>">
-		Usuarios
+		Organización
 		<ul>
 			<li class = "children <?php if($this->params['controller'] == 'users' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Usuario',array('controller' => 'users', 'action' => 'admin_index')); ?>
