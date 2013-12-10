@@ -11,6 +11,10 @@ class Unidad extends AppModel {
             'className'  => 'Materiasprima',
 			'foreignKey'    => 'unidad_id',
         ),
+		'Miembro' => array(
+            'className'  => 'Miembro',
+			'foreignKey'    => 'unidad_id',
+        ),
     );
 	
 	 public $belongsTo = array(

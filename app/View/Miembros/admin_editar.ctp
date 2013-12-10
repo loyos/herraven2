@@ -1,6 +1,9 @@
 <div class="wrap">
 <?php
 echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'=>'boton'));
+if (empty($titulo)){
+	$titulo = 'Miembro del Personal';
+}
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
@@ -161,8 +164,8 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	if (!empty($id)) {
 		echo $this->Form->input('id',array('type'=>'hidden'));
 	}
-	if (!empty($user_id)) {
-		echo $this->Form->input('User.id',array('type'=>'hidden','value'=>$user_id));
+	if (!empty($id_user)) {
+		echo $this->Form->input('User.id',array('type'=>'hidden','value'=>$id_user));
 	}
 	echo $this->Form->submit('Guardar', array('class' => 'button'));
 	echo $this->Form->end;

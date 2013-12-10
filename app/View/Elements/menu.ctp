@@ -20,6 +20,9 @@
 			<li class = "children <?php if($this->params['controller'] == 'miembros' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Personal',array('controller' => 'miembros', 'action' => 'admin_index')); ?>
 			</li>
+			<li class = "children <?php if($this->params['controller'] == 'unidads' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Unidades',array('controller' => 'unidads', 'action' => 'admin_index')); ?>
+			</li>
 		</ul>
 	</li>
 	<li class = "option <?php if(($this->params['controller'] == 'clientes') ||

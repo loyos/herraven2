@@ -36,10 +36,13 @@ class MiembrosController extends AppController {
 						$data['Miembro']['imagen_test'] = $this->data['Miembro']['Test']['name'];
 					}
 				}
-				if ($this->Miembro->save($data,array('validate' => 'only'))) {	
+				$this->Miembro->set($data);
+				if ($this->Miembro->validates()) {	
 					if ($this->User->save($data,array('validate' => 'first'))) {	
-						$user_id = $this->User->id;
-						$data['Miembro']['user_id'] = $user_id;
+						//var_dump($data);die();
+						$id_user = $this->User->id;
+						$data['Miembro']['user_id'] = $id_user;
+						$data['Miembro']['unidad_id'] = 1;
 						$this->Miembro->save($data);
 						$this->Session->setFlash("Los datos se guardaron con éxito");
 						$this->redirect(array('action' => 'admin_index'));
@@ -55,13 +58,13 @@ class MiembrosController extends AppController {
 			$this->data = $this->Miembro->findById($id);
 			$m = $this->Miembro->findById($id);
 			$u = $this->User->findById($m['Miembro']['user_id']);
-			$user_id = $u['User']['id'];
+			$id_user = $u['User']['id'];
 			$titulo = 'Editar miembro del personal';
 		} else {
 			$titulo = 'Agrega un miembro al personal';
 		}
 		
-		$this->set(compact('id','titulo','user_id'));
+		$this->set(compact('id','titulo','id_user'));
 	}
 	
 	function admin_eliminar($id) {
