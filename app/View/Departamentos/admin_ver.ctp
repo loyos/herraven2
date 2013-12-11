@@ -2,25 +2,31 @@
 <?php
 echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'=>'boton'));
 ?>
-<h1>Unidad</h1>
+<h1>Departamento</h1>
 <?php 
 	echo '<table  class="tabla_ver">';
 	echo '<tr>';
-	echo '<th>Unidad</th>';
+	echo '<th>Departamento</th>';
 	echo '<td>';
-	echo $unidad['Unidad']['numero'];
+	echo $departamento['Departamento']['numero'];
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
 	echo '<th>Nombre</th>';
 	echo '<td>';
-	echo $unidad['Unidad']['nombre'];
+	echo $departamento['Departamento']['nombre'];
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
 	echo '<th>Jefe de la unidad</th>';
 	echo '<td>';
-	echo $unidad['User']['nombre'].' '.$unidad['User']['apellido'];
+	echo $departamento['User']['nombre'].' '.$departamento['User']['apellido'];
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<th>Unidades</th>';
+	echo '<td>';
+	echo $unidades;
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';

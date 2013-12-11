@@ -23,7 +23,9 @@ class UnidadsController extends AppController {
 		if (!empty($this->data)) {
 			//var_dump($this->data);die();
 			$data = $this->data;
-			
+			if (empty($data['Unidad']['id'])) {
+				$data['Unidad']['departamento_id'] = 1;
+			}
 			$this->Unidad->save($data);
 			//Ubico en que unidad se van a colocar los miembros
 			$data['Miembro']['unidad_id'] =  $this->Unidad->id;
@@ -53,7 +55,7 @@ class UnidadsController extends AppController {
 				$data['Miembro']['id'] = $data['miembro3'];
 				$this->Miembro->save($data);
 			}
-			if (!empty($this->data['miembro4']) && ($this->data['miembro4'] != $this->data['miembro1']) && ($this->data['miembro2'] != $this->data['miembro2']) && ($this->data['miembro4'] != $this->data['miembro3'])) {
+			if (!empty($this->data['miembro4']) && ($this->data['miembro4'] != $this->data['miembro1']) && ($this->data['miembro4'] != $this->data['miembro2']) && ($this->data['miembro4'] != $this->data['miembro3'])) {
 				$data['Miembro']['id'] = $data['miembro4'];
 				$this->Miembro->save($data);
 			}
@@ -108,23 +110,21 @@ class UnidadsController extends AppController {
 	}
 	
 	function admin_eliminar($id) {
-		$this->Miembro->delete($id);
-		$this->Session->setFlash("El miembro del personal se elimino con éxito");
+		$this->Unidad->delete($id);
+		$this->Session->setFlash("La unidad se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
 	function admin_ver($id) {
-		$miembro = $this->Miembro->find('first',array(
+		$unidad = $this->Unidad->find('first',array(
 			'conditions' => array(
-				'Miembro.id' => $id
+				'Unidad.id' => $id
 			),
-			'recursive' => 3
+			'contain' => array('Miembro'),
+			'recursive' => 1
 		));
-		$tiempo_trabajo = $this->Config->obtenerIntervaloFechas($miembro['Miembro']['fecha_ingreso']);
-		$edad = $this->Config->obtenerIntervaloFechas($miembro['Miembro']['fecha_nacimiento']);
-		$edad = explode(" ", $edad);
-		$edad = $edad[0];
-		$this->set(compact('miembro','tiempo_trabajo','edad'));
+		$personal = count($unidad['Miembro']);
+		$this->set(compact('unidad','personal'));
 	}
 }
 

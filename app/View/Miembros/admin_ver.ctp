@@ -20,7 +20,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo '<tr>';
 	echo '<th>Nombre y apellido</th>';
 	echo '<td>';
-	echo $miembro['User']['nombre'].' '.$miembro['User']['apellido'];;	
+	echo $miembro['User']['nombre'].' '.$miembro['User']['apellido'];	
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';

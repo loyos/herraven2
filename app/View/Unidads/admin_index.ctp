@@ -20,7 +20,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'
 			echo '<td>'.$u['Unidad']['numero'].'</td>';
 			echo '<td>'.$u['Unidad']['nombre'].'</td>';
 			echo '<td>'.$u['User']['nombre'].' '.$u['User']['apellido'].'</td>';
-			if (!empty($u['Departamento']['nombre'])) {
+			if ($u['Unidad']['departamento_id'] != 1) {
 				$val = $u['Departamento']['nombre'];
 			} else {
 				$val = 'Departamento no asignado';

@@ -23,6 +23,9 @@
 			<li class = "children <?php if($this->params['controller'] == 'unidads' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Unidades',array('controller' => 'unidads', 'action' => 'admin_index')); ?>
 			</li>
+			<li class = "children <?php if($this->params['controller'] == 'departamentos' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Departamentos',array('controller' => 'departamentos', 'action' => 'admin_index')); ?>
+			</li>
 		</ul>
 	</li>
 	<li class = "option <?php if(($this->params['controller'] == 'clientes') ||
