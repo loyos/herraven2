@@ -3,7 +3,7 @@ App::uses('CakeEmail', 'Network/Email');
 class DivisionsController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop');
+	public $components = array('Session','JqImgcrop','RequestHandler');
 	var $uses = array('User','Miembro','Config','Unidad','Departamento','Division');
 	
 	 public function beforeFilter() {
@@ -125,25 +125,47 @@ class DivisionsController extends AppController {
 	}
 	
 	function admin_eliminar($id) {
-		$this->Departamento->delete($id);
-		$this->Session->setFlash("El departamento se elimino con éxito");
+		$this->Division->delete($id);
+		$this->Session->setFlash("La división se elimino con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
 	function admin_ver($id) {
-		$departamento = $this->Departamento->find('first',array(
+		$division = $this->Division->find('first',array(
 			'conditions' => array(
-				'Departamento.id' => $id
+				'Division.id' => $id
 			),
-			'contain' => array('Unidad'),
+			'contain' => array('Departamento'),
 			'recursive' => 2
 		));
-		$unidades = count($departamento['Unidad']);
-		$personal = 0;
-		foreach ($departamento['Unidad'] as $u) {
-			$personal = $personal + count($u['Miembro']);
+		//busco el numero de unidades y miembros dentro de la division;
+		$sum_unidades = 0;
+		foreach($division['Departamento'] as $d) {
+			$sum_unidades = $sum_unidades + count($d['Unidad']);
 		}
-		$this->set(compact('unidades','personal','departamento'));
+		$unidades[] = '';
+		foreach($division['Departamento'] as $d) {
+			foreach($d['Unidad'] as $u) {
+				$unidades[] = $u['id'];
+			}
+		}
+		$miembros = $this->Miembro->find('all',array(
+			'conditions' => array(
+				'Miembro.unidad_id' => $unidades 
+			)
+		));
+		$personal = count($miembros);
+		
+		//Busco los departamentos unidades y miembros para listarlos luego
+		$departamentos = $this->Departamento->find('all',array(
+			'conditions' => array(
+				'Departamento.division_id' => $id
+			),
+			'recursive' => 3,
+			'contain' => array('Unidad')
+		));
+		
+		$this->set(compact('sum_unidades','personal','division','departamentos','id'));
 	}
 }
 
