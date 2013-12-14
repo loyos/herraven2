@@ -22,46 +22,60 @@ class DivisionsController extends AppController {
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$data = $this->data;
-			$this->Division->save($data);
-			
-			//Ubico en que division se van a colocar los departamentos
-			$data['Departamento']['division_id'] =  $this->Division->id;
-			
-			//Eliminar las unidades que estaban asociadas
-			$unidad_departamentos = $this->Unidad->find('all',array(
-				'conditions' => array('Unidad.departamento_id' => $data['Unidad']['departamento_id'])
-			)); 
-			foreach ($unidad_departamentos as $m){
-				$update = array('Unidad'=>array(
-					'id' => $m['Unidad']['id'],
-					'departamento_id' => 1
-				));
-				$this->Unidad->save($update);
+			$validando_departamentos = true;
+			if (!empty($this->data['departamento1'])) {
+				if (($this->data['departamento1'] == $this->data['departamento2']) || ($this->data['departamento1'] == $this->data['departamento3'])){
+					$validando_departamentos = false;
+				}
+			} 
+			if (!empty($this->data['departamento2'])) {
+				if (($this->data['departamento1'] == $this->data['departamento2']) || ($this->data['departamento2'] == $this->data['departamento3'])){
+					$validando_departamentos = false;
+				}
+			} 
+			if (!empty($this->data['departamento3'])) {
+				if (($this->data['departamento1'] == $this->data['departamento3']) || ($this->data['departamento2'] == $this->data['departamento3'])){
+					$validando_departamentos = false;
+				}
+			} 
+			if ($validando_departamentos) {
+				if ($this->Division->save($data,array('validate'=>'first'))) {
+				
+					//Ubico en que division se van a colocar los departamentos
+					$data['Departamento']['division_id'] =  $this->Division->id;
+					
+					//Eliminar las unidades que estaban asociadas
+					$departamentos_division = $this->Departamento->find('all',array(
+						'conditions' => array('Departamento.division_id' => $data['Departamento']['division_id'])
+					)); 
+					foreach ($departamentos_division as $m){
+						$update = array('Departamento'=>array(
+							'id' => $m['Departamento']['id'],
+							'division_id' => 1
+						));
+						$this->Departamento->save($update);
+					}
+					
+					if (!empty($this->data['departamento1'])) {
+						$data['Departamento']['id'] = $data['departamento1'];
+						$this->Departamento->save($data);
+					}
+					if (!empty($this->data['departamento2'])) {
+						$data['Departamento']['id'] = $data['departamento2'];
+						$this->Departamento->save($data);
+					}
+					if (!empty($this->data['departamento3'])) {
+						$data['Departamento']['id'] = $data['departamento3'];
+						$this->Departamento->save($data);
+					}
+					$this->Session->setFlash("Los datos se guardaron con éxito");
+					$this->redirect(array('action' => 'admin_index'));
+				} 
+			} else {
+					$this->Session->setFlash("Los departamentos no pueden ser iguales");
 			}
-			
-			if (!empty($this->data['unidad1'])) {
-				$data['Unidad']['id'] = $data['unidad1'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad2']) && ($this->data['unidad2'] != $this->data['unidad1'])) {
-				$data['Unidad']['id'] = $data['unidad2'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad3']) && ($this->data['unidad2'] != $this->data['unidad3']) && ($this->data['unidad3'] != $this->data['unidad1'])) {
-				$data['Unidad']['id'] = $data['unidad3'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad4']) && ($this->data['unidad4'] != $this->data['unidad1']) && ($this->data['unidad4'] != $this->data['unidad2']) && ($this->data['unidad4'] != $this->data['unidad3'])) {
-				$data['Unidad']['id'] = $data['unidad4'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad5']) && ($this->data['unidad5'] != $this->data['unidad1']) && ($this->data['unidad5'] != $this->data['unidad2']) && ($this->data['unidad5'] != $this->data['unidad3']) && ($this->data['unidad5'] != $this->data['unidad4'])) {
-				$data['Unidad']['id'] = $data['unidad5'];
-				$this->Unidad->save($data);
-			}
-			$this->Session->setFlash("Los datos se guardaron con éxito");
-			$this->redirect(array('action' => 'admin_index'));
-		} elseif (!empty($id)) {
+		} 
+		if (!empty($id)) {
 			$this->data = $this->Division->findById($id);
 			$titulo = 'Editar Division';
 		} else {
@@ -81,6 +95,9 @@ class DivisionsController extends AppController {
 		));
 		$departamentos[0] = '';
 		
+		if (empty($users_busqueda)) {
+			$users[0] = 'No existen jefes de división';
+		}
 		foreach ($users_busqueda as $u) {
 			$users[$u['User']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
 		}

@@ -244,6 +244,8 @@ function funciones_rol() {
 		$('#div_rol_admin').css('display','none');
 		$('#div_rol_cliente').css('display','none');
 		inputs = $('#div_rol_admin input');
+		$('.cliente').css('display','none');
+		$('.cliente_label').css('display','none');
 		$.each( inputs, function( key, value ) {
 			$(this).val(0);
 			$(this).attr('checked',false);

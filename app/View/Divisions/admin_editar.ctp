@@ -4,7 +4,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
-	echo $this->Form->create('Departamento',array('type' => 'file'));
+	echo $this->Form->create('Division',array('type' => 'file'));
 	echo '<table>';
 	echo '<tr>';
 	echo '<td>Número</td>';
@@ -23,7 +23,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Jefe del departamento</td>';
+	echo '<td>Jefe de la división</td>';
 	echo '<td>';
 	echo $this->Form->input('user_id',array(
 		'label' => false
@@ -39,51 +39,35 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
-	echo '<h3>Unidades</h3>';
+	echo '<h3>Departamentos</h3>';
 	if (!empty($id)) {
 		echo $this->Form->input('id',array('type'=>'hidden'));
 	}
 	echo '<table class="tabla_index">';
 	echo '<tr>';
-	echo '<th>Unidad 1</th>';
-	echo '<th>Unidad 2</th>';
-	echo '<th>Unidad 3</th>';
-	echo '<th>Unidad 4</th>';
-	echo '<th>Unidad 5</th>';
+	echo '<th>Departamento 1</th>';
+	echo '<th>Departamento 2</th>';
+	echo '<th>Departamento 3</th>';
 	echo '</tr>';
 	echo '<tr>';
 	echo '<td>';
-	echo $this->Form->input('unidad_id',array(
-		'value' => $unidad1,
-		'name' => 'unidad1',
+	echo $this->Form->input('departamento_id',array(
+		'value' => $departamento1,
+		'name' => 'departamento1',
 		'label' => false
 	));
 	echo '</td>';
 	echo '<td>';
-	echo $this->Form->input('unidad_id',array(
-		'value' => $unidad2,
-		'name' => 'unidad2',
+	echo $this->Form->input('departamento_id',array(
+		'value' => $departamento2,
+		'name' => 'departamento2',
 		'label' => false
 	));
 	echo '</td>';
 	echo '<td>';
-	echo $this->Form->input('unidad_id',array(
-		'value' => $unidad3,
-		'name' => 'unidad3',
-		'label' => false
-	));
-	echo '</td>';
-	echo '<td>';
-	echo $this->Form->input('unidad_id',array(
-		'value' => $unidad4,
-		'name' => 'unidad4',
-		'label' => false
-	));
-	echo '</td>';
-	echo '<td>';
-	echo $this->Form->input('unidad_id',array(
-		'value' => $unidad5,
-		'name' => 'unidad5',
+	echo $this->Form->input('departamento_id',array(
+		'value' => $departamento3,
+		'name' => 'departamento3',
 		'label' => false
 	));
 	echo '</td>';
@@ -93,57 +77,3 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo $this->Form->end;
 ?>
 </div>
-<script>
-funciones_rol();
-$('#rol_usuario').change(function() {
-  funciones_rol();
-});
-function funciones_rol() {
-	rol = $('#rol_usuario').val();
-	if (rol == 'admin') {
-		$('#div_rol_cliente').css('display','none');
-		$('#div_rol_admin').css('display','block');
-		$('.cliente').css('display','none');
-		$('.cliente_label').css('display','none');
-		inputs = $('#div_rol_cliente input');
-		$('.cliente').val(0);
-		$.each( inputs, function( key, value ) {
-			$(this).val(0);
-			$(this).attr('checked',false);
-		});
-	} else if (rol == 'cliente') {
-		$('#div_rol_admin').css('display','none');
-		$('#div_rol_cliente').css('display','block');
-		$('.cliente').css('display','block');
-		$('.cliente_label').css('display','block');
-		inputs = $('#div_rol_admin input');
-		$.each( inputs, function( key, value ) {
-			$(this).val(0);
-			$(this).attr('checked',false);
-		});
-	}
-}
-
-$( "input[type=checkbox]" ).on( "click",function(){
-	$(this).val(1);
-	$(this).attr('checked',true);
-});
-
-function checkSize() {
-	var max_img_size = 1803600;
-	var input2 = document.getElementById("upload_imagen");
-  
-    if(input2.files && input2.files.length == 1)
-    {           
-        if (input2.files[0].size > max_img_size) 
-        {
-			var clon = $("#upload_imagen").clone(); 
-			$("#upload_imagen").replaceWith(clon);
-            alert("Las imágenes no pueden superar 1.8 MB");
-            return false;
-        }
-    }
-	
-    
-}
-</script>

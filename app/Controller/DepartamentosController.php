@@ -19,48 +19,84 @@ class DepartamentosController extends AppController {
 		$this->set(compact('departamentos'));
     }
 	
-	function admin_editar($id = null) {
+	function admin_editar($id = null) {	
+		$titulo = 'Departamento';
 		if (!empty($this->data)) {
 			$data = $this->data;
-			$this->Departamento->save($data);
-			
-			//Ubico en que departamento se van a colocar las unidades
-			$data['Unidad']['departamento_id'] =  $this->Departamento->id;
-			
-			//Eliminar las unidades que estaban asociadas
-			$unidad_departamentos = $this->Unidad->find('all',array(
-				'conditions' => array('Unidad.departamento_id' => $data['Unidad']['departamento_id'])
-			)); 
-			foreach ($unidad_departamentos as $m){
-				$update = array('Unidad'=>array(
-					'id' => $m['Unidad']['id'],
-					'departamento_id' => 1
-				));
-				$this->Unidad->save($update);
-			}
-			
+			$validando_unidades = true;
 			if (!empty($this->data['unidad1'])) {
-				$data['Unidad']['id'] = $data['unidad1'];
-				$this->Unidad->save($data);
+				if (($this->data['unidad1'] == $this->data['unidad2']) || ($this->data['unidad1'] == $this->data['unidad3']) || ($this->data['unidad1'] == $this->data['unidad4']) || ($this->data['unidad1'] == $this->data['unidad5'])){
+					$validando_unidades = false;
+				}
+			} 
+			if (!empty($this->data['unidad2'])) {
+				if (($this->data['unidad1'] == $this->data['unidad2']) || ($this->data['unidad2'] == $this->data['unidad3']) || ($this->data['unidad2'] == $this->data['unidad4']) || ($this->data['unidad2'] == $this->data['unidad5'])){
+					$validando_unidades = false;
+				}
+			} 
+			if (!empty($this->data['unidad3'])) {
+				if (($this->data['unidad1'] == $this->data['unidad3']) || ($this->data['unidad2'] == $this->data['unidad3']) || ($this->data['unidad3'] == $this->data['unidad4']) || ($this->data['unidad3'] == $this->data['unidad5'])){
+					$validando_unidades = false;
+				}
+			} 
+			if (!empty($this->data['unidad4'])) {
+				if (($this->data['unidad1'] == $this->data['unidad4']) || ($this->data['unidad4'] == $this->data['unidad3']) || ($this->data['unidad2'] == $this->data['unidad4']) || ($this->data['unidad4'] == $this->data['unidad5'])){
+					$validando_unidades = false;
+				}
+			} 
+			if (!empty($this->data['unidad5'])) {
+				if (($this->data['unidad1'] == $this->data['unidad5']) || ($this->data['unidad5'] == $this->data['unidad3']) || ($this->data['unidad2'] == $this->data['unidad5']) || ($this->data['unidad5'] == $this->data['unidad4'])){
+					$validando_unidades = false;
+				}
+			} 
+			if ($validando_unidades) {
+			if($this->Departamento->save($data,array('validate' => 'first'))) {
+				
+				//Ubico en que departamento se van a colocar las unidades
+				$data['Unidad']['departamento_id'] =  $this->Departamento->id;
+				
+				//Eliminar las unidades que estaban asociadas
+				$unidad_departamentos = $this->Unidad->find('all',array(
+					'conditions' => array('Unidad.departamento_id' => $data['Unidad']['departamento_id'])
+				)); 
+				foreach ($unidad_departamentos as $m){
+					$update = array('Unidad'=>array(
+						'id' => $m['Unidad']['id'],
+						'departamento_id' => 1
+					));
+					$this->Unidad->save($update);
+				}
+				
+				if (!empty($this->data['unidad1'])) {
+					$data['Unidad']['id'] = $data['unidad1'];
+					$this->Unidad->save($data);
+				}
+				if (!empty($this->data['unidad2']) && ($this->data['unidad2'] != $this->data['unidad1'])) {
+					$data['Unidad']['id'] = $data['unidad2'];
+					$this->Unidad->save($data);
+				}
+				if (!empty($this->data['unidad3']) && ($this->data['unidad2'] != $this->data['unidad3']) && ($this->data['unidad3'] != $this->data['unidad1'])) {
+					$data['Unidad']['id'] = $data['unidad3'];
+					$this->Unidad->save($data);
+				}
+				if (!empty($this->data['unidad4']) && ($this->data['unidad4'] != $this->data['unidad1']) && ($this->data['unidad4'] != $this->data['unidad2']) && ($this->data['unidad4'] != $this->data['unidad3'])) {
+					$data['Unidad']['id'] = $data['unidad4'];
+					$this->Unidad->save($data);
+				}
+				if (!empty($this->data['unidad5']) && ($this->data['unidad5'] != $this->data['unidad1']) && ($this->data['unidad5'] != $this->data['unidad2']) && ($this->data['unidad5'] != $this->data['unidad3']) && ($this->data['unidad5'] != $this->data['unidad4'])) {
+					$data['Unidad']['id'] = $data['unidad5'];
+					$this->Unidad->save($data);
+				}
+				$this->Session->setFlash("Los datos se guardaron con éxito");
+				$this->redirect(array('action' => 'admin_index'));
+				} 
+			} else {
+					if (!empty($id)) {
+						$this->data = $this->Departamento->findById($id);
+						$titulo = 'Editar departamento';
+					}
+					$this->Session->setFlash("Las unidades no pueden ser iguales");
 			}
-			if (!empty($this->data['unidad2']) && ($this->data['unidad2'] != $this->data['unidad1'])) {
-				$data['Unidad']['id'] = $data['unidad2'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad3']) && ($this->data['unidad2'] != $this->data['unidad3']) && ($this->data['unidad3'] != $this->data['unidad1'])) {
-				$data['Unidad']['id'] = $data['unidad3'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad4']) && ($this->data['unidad4'] != $this->data['unidad1']) && ($this->data['unidad4'] != $this->data['unidad2']) && ($this->data['unidad4'] != $this->data['unidad3'])) {
-				$data['Unidad']['id'] = $data['unidad4'];
-				$this->Unidad->save($data);
-			}
-			if (!empty($this->data['unidad5']) && ($this->data['unidad5'] != $this->data['unidad1']) && ($this->data['unidad5'] != $this->data['unidad2']) && ($this->data['unidad5'] != $this->data['unidad3']) && ($this->data['unidad5'] != $this->data['unidad4'])) {
-				$data['Unidad']['id'] = $data['unidad5'];
-				$this->Unidad->save($data);
-			}
-			$this->Session->setFlash("Los datos se guardaron con éxito");
-			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$this->data = $this->Departamento->findById($id);
 			$titulo = 'Editar departamento';
@@ -83,6 +119,9 @@ class DepartamentosController extends AppController {
 		// foreach ($miembros_busqueda as $u) {
 			// $miembros[$u['Miembro']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
 		// }
+		if (empty($users_busqueda)) {
+			$users[0] = 'No existen jefes de departamento';
+		}
 		foreach ($users_busqueda as $u) {
 			$users[$u['User']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
 		}

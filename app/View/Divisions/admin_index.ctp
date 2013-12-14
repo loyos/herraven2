@@ -26,7 +26,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'
 		}
 		echo '</table>';
 	} else {
-		echo '<h3>No hay departamentos registradas </h3>';
+		echo '<h3>No hay divisiones registradas </h3>';
 	}
 ?>
 </div>

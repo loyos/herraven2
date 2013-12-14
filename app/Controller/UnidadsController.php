@@ -26,41 +26,70 @@ class UnidadsController extends AppController {
 			if (empty($data['Unidad']['id'])) {
 				$data['Unidad']['departamento_id'] = 1;
 			}
-			$this->Unidad->save($data);
-			//Ubico en que unidad se van a colocar los miembros
-			$data['Miembro']['unidad_id'] =  $this->Unidad->id;
-			
-			//Eliminar los miembros que estaban asociados
-			$miembros_unidad = $this->Miembro->find('all',array(
-				'conditions' => array('Miembro.unidad_id' => $data['Miembro']['unidad_id'])
-			)); 
-			foreach ($miembros_unidad as $m){
-				$update = array('Miembro'=>array(
-					'id' => $m['Miembro']['id'],
-					'unidad_id' => 1
-				));
-				$this->Miembro->save($update);
-			}
-			
+			$validando_miembros = true;
 			if (!empty($this->data['miembro1'])) {
-				$miembro = $this->Miembro->findById($data['miembro1']);
-				$data['Miembro']['id'] = $data['miembro1'];
-				$this->Miembro->save($data);
+				if (($this->data['miembro1'] == $this->data['miembro2']) || ($this->data['miembro1'] == $this->data['miembro3']) || ($this->data['miembro1'] == $this->data['miembro4'])){
+					$validando_miembros = false;
+				}
+			} 
+			if (!empty($this->data['miembro2'])) {
+				if (($this->data['miembro1'] == $this->data['miembro2']) || ($this->data['miembro2'] == $this->data['miembro3']) || ($this->data['miembro2'] == $this->data['miembro4'])){
+					$validando_miembros = false;
+				}
+			} 
+			if (!empty($this->data['miembro3'])) {
+				if (($this->data['miembro1'] == $this->data['miembro3']) || ($this->data['miembro2'] == $this->data['miembro3']) || ($this->data['miembro3'] == $this->data['miembro4'])){
+					$validando_miembros = false;
+				}
+			} 
+			if (!empty($this->data['miembro4'])) {
+				if (($this->data['miembro1'] == $this->data['miembro4']) || ($this->data['miembro4'] == $this->data['miembro3']) || ($this->data['miembro2'] == $this->data['miembro4']) ){
+					$validando_miembros = false;
+				}
+			} 
+			if ($validando_miembros){
+				if ($this->Unidad->save($data,array('validate' => 'first'))){
+				
+					//Ubico en que unidad se van a colocar los miembros
+					$data['Miembro']['unidad_id'] =  $this->Unidad->id;
+					
+					//Eliminar los miembros que estaban asociados
+					$miembros_unidad = $this->Miembro->find('all',array(
+						'conditions' => array('Miembro.unidad_id' => $data['Miembro']['unidad_id'])
+					)); 
+					foreach ($miembros_unidad as $m){
+						$update = array('Miembro'=>array(
+							'id' => $m['Miembro']['id'],
+							'unidad_id' => 1
+						));
+						$this->Miembro->save($update);
+					}
+					
+					if (!empty($this->data['miembro1'])) {
+						$miembro = $this->Miembro->findById($data['miembro1']);
+						$data['Miembro']['id'] = $data['miembro1'];
+						$this->Miembro->save($data);
+					}
+					if (!empty($this->data['miembro2']) && ($this->data['miembro2'] != $this->data['miembro1'])) {
+						$data['Miembro']['id'] = $data['miembro2'];
+						$this->Miembro->save($data);
+					}
+					if (!empty($this->data['miembro3']) && ($this->data['miembro2'] != $this->data['miembro3']) && ($this->data['miembro3'] != $this->data['miembro1'])) {
+						$data['Miembro']['id'] = $data['miembro3'];
+						$this->Miembro->save($data);
+					}
+					if (!empty($this->data['miembro4']) && ($this->data['miembro4'] != $this->data['miembro1']) && ($this->data['miembro4'] != $this->data['miembro2']) && ($this->data['miembro4'] != $this->data['miembro3'])) {
+						$data['Miembro']['id'] = $data['miembro4'];
+						$this->Miembro->save($data);
+					}
+					$this->Session->setFlash("Los datos se guardaron con éxito");
+					$this->redirect(array('action' => 'admin_index'));
+				} 
+			} else {
+					$this->data = $this->Unidad->findById($id);
+					$titulo = 'Editar unidad';
+					$this->Session->setFlash("Los miembros no pueden ser iguales");
 			}
-			if (!empty($this->data['miembro2']) && ($this->data['miembro2'] != $this->data['miembro1'])) {
-				$data['Miembro']['id'] = $data['miembro2'];
-				$this->Miembro->save($data);
-			}
-			if (!empty($this->data['miembro3']) && ($this->data['miembro2'] != $this->data['miembro3']) && ($this->data['miembro3'] != $this->data['miembro1'])) {
-				$data['Miembro']['id'] = $data['miembro3'];
-				$this->Miembro->save($data);
-			}
-			if (!empty($this->data['miembro4']) && ($this->data['miembro4'] != $this->data['miembro1']) && ($this->data['miembro4'] != $this->data['miembro2']) && ($this->data['miembro4'] != $this->data['miembro3'])) {
-				$data['Miembro']['id'] = $data['miembro4'];
-				$this->Miembro->save($data);
-			}
-			$this->Session->setFlash("Los datos se guardaron con éxito");
-			$this->redirect(array('action' => 'admin_index'));
 		} elseif (!empty($id)) {
 			$this->data = $this->Unidad->findById($id);
 			$titulo = 'Editar unidad';
