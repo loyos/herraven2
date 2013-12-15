@@ -55,44 +55,36 @@ class Config extends AppModel {
 	}
 	
 	function obtenerIntervaloFechas($fecha_menor,$fecha_mayor = null) {
-		$fecha_menor = new DateTime($fecha_menor); 
+		
 		if (empty($fecha_mayor)) {
-			$hoy = new DateTime("now");
+
+			$hoy = "now";
+
 		} else {
-			$hoy = new DateTime($fecha_mayor);
+
+			$hoy = $fecha_mayor;
+
 		}		
-		$intervalo = $fecha_menor->diff( $hoy );
-		$anios = $intervalo->format('%y'); 
-		$meses = $intervalo->format('%m'); 
-		$dias = $intervalo->format('%d'); 
-		$tiempo = '';
-		if ( $anios > 0 ) { 
-			$tiempo = $anios;
-			if ($anios > 1) { 
-				$tiempo.='años '; 
-			} else {
-				$tiempo.='año '; 
-			}
-        } 
-		if ( $meses > 0 ) { 
-			$tiempo.= $meses;
-			if($meses > 1) {
-				$tiempo.='meses ';
-			}else{
-				$tiempo.= 'mes ';
-			}
+		  $diferencia = strtotime($hoy) - strtotime($fecha_menor);
+
+		if($diferencia<60){
+			$tiempo = floor($diferencia)." segundos";
+		}elseif($diferencia>60 && $diferencia<3600){
+			$tiempo = floor($diferencia/60)." minutos'";
+		}elseif($diferencia>3600 && $diferencia<86400){
+			$tiempo = floor($diferencia/3600)." horas";
+		}elseif($diferencia>86400 && $diferencia<2592000){
+			$tiempo = floor($diferencia/86400)." días";
+		}elseif($diferencia>2592000 && $diferencia<31104000){
+			$tiempo = floor($diferencia/2592000)." meses";
+		}elseif($diferencia>31104000){
+			$tiempo = floor($diferencia/31104000)." años";
+		}else{
+			$tiempo = "Error";
 		}
-		if ( $dias > 0 ) { 
-			$tiempo.= $dias;
-			
-			if ($dias > 1) {
-				$tiempo.='días';
-			} else {
-				$tiempo.='día';
-			}
-			 
-		}
-		return ($tiempo);
+		//debug($tiempo);
+		return($tiempo);
+		
 	}
 	
 }

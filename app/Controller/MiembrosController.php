@@ -82,8 +82,6 @@ class MiembrosController extends AppController {
 		));
 		$tiempo_trabajo = $this->Config->obtenerIntervaloFechas($miembro['Miembro']['fecha_ingreso']);
 		$edad = $this->Config->obtenerIntervaloFechas($miembro['Miembro']['fecha_nacimiento']);
-		$edad = explode(" ", $edad);
-		$edad = $edad[0];
 		$this->set(compact('miembro','tiempo_trabajo','edad'));
 	}
 	

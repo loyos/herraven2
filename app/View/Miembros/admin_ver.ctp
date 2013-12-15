@@ -8,7 +8,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo '<tr>';
 	echo '<th>Foto</th>';
 	echo '<td>';
-	echo $this->Html->image($miembro['User']['imagen'],array('width' => '100px'));
+	echo $this->Html->image('users/'.$miembro['User']['imagen'],array('width' => '100px'));
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
@@ -135,7 +135,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 		echo '<tr>';
 		echo '<th>Imagen IQ test</th>';
 		echo '<td>';
-		echo $this->Html->image($miembro['User']['imagen_test'],array('width' => '100px'));
+		echo $this->Html->image('users/test/'.$miembro['Miembro']['imagen_test'],array('width' => '100px'));
 		echo '</td>';
 		echo '</tr>';
 	}
