@@ -156,6 +156,21 @@ class DepartamentosController extends AppController {
 	
 	function admin_eliminar($id) {
 		$this->Departamento->delete($id);
+		//Busca todos las unidades que estaban relacionadas
+		$unidades = $this->Unidad->find('all',array(
+			'conditions' => array(
+				'Unidad.departamento_id' => $id
+			)
+		));
+		foreach ($unidades as $u){
+			$update = array(
+				'Unidad' => array(
+					'id' => $u['Unidad']['id'],
+					'departamento_id' => 1
+				)
+			);
+			$this->Unidad->save($update);
+		}
 		$this->Session->setFlash("El departamento se elimino con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}

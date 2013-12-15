@@ -144,6 +144,21 @@ class UnidadsController extends AppController {
 	
 	function admin_eliminar($id) {
 		$this->Unidad->delete($id);
+		//Busca todos los miembros que estaban relacionados a la unidad
+		$personal = $this->Miembro->find('all',array(
+			'conditions' => array(
+				'Miembro.unidad_id' => $id
+			)
+		));
+		foreach ($personal as $p){
+			$update = array(
+				'Miembro' => array(
+					'id' => $p['Miembro']['id'],
+					'unidad_id' => 1
+				)
+			);
+			$this->Miembro->save($update);
+		}
 		$this->Session->setFlash("La unidad se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}

@@ -126,6 +126,21 @@ class DivisionsController extends AppController {
 	
 	function admin_eliminar($id) {
 		$this->Division->delete($id);
+		//Busca todos los departamentos que estaban relacionados
+		$depatamentos = $this->Departamento->find('all',array(
+			'conditions' => array(
+				'Departamento.division_id' => $id
+			)
+		));
+		foreach ($departamentos as $p){
+			$update = array(
+				'Departamento' => array(
+					'id' => $p['Departamento']['id'],
+					'division_id' => 1
+				)
+			);
+			$this->Departamento->save($update);
+		}
 		$this->Session->setFlash("La división se elimino con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
