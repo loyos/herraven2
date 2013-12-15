@@ -20,6 +20,7 @@ class UnidadsController extends AppController {
     }
 	
 	function admin_editar($id = null) {
+		$titulo = 'Unidad';
 		if (!empty($this->data)) {
 			//var_dump($this->data);die();
 			$data = $this->data;
@@ -108,6 +109,9 @@ class UnidadsController extends AppController {
 		$miembros[0] = '';
 		foreach ($miembros_busqueda as $u) {
 			$miembros[$u['Miembro']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
+		}
+		if (empty($users_busqueda)) {
+			$users[0] = 'No existen jefes de unidad';
 		}
 		foreach ($users_busqueda as $u) {
 			$users[$u['User']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
