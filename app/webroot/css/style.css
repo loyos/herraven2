@@ -16,6 +16,10 @@ html, body {
 	margin-top: 0px;
 }
 
+.margin_boton {
+	margin-top:5px;
+}
+
 .chiclet{
 	display: block;
 	height: 1px;

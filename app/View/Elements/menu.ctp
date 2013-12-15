@@ -31,6 +31,14 @@
 			</li>
 		</ul>
 	</li>
+	<li class = "option <?php if($this->params['controller'] == 'proveedors') echo 'active'; ?>">
+		Proveedores
+		<ul>
+			<li class = "children <?php if(($this->params['controller'] == 'proveedors' && $this->params['action'] == 'admin_index') || ($this->params['controller'] == 'proveedors' && $this->params['action'] == 'admin_editar') || ($this->params['controller'] == 'proveedors' && $this->params['action'] == 'admin_ver')) echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Proveedores',array('controller' => 'proveedors', 'action' => 'admin_index')); ?>
+			</li>
+		</ul>
+	</li>
 	<li class = "option <?php if(($this->params['controller'] == 'clientes') ||
 								($this->params['controller'] == 'pedidos' && $this->params['action'] == 'admin_pedidos') ||
 								($this->params['controller'] == 'cuentas' && $this->params['action'] == 'admin_index') ||
@@ -171,7 +179,7 @@
 	<?php } ?>
 	<?php
 	}
-	if ($admin_reportes){ ?>
+	if ($admin_reportes && false){ ?>
 	<li class = "option <?php if(($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cuentas_mensual') ||
 								($this->params['controller'] == 'index' && $this->params['action'] == 'admin_facturacion_mensual') ||
 								($this->params['controller'] == 'index' && $this->params['action'] == 'admin_cobranza_mensual') || 
@@ -226,7 +234,7 @@
 		</li>
 	<?php
 	}
-	if ($admin_web) { ?>
+	if ($admin_web && false) { ?>
 		<li class = "option <?php if($this->params['controller'] == 'contenidos') echo 'active'; ?>">
 			Web
 			<ul>
