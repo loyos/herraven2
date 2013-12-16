@@ -3,8 +3,8 @@
 class MateriasprimasController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop');
-	public $uses = array('Materiasprima','MateriasprimasPrecio','Precio');
+	public $components = array('Session','JqImgcrop','RequestHandler');
+	public $uses = array('Materiasprima','MateriasprimasPrecio','Precio','Division','Departamento','Unidad');
 	
     function admin_index() {
 		$materias = $this->Materiasprima->find('all');
@@ -24,19 +24,39 @@ class MateriasprimasController extends AppController {
 		if (!empty($this->data)) {
 			$data = $this->data;
 			$i = 0;
-			
 			if ($this->Materiasprima->save($data)) {
 				$this->Session->setFlash("Los datos se guardaron con éxito");
 				$this->redirect(array('action' => 'admin_index'));
 			}
-		} elseif (!empty($id)) {
+		} 
+		if (!empty($id)) {
 			$titulo = "Editar";
 			$this->data = $this->Materiasprima->findById($id);
+			//Si tiene unidad asignada busco el departamento y division
+			if (!empty($this->data['Materiasprima']['unidad_id'])) {
+				$unidad = $this->Unidad->findById($this->data['Materiasprima']['unidad_id']);
+				$id_unidad = $this->data['Materiasprima']['unidad_id'];
+				$id_departamento = $unidad['Unidad']['departamento_id'];
+				$id_division = $unidad['Departamento']['division_id'];
+				$unidads = $this->Unidad->find('list',array(
+					'fields' => array('Unidad.id','Unidad.nombre'),
+					'conditions' => array('Unidad.departamento_id' => $id_departamento )
+				));
+				$departamentos = $this->Departamento->find('list',array(
+					'fields' => array('Departamento.id','Departamento.nombre'),
+					'conditions' => array('Departamento.division_id' => $id_division )
+				));
+			}
+		
 		} else {
 			$titulo = "Agregar";
 		}
-		
-		$this->set(compact('id','titulo'));
+		$divisions = $this->Division->find('list',array(
+			'fields' => array('Division.id','Division.nombre'),
+			'conditions' => array('Division.id <>' => 1 )
+		));
+		$divisions[0] = 'Escoge una división';
+		$this->set(compact('id','titulo','divisions','id_unidad','id_departamento','id_departamento','id_division','unidads','departamentos'));
 	}
 	
 	function admin_eliminar($id) {
@@ -48,7 +68,23 @@ class MateriasprimasController extends AppController {
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
+	function buscar_departamentos(){
+		$departamento = $this->Departamento->find('all', array(
+			'conditions' => array('Departamento.division_id' => $_POST['division']),
+		));
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode($departamento);
+	}
 	
+	function buscar_unidades(){
+		$unidad = $this->Unidad->find('all', array(
+			'conditions' => array('Unidad.departamento_id' => $_POST['departamento']),
+		));
+		$this->autoRender = false;
+		$this->RequestHandler->respondAs('json');
+		echo json_encode($unidad);
+	}
 }
 
 ?>
