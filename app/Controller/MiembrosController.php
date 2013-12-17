@@ -49,7 +49,9 @@ class MiembrosController extends AppController {
 						//var_dump($data);die();
 						$id_user = $this->User->id;
 						$data['Miembro']['user_id'] = $id_user;
-						$data['Miembro']['unidad_id'] = 1;
+						if (empty($data['Miembro']['id'])) {
+							$data['Miembro']['unidad_id'] = 1;
+						}
 						$this->Miembro->save($data);
 						$this->Session->setFlash("Los datos se guardaron con éxito");
 						$this->redirect(array('action' => 'admin_index'));
