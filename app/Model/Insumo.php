@@ -3,10 +3,6 @@ class Insumo extends AppModel {
     var $name = 'Insumo';
 	
    public $belongsTo = array(
-        'Unidad' => array(
-            'className'    => 'Unidad',
-            'foreignKey'   => 'unidad_id'
-        ),
 		'Lote' => array(
             'className'    => 'Lote',
             'foreignKey'   => 'lote_id'

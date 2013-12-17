@@ -1,10 +1,10 @@
 <?php
-class Lote extends AppModel {
-    var $name = 'Lote';
+class Lotesherramienta extends AppModel {
+    var $name = 'Lotesherramienta';
 	
 	public $hasMany = array(
-        'Insumo' => array(
-            'className'  => 'Insumo',
+        'Herramienta' => array(
+            'className'  => 'Herramienta',
 			'foreignKey'    => 'lote_id',
         )
     );

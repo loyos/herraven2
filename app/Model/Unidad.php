@@ -3,8 +3,8 @@ class Unidad extends AppModel {
     var $name = 'Unidad';
 	
 	public $hasMany = array(
-        'Insumo' => array(
-            'className'  => 'Insumo',
+        'Lote' => array(
+            'className'  => 'Lote',
 			'foreignKey'    => 'unidad_id',
         ),
 		'Materiasprima' => array(

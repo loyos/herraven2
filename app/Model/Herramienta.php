@@ -2,7 +2,14 @@
 class Herramienta extends AppModel {
     var $name = 'Herramienta';
 	
-	var $hasAndBelongsToMany = array(
+	public $belongsTo = array(
+		'Lotesherramienta' => array(
+            'className'    => 'Lotesherramienta',
+            'foreignKey'   => 'lotesherramienta_id'
+        ),
+    );
+	
+	public $hasAndBelongsToMany = array(
         'Proveedor' =>
             array('className'            => 'Proveedor',
                  'joinTable'              => 'herramientas_proveedors',
