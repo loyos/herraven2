@@ -4,7 +4,7 @@ class ProveedorsController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	var $uses = array('User','Herramienta','Config','Proveedor','MateriasPrima','Insumo','HerramientasProveedor','InsumosProveedor','MateriasprimasProveedor');
+	var $uses = array('User','Herramienta','Config','Proveedor','MateriasPrima','Insumo','HerramientasProveedor','InsumosProveedor','MateriasprimasProveedor','Herramienta','Insumo');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
@@ -78,6 +78,25 @@ class ProveedorsController extends AppController {
 	function admin_ver($id) {
 		$proveedor = $this->Proveedor->findById($id);
 		$this->set(compact('proveedor'));
+	}
+	
+	function admin_agregar_herramientas($id){
+		$herramientas_proveedor = $this->HerramientasProveedor->find('all',array(
+			'conditions' => array(
+				'HerramientasProveedor.proveedor_id' => $id
+			)
+		));
+		$herr[] = 0;
+		foreach ($herramientas_proveedor as $h) {
+			$herr[]=$h['HerramientasProveedor']['herramienta_id'];
+		}
+		$herramientas = $this->Herramienta->find('list',array(
+			'fields' => array('Herramienta.id','Herramienta.nombre'),
+			'conditions' => array(
+				'NOT' => array( 'Herramienta.id' => $herr)
+			)
+		));
+		$this->set(compact('herramientas_proveedor','herramientas','id'));
 	}
 }
 

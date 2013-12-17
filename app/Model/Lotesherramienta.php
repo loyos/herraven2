@@ -5,7 +5,7 @@ class Lotesherramienta extends AppModel {
 	public $hasMany = array(
         'Herramienta' => array(
             'className'  => 'Herramienta',
-			'foreignKey'    => 'lote_id',
+			'foreignKey'    => 'lotesherramienta_id',
         )
     );
 	
