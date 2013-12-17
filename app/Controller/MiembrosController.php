@@ -4,7 +4,7 @@ class MiembrosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	var $uses = array('User','Miembro','Config','Unidad');
+	var $uses = array('User','Miembro','Config','Unidad','Departamento','Division');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
@@ -15,7 +15,39 @@ class MiembrosController extends AppController {
 		$miembros = $this->Miembro->find('all',array(
 			'recursive' => 3
 		));
-		$this->set(compact('miembros'));
+		//Busco los jefes de depto. para asignarselo en la vista
+		$jefes_d = $this->Departamento->find('all');
+		$usuarios_d[] = 0;
+		foreach ($jefes_d as $d){
+			$usuarios_d[] = $d['Departamento']['user_id'];
+		}
+		$miembros_jefes_d = $this->Miembro->find('all',array(
+			'conditions' => array('Miembro.user_id' => $usuarios_d)
+		));
+		foreach ($miembros_jefes_d as $d) {
+			$buscar_d = $this->Departamento->find('first',array(
+				'conditions' => array('Departamento.user_id' => $d['Miembro']['user_id'])
+			));
+			$departamento_miembros[$d['Miembro']['id']] =  $buscar_d['Departamento']['nombre'];
+		}
+		
+		//Busco los jefes de division. para asignarselo en la vista
+		$jefes_di = $this->Division->find('all');
+		$usuarios_di[] = 0;
+		foreach ($jefes_di as $d){
+			$usuarios_di[] = $d['Division']['user_id'];
+		}
+		$miembros_jefes_di = $this->Miembro->find('all',array(
+			'conditions' => array('Miembro.user_id' => $usuarios_di)
+		));
+		foreach ($miembros_jefes_di as $d) {
+			$buscar_di = $this->Division->find('first',array(
+				'conditions' => array('Division.user_id' => $d['Miembro']['user_id'])
+			));
+			$division_miembros[$d['Miembro']['id']] =  $buscar_d['Division']['nombre'];
+		}
+		
+		$this->set(compact('miembros','departamento_miembros','division_miembros'));
     }
 	
 	function admin_editar($id = null) {

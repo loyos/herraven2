@@ -28,14 +28,20 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'
 			echo '<td>'.$val.'</td>';
 			if (!empty($u['Unidad']['Departamento']['nombre'])) {
 				$val = $u['Unidad']['Departamento']['nombre'];
+			} 
+			if(!empty($departamento_miembros[$u['Miembro']['id']])) {
+				$val = $departamento_miembros[$u['Miembro']['id']];
 			} else {
 				$val = 'Departamento no asignado';
 			}
 			echo '<td>'.$val.'</td>';
 			if (!empty($u['Unidad']['Departamento']['Division']['nombre'])) {
 				$val = $u['Unidad']['Departamento']['Division']['nombre'];
+			} 
+			if(!empty($division_miembros[$u['Miembro']['id']])) {
+				$val = $division_miembros[$u['Miembro']['id']];
 			} else {
-				$val = 'Division no asignada';
+				$val = 'División no asignada';
 			}
 			echo '<td>'.$val.'</td>';
 			echo '<td>'.$this->Html->link('Editar',array(
