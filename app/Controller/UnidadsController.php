@@ -15,7 +15,7 @@ class UnidadsController extends AppController {
 		$unidades = $this->Unidad->find('all',array(
 			'recursive' => 3,
 			'conditions' => array('Unidad.id <>' => 1 ),
-			'order' => array('Unidad.numero')
+			'order' => array('Departamento.numero','Unidad.numero')
 		));
 		$this->set(compact('unidades'));
     }
