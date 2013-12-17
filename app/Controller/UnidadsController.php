@@ -113,9 +113,27 @@ class UnidadsController extends AppController {
 			$titulo = 'Agrega una unidad';
 		}
 		
+		//Busco los jefes que ya estan asignados
+		if (!empty($id)) {
+			$jefe_actual = $this->Unidad->findById($id);
+			$jefe_actual = $jefe_actual['Unidad']['user_id'];
+		}
+		$buscar_jefes_asignados = $this->Unidad->find('all',array(
+			'fields' => array('Unidad.id','Unidad.user_id'),
+			'conditions' => array('Unidad.user_id <>' => $jefe_actual)
+		));
+		$jefes_asignados[] = 0;
+		foreach($buscar_jefes_asignados as $j) {
+			$jefes_asignados[] = $j['Unidad']['user_id']; 
+		}
 		$users_busqueda = $this->User->find('all',array(
 			'fields' => array('User.id','User.nombre ','User.apellido'),
-			'conditions' => array('User.rol' => 'jefe_unidad')
+			'conditions' => array(
+				'User.rol' => 'jefe_unidad',
+				'NOT' => array( 
+				  'User.id' => $jefes_asignados
+				)
+			)
 		));
 		$miembros_busqueda = $this->Miembro->find('all',array(
 			'fields' => array('Miembro.id','User.nombre ','User.apellido'), 
