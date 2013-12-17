@@ -14,7 +14,8 @@ class DivisionsController extends AppController {
     function admin_index() {
 		$divisiones = $this->Division->find('all',array(
 			'recursive' => 3,
-			'conditions' => array('Division.id <>' => 1 )
+			'conditions' => array('Division.id <>' => 1 ),
+			'order' => array('Division.numero')
 		));
 		$this->set(compact('divisiones'));
     }

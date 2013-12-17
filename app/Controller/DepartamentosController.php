@@ -14,7 +14,8 @@ class DepartamentosController extends AppController {
     function admin_index() {
 		$departamentos = $this->Departamento->find('all',array(
 			'recursive' => 3,
-			'conditions' => array('Departamento.id <>' => 1 )
+			'conditions' => array('Departamento.id <>' => 1 ),
+			'order' => array('Departamento.numero')
 		));
 		$this->set(compact('departamentos'));
     }

@@ -14,7 +14,8 @@ class UnidadsController extends AppController {
     function admin_index() {
 		$unidades = $this->Unidad->find('all',array(
 			'recursive' => 3,
-			'conditions' => array('Unidad.id <>' => 1 )
+			'conditions' => array('Unidad.id <>' => 1 ),
+			'order' => array('Unidad.numero')
 		));
 		$this->set(compact('unidades'));
     }
