@@ -104,7 +104,10 @@ class UnidadsController extends AppController {
 		));
 		$miembros_busqueda = $this->Miembro->find('all',array(
 			'fields' => array('Miembro.id','User.nombre ','User.apellido'), 
-			'conditions' => array('Miembro.unidad_id' => array(1,$id))
+			'conditions' => array(
+				'Miembro.unidad_id' => array(1,$id),
+				'User.rol' => ''
+			)
 		));
 		$miembros[0] = '';
 		foreach ($miembros_busqueda as $u) {
