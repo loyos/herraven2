@@ -65,11 +65,11 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo $proveedor['Proveedor']['descripcion'];
 	echo '</td>';
 	echo '</tr>';
-	if (!empty($proveedor['Herramientas'])) {
+	if (!empty($proveedor['Herramienta'])) {
 		echo '<tr>';
 		echo '<th>Herramientas que provee</th>';
 		echo '<td>';
-		foreach ($proveedor['Herramientas'] as $h){
+		foreach ($proveedor['Herramienta'] as $h){
 			echo $h['nombre'].'<br>';
 		}
 		echo '</td>';
@@ -90,7 +90,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 		echo '<th>Materias prima que provee</th>';
 		echo '<td>';
 		foreach ($proveedor['Materiasprima'] as $h){
-			echo $h['nombre'].'<br>';
+			echo $h['descripcion'].'<br>';
 		}
 		echo '</td>';
 		echo '</tr>';

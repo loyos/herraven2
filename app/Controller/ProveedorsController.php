@@ -44,34 +44,17 @@ class ProveedorsController extends AppController {
 	function admin_eliminar($id) {
 		$this->Proveedor->delete($id);
 		//Busco en las tablas asociadas al proveedor
-		$herramientas = $this->HerramientasProveedor->find('all',array(
-			'conditions' => array(
-				'HerramientasProveedor.proveedor_id' => $id
-			)
+		$this->HerramientasProveedor->deleteAll(array(
+			'HerramientasProveedor.proveedor_id' => $id
 		));
-		foreach ($herramientas as $i){
-			$this->HerramientasProveedor->delete($i['HerramientasProveedor']['id']);
-		}
-		
-		$insumos = $this->InsumosProveedor->find('all',array(
-			'conditions' => array(
-				'InsumosProveedor.proveedor_id' => $id
-			)
+		$this->InsumosProveedor->deleteAll(array(
+			'InsumosProveedor.proveedor_id' => $id
 		));
-		foreach ($insumos as $i){
-			$this->InsumosProveedor->delete($i['InsumosProveedor']['id']);
-		}
-		
-		$materias = $this->MateriasprimasProveedor->find('all',array(
-			'conditions' => array(
-				'MateriasprimasProveedor.proveedor_id' => $id
-			)
+		$this->MateriasprimasProveedor->deleteAll(array(
+			'MateriasprimasProveedor.proveedor_id' => $id
 		));
-		foreach ($materias as $i){
-			$this->InsumosProveedor->delete($i['MateriasprimasProveedor']['id']);
-		}
 		
-		$this->Session->setFlash("El miembro del personal se elimino con éxito");
+		$this->Session->setFlash("El proveedor se elimino con éxito");
 		$this->redirect(array('action' => 'admin_index'));
 	}
 	
