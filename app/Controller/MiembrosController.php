@@ -3,7 +3,7 @@ App::uses('CakeEmail', 'Network/Email');
 class MiembrosController extends AppController {
     
 	public $helpers = array ('Html','Form');
-	public $components = array('Session','JqImgcrop');
+	public $components = array('Session','JqImgcrop','RequestHandler');
 	var $uses = array('User','Miembro','Config');
 	
 	 public function beforeFilter() {
@@ -81,6 +81,7 @@ class MiembrosController extends AppController {
 	}
 	
 	function admin_ver($id) {
+		$hoy = $hoy = date('d-m-Y');
 		$miembro = $this->Miembro->find('first',array(
 			'conditions' => array(
 				'Miembro.id' => $id
@@ -89,7 +90,7 @@ class MiembrosController extends AppController {
 		));
 		$tiempo_trabajo = $this->Config->obtenerIntervaloFechas($miembro['Miembro']['fecha_ingreso']);
 		$edad = $this->Config->obtenerIntervaloFechas($miembro['Miembro']['fecha_nacimiento']);
-		$this->set(compact('miembro','tiempo_trabajo','edad'));
+		$this->set(compact('miembro','tiempo_trabajo','edad','hoy','id'));
 	}
 	
 	function reset_password(){
