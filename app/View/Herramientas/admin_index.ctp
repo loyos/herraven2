@@ -13,7 +13,7 @@ if (!empty($herramientas)) {
 		echo '<tr>';
 		echo '<td>'.$l['Herramienta']['nombre'].'</td>';
 		echo '<td>'.$l['Lotesherramienta']['nombre'].'</td>';
-		echo '<td>'.$this->Html->link('Editar',array('action'=>'admin_editar',$l['Herramienta']['id']),array('class'=>'boton_accion')).' '.$this->Html->link('Eliminar',array('action'=>'admin_eliminar',$l['Herramienta']['id']),array('class'=>'boton_accion')).'</td>';
+		echo '<td>'.$this->Html->link('Editar',array('action'=>'admin_editar',$l['Herramienta']['id']),array('class'=>'boton_accion')).' '.$this->Html->link('Eliminar',array('action'=>'admin_eliminar',$l['Herramienta']['id']),array('class'=>'boton_accion'),'¿Estás seguro que deseas eliminar?').'</td>';
 		echo '</tr>';
 	}
 	echo '<table>';

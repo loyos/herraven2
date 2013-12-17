@@ -4,7 +4,7 @@ class HerramientasController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	var $uses = array('User','Lotesherramienta','Config','Herramienta','Departamento','Division','Unidad');
+	var $uses = array('User','Lotesherramienta','Config','Herramienta','Departamento','Division','Unidad','HerramientasProveedor');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
@@ -97,24 +97,44 @@ class HerramientasController extends AppController {
 	}
 	
 	function admin_eliminar($id) {
-		$this->Departamento->delete($id);
-		//Busca todos las unidades que estaban relacionadas
-		$unidades = $this->Unidad->find('all',array(
+		$this->Herramienta->delete($id);
+		//Borra de la tabla herramientas_proveedores
+		$herramientas_proveedores = $this->HerramientasProveedor->find('all',array(
 			'conditions' => array(
-				'Unidad.departamento_id' => $id
+				'HerramientasProveedor.herramienta_id' => $id
 			)
 		));
-		foreach ($unidades as $u){
-			$update = array(
-				'Unidad' => array(
-					'id' => $u['Unidad']['id'],
-					'departamento_id' => 1
-				)
-			);
-			$this->Unidad->save($update);
+		foreach ($herramientas_proveedores as $h){
+			$this->HerramientasProveedor->delete($h['HerramientasProveedor']['id']);
 		}
-		$this->Session->setFlash("El departamento se elimino con éxito");
+		$this->Session->setFlash("La herramienta se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_index'));
+	}
+	
+	function admin_eliminar_lote($id) {
+		$this->Lotesherramienta->delete($id);
+		
+		//Borrar las herramientas del lote
+		$herramientas = $this->Herramienta->find('all',array(
+			'conditions' => array('Herramienta.lotesherramienta_id' => $id)
+		));
+		$aux[]=0;
+		foreach ($herramientas as $h) {
+			$this->Herramienta->delete($h['Herramienta']['id']);
+			$aux[] = $h['Herramienta']['id'];
+		}
+		
+		//Eliminar la relacion con los proveedores
+		$herramientas_proveedores = $this->HerramientasProveedor->find('all',array(
+			'conditions' => array(
+				'HerramientasProveedor.herramienta_id' => $aux
+			)
+		));
+		foreach ($herramientas_proveedores as $h){
+			$this->HerramientasProveedor->delete($h['HerramientasProveedor']['id']);
+		}
+		$this->Session->setFlash("El lote se eliminó con éxito");
+		$this->redirect(array('action' => 'admin_index_lotes'));
 	}
 	
 	function admin_ver($id) {

@@ -81,14 +81,21 @@ class ProveedorsController extends AppController {
 	}
 	
 	function admin_agregar_herramientas($id){
-		$herramientas_proveedor = $this->HerramientasProveedor->find('all',array(
+		if (!empty($this->data)){
+			$this->HerramientasProveedor->save($this->data);
+			$this->Session->setFlash("Se agregó una herramienta");
+			$this->redirect(array('action' => 'admin_agregar_herramientas',$this->data['HerramientasProveedor']['proveedor_id']));
+		}
+		$herramientas_proveedor = $this->Proveedor->find('first',array(
 			'conditions' => array(
-				'HerramientasProveedor.proveedor_id' => $id
-			)
+				'Proveedor.id' => $id
+			),
+			'recursive' => 2
 		));
+
 		$herr[] = 0;
-		foreach ($herramientas_proveedor as $h) {
-			$herr[]=$h['HerramientasProveedor']['herramienta_id'];
+		foreach ($herramientas_proveedor['Herramienta'] as $h) {
+			$herr[]=$h['id'];
 		}
 		$herramientas = $this->Herramienta->find('list',array(
 			'fields' => array('Herramienta.id','Herramienta.nombre'),
@@ -97,6 +104,19 @@ class ProveedorsController extends AppController {
 			)
 		));
 		$this->set(compact('herramientas_proveedor','herramientas','id'));
+	}
+	
+	function admin_eliminar_herramienta($id,$h_id) {
+		//Eliminar la relacion con el proveedor
+		$herramientas_proveedores = $this->HerramientasProveedor->find('first',array(
+			'conditions' => array(
+				'HerramientasProveedor.herramienta_id' => $h_id,
+				'HerramientasProveedor.proveedor_id' => $id,
+			)
+		));
+		$this->HerramientasProveedor->delete($herramientas_proveedores['HerramientasProveedor']['id']);
+		$this->Session->setFlash("La herramienta se eliminó con éxito");
+		$this->redirect(array('action' => 'admin_agregar_herramientas',$id));
 	}
 }
 

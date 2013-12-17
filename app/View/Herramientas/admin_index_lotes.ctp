@@ -13,7 +13,7 @@ if (!empty($lotes)) {
 		echo '<tr>';
 		echo '<td>'.$l['Lotesherramienta']['nombre'].'</td>';
 		echo '<td>'.$l['Unidad']['nombre'].'</td>';
-		echo '<td>'.$this->Html->link('Editar',array('action'=>'admin_editar_lote',$l['Lotesherramienta']['id']),array('class'=>'boton_accion')).' '.$this->Html->link('Eliminar',array('action'=>'admin_eliminar_lote',$l['Lotesherramienta']['id']),array('class'=>'boton_accion')).'</td>';
+		echo '<td>'.$this->Html->link('Editar',array('action'=>'admin_editar_lote',$l['Lotesherramienta']['id']),array('class'=>'boton_accion')).' '.$this->Html->link('Eliminar',array('action'=>'admin_eliminar_lote',$l['Lotesherramienta']['id']),array('class'=>'boton_accion'),'¿Estás seguro que deseas eliminar? Se eliminarán todas las herramientas asociadas a este lote').'</td>';
 		echo '</tr>';
 	}
 	echo '<table>';
