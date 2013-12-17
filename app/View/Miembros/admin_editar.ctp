@@ -7,20 +7,31 @@ if (empty($titulo)){
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
+	echo $this->Form->button('Usuario/No Usuario',array('class'=>'boton','id'=>'usuario'));
 	echo $this->Form->create('Miembro',array('type' => 'file','onSubmit' => 'return checkSize();'));
+	if (!empty($this->data['User']['username']) && $this->data['User']['username'] != 'no_usuario') {
+		$display = '';
+		$value = 1;
+	} else {
+		$display = 'none';
+		$value = 0;
+	}
+	echo $this->Form->input('es_usuario',array('type'=>'hidden','value'=>$value,'id'=>'es_usuario'));
 	echo '<table>';
-	echo '<tr>';
+	echo '<tr id="username_miembro" style="display:'.$display.'">';
 	echo '<td>Username</td>';
 	echo '<td>';
 	echo $this->Form->input('User.username',array(
-		'label' => false
+		'label' => false,
+		'id' => 'username'
 	));
 	echo '</td>';
 	if (empty($id)) {
 		echo '<td>Contraseña</td>';
 		echo '<td>';
 		echo $this->Form->input('User.password',array(
-			'label' => false
+			'label' => false,
+			'id' => 'contrasena'
 		));
 		echo '</td>';
 	} else {
@@ -86,20 +97,6 @@ if (empty($titulo)){
 	echo '</td>';
 	echo '</tr>';
 	echo '<tr>';
-	echo '<td>Contacto 1</td>';
-	echo '<td>';
-	echo $this->Form->input('contacto1',array(
-		'label' => false
-	));
-	echo '</td>';
-	echo '<td>Contacto 2</td>';
-	echo '<td>';
-	echo $this->Form->input('contacto2',array(
-		'label' => false,
-	));
-	echo '</td>';
-	echo '</tr>';
-	echo '<tr>';
 	echo '<td>Puesto</td>';
 	echo '<td>';
 	echo $this->Form->input('puesto',array(
@@ -157,6 +154,99 @@ if (empty($titulo)){
 	echo '<td>';
 	echo $this->Form->input('observaciones',array(
 		'label' => false
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '<h3>Contacto 1</h3>';
+	echo '<table>';
+	echo '<tr>';
+	echo '<td>Nombre</td>';
+	echo '<td>';
+	echo $this->Form->input('contacto1',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '<td>Parentesco</td>';
+	echo '<td>';
+	echo $this->Form->input('parentesco1',array(
+		'label' => false,
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Telefono 1</td>';
+	echo '<td>';
+	echo $this->Form->input('tlf1_contacto1',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '<td>Telefono 2</td>';
+	echo '<td>';
+	echo $this->Form->input('tlf2_contacto1',array(
+		'label' => false,
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '<h3>Contacto 2</h3>';
+	echo '<table>';
+	echo '<tr>';
+	echo '<td>Nombre</td>';
+	echo '<td>';
+	echo $this->Form->input('contacto2',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '<td>Parentesco</td>';
+	echo '<td>';
+	echo $this->Form->input('parentesco2',array(
+		'label' => false,
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Telefono 1</td>';
+	echo '<td>';
+	echo $this->Form->input('tlf1_contacto2',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '<td>Telefono 2</td>';
+	echo '<td>';
+	echo $this->Form->input('tlf2_contacto2',array(
+		'label' => false,
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '<h3>Contacto 1</h3>';
+	echo '<table>';
+	echo '<tr>';
+	echo '<td>Nombre</td>';
+	echo '<td>';
+	echo $this->Form->input('contacto3',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '<td>Parentesco</td>';
+	echo '<td>';
+	echo $this->Form->input('parentesco3',array(
+		'label' => false,
+	));
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Telefono 1</td>';
+	echo '<td>';
+	echo $this->Form->input('tlf1_contacto3',array(
+		'label' => false
+	));
+	echo '</td>';
+	echo '<td>Telefono 2</td>';
+	echo '<td>';
+	echo $this->Form->input('tlf2_contacto3',array(
+		'label' => false,
 	));
 	echo '</td>';
 	echo '</tr>';
@@ -224,4 +314,15 @@ function checkSize() {
 	
     
 }
+$("#usuario").click(function() {
+ 
+  $("#username_miembro").toggle();
+  if($("#username_miembro").is(":visible")){
+	 $("#username").val('');
+	$("#es_usuario").val(1);
+  } else {
+	 $("#username").val('.');
+	$("#es_usuario").val(0);
+  }
+});
 </script>

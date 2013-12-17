@@ -21,6 +21,13 @@ class MiembrosController extends AppController {
 	function admin_editar($id = null) {
 		if (!empty($this->data)) {
 			$data = $this->data;
+			
+			if ($this->data['Miembro']['es_usuario'] == 0){
+				$data['User']['username'] = 'no_usuario';
+				$data['User']['usuario'] = 0;
+			} else {
+				$data['User']['usuario'] = 1;
+			}
 			if (!empty($this->data['User']['Foto']['name'])) {
 				if ($this->JqImgcrop->uploadImage($this->data['User']['Foto'], 'img/users', '')) {
 					$data['User']['imagen'] = $this->data['User']['Foto']['name'];

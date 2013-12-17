@@ -77,7 +77,9 @@ class UsersController extends AppController {
 	}
 	
     function admin_index() {
-		$usuarios = $this->User->find('all');
+		$usuarios = $this->User->find('all',array(
+			'conditions' => array('User.usuario' => 1)
+		));
 		$this->set(compact('usuarios'));
     }
 	

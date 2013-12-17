@@ -11,12 +11,14 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo $this->Html->image('users/'.$miembro['User']['imagen'],array('width' => '100px'));
 	echo '</td>';
 	echo '</tr>';
-	echo '<tr>';
-	echo '<th>Username</th>';
-	echo '<td>';
-	echo $miembro['User']['username'];
-	echo '</td>';
-	echo '</tr>';
+	if ($miembro['User']['usuario'] == 1){
+		echo '<tr>';
+		echo '<th>Username</th>';
+		echo '<td>';
+		echo $miembro['User']['username'];
+		echo '</td>';
+		echo '</tr>';
+	}
 	echo '<tr>';
 	echo '<th>Nombre y apellido</th>';
 	echo '<td>';
@@ -57,18 +59,66 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index'),array('class'
 	echo $miembro['Miembro']['direccion'];
 	echo '</td>';
 	echo '</tr>';
-	echo '<tr>';
-	echo '<th>Personas de contacto</th>';
-	echo '<td>';
-	echo $miembro['Miembro']['contacto1'];
+	if (!empty($miembro['Miembro']['contacto1'])) {
+		echo '<tr>';
+		echo '<th>Contacto</th>';
+		echo '<td>';
+		echo 'Nombre: '.$miembro['Miembro']['contacto1'];
+		if (!empty($miembro['Miembro']['parentesco1'])){
+			echo '<br>Parentesco: '.$miembro['Miembro']['parentesco1'];
+		}
+		if (!empty($miembro['Miembro']['tlf1_contacto1'])){
+			echo '<br>Telefono: '.$miembro['Miembro']['tlf1_contacto1'];
+		}
+		if (!empty($miembro['Miembro']['tlf1_contacto1']) && !empty($miembro['Miembro']['tlf2_contacto1'])){
+			echo '/';
+		}
+		if (!empty($miembro['Miembro']['tlf2_contacto1'])){
+			echo $miembro['Miembro']['tlf2_contacto1'];
+		}
+		echo '</td>';
+		echo '</tr>';
+	}
 	if (!empty($miembro['Miembro']['contacto2'])) {
-		echo ' / '.$miembro['Miembro']['contacto2'];
+		echo '<tr>';
+		echo '<th>Contacto</th>';
+		echo '<td>';
+		echo 'Nombre: '.$miembro['Miembro']['contacto2'];
+		if (!empty($miembro['Miembro']['parentesco2'])){
+			echo '<br>Parentesco: '.$miembro['Miembro']['parentesco2'];
+		}
+		if (!empty($miembro['Miembro']['tlf1_contacto2'])){
+			echo '<br>Telefono: '.$miembro['Miembro']['tlf1_contacto2'];
+		}
+		if (!empty($miembro['Miembro']['tlf1_contacto2']) && !empty($miembro['Miembro']['tlf2_contacto2'])){
+			echo '/';
+		}
+		if (!empty($miembro['Miembro']['tlf2_contacto2'])){
+			echo $miembro['Miembro']['tlf2_contacto2'];
+		}
+		echo '</td>';
+		echo '</tr>';
 	}
 	if (!empty($miembro['Miembro']['contacto3'])) {
-		echo ' / '.$miembro['Miembro']['contacto3'];
+		echo '<tr>';
+		echo '<th>Contacto</th>';
+		echo '<td>';
+		echo 'Nombre: '.$miembro['Miembro']['contacto3'];
+		if (!empty($miembro['Miembro']['parentesco3'])){
+			echo '<br>Parentesco: '.$miembro['Miembro']['parentesco3'];
+		}
+		if (!empty($miembro['Miembro']['tlf1_contacto3'])){
+			echo '<br>Telefono: '.$miembro['Miembro']['tlf1_contacto3'];
+		}
+		if (!empty($miembro['Miembro']['tlf1_contacto3']) && !empty($miembro['Miembro']['tlf2_contacto3'])){
+			echo '/';
+		}
+		if (!empty($miembro['Miembro']['tlf2_contacto3'])){
+			echo $miembro['Miembro']['tlf2_contacto3'];
+		}
+		echo '</td>';
+		echo '</tr>';
 	}
-	echo '</td>';
-	echo '</tr>';
 	echo '<tr>';
 	echo '<th>Fecha de ingreso</th>';
 	echo '<td>';
