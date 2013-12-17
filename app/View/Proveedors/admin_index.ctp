@@ -25,7 +25,7 @@ echo $this->Html->link('Agregar',array('action' => 'admin_editar'),array('class'
 				'action' => 'admin_editar',$u['Proveedor']['id']),array('class'=>'boton_accion')).' '.$this->Html->link('Eliminar',array('action' => 'admin_eliminar',$u['Proveedor']['id']),array('class'=>'boton_accion'),'¿Estás seguro que deseas eliminar?').' '.$this->Html->link('Ver',array('action' => 'admin_ver',$u['Proveedor']['id']),array('class'=>'boton_accion')).'<br>'.$this->Html->link('Herramientas',array(
 				'action' => 'admin_agregar_herramientas',$u['Proveedor']['id']),array('class'=>'boton_accion')).'<br>'.$this->Html->link('Insumos',array(
 				'action' => 'admin_agregar_insumos',$u['Proveedor']['id']),array('class'=>'boton_accion')).'<br>'.$this->Html->link('Materia prima',array(
-				'action' => 'admin_agregar_materia',$u['Proveedor']['id']),array('class'=>'boton_accion')).'</td>';
+				'action' => 'admin_agregar_materiasprima',$u['Proveedor']['id']),array('class'=>'boton_accion')).'</td>';
 			echo '</tr>';
 		}
 		echo '</table>';

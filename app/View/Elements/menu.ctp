@@ -39,12 +39,15 @@
 			</li>
 		</ul>
 	</li>
-	<li class = "option <?php if($this->params['controller'] == 'insumos')
+	<li class = "option <?php if($this->params['controller'] == 'insumos' || $this->params['controller'] == 'herramientas')
 		echo 'active'; ?>">
 		Elementos
 		<ul>
 			<li class = "children <?php if($this->params['controller'] == 'insumos' && $this->params['action'] == 'admin_index_lotes') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Lote de Insumo',array('controller' => 'insumos', 'action' => 'admin_index_lotes')); ?>
+			</li>
+			<li class = "children <?php if($this->params['controller'] == 'insumos' && $this->params['action'] == 'admin_index') echo 'active'; else echo 'inactive'; ?>">
+				<?php echo $this->Html->link('Insumos',array('controller' => 'insumos', 'action' => 'admin_index')); ?>
 			</li>
 			<li class = "children <?php if($this->params['controller'] == 'herramientas' && $this->params['action'] == 'admin_index_lotes') echo 'active'; else echo 'inactive'; ?>">
 				<?php echo $this->Html->link('Lote de Herramientas',array('controller' => 'herramientas', 'action' => 'admin_index_lotes')); ?>

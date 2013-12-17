@@ -4,7 +4,7 @@ class ProveedorsController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop');
-	var $uses = array('User','Herramienta','Config','Proveedor','MateriasPrima','Insumo','HerramientasProveedor','InsumosProveedor','MateriasprimasProveedor','Herramienta','Insumo');
+	var $uses = array('User','Herramienta','Config','Proveedor','Materiasprima','Insumo','HerramientasProveedor','InsumosProveedor','MateriasprimasProveedor','Herramienta','Insumo');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
@@ -117,6 +117,84 @@ class ProveedorsController extends AppController {
 		$this->HerramientasProveedor->delete($herramientas_proveedores['HerramientasProveedor']['id']);
 		$this->Session->setFlash("La herramienta se eliminó con éxito");
 		$this->redirect(array('action' => 'admin_agregar_herramientas',$id));
+	}
+	
+	function admin_agregar_insumos($id){
+		if (!empty($this->data)){
+			$this->InsumosProveedor->save($this->data);
+			$this->Session->setFlash("Se agregó un insumo");
+			$this->redirect(array('action' => 'admin_agregar_insumos',$this->data['InsumosProveedor']['proveedor_id']));
+		}
+		$insumos_proveedor = $this->Proveedor->find('first',array(
+			'conditions' => array(
+				'Proveedor.id' => $id
+			),
+			'recursive' => 2
+		));
+
+		$herr[] = 0;
+		foreach ($insumos_proveedor['Insumo'] as $h) {
+			$herr[]=$h['id'];
+		}
+		$insumos = $this->Insumo->find('list',array(
+			'fields' => array('Insumo.id','Insumo.nombre'),
+			'conditions' => array(
+				'NOT' => array( 'Insumo.id' => $herr)
+			)
+		));
+		$this->set(compact('insumos_proveedor','insumos','id'));
+	}
+	
+	function admin_eliminar_insumo($id,$h_id) {
+		//Eliminar la relacion con el proveedor
+		$insumos_proveedores = $this->InsumosProveedor->find('first',array(
+			'conditions' => array(
+				'InsumosProveedor.insumo_id' => $h_id,
+				'InsumosProveedor.proveedor_id' => $id,
+			)
+		));
+		$this->InsumosProveedor->delete($insumos_proveedores['InsumosProveedor']['id']);
+		$this->Session->setFlash("El insumo se eliminó con éxito");
+		$this->redirect(array('action' => 'admin_agregar_insumos',$id));
+	}
+	
+	function admin_agregar_materiasprima($id){
+		if (!empty($this->data)){
+			$this->MateriasprimasProveedor->save($this->data);
+			$this->Session->setFlash("Se agregó una materia prima");
+			$this->redirect(array('action' => 'admin_agregar_materiasprima',$this->data['MateriasprimasProveedor']['proveedor_id']));
+		}
+		$materias_proveedor = $this->Proveedor->find('first',array(
+			'conditions' => array(
+				'Proveedor.id' => $id
+			),
+			'recursive' => 2
+		));
+
+		$mat[] = 0;
+		foreach ($materias_proveedor['Materiasprima'] as $h) {
+			$mat[]=$h['id'];
+		}
+		$materiasprimas = $this->Materiasprima->find('list',array(
+			'fields' => array('Materiasprima.id','Materiasprima.descripcion'),
+			'conditions' => array(
+				'NOT' => array( 'Materiasprima.id' => $mat)
+			)
+		));
+		$this->set(compact('materias_proveedor','materiasprimas','id'));
+	}
+	
+	function admin_eliminar_materiasprima($id,$h_id) {
+		//Eliminar la relacion con el proveedor
+		$materias_proveedores = $this->MateriasprimasProveedor->find('first',array(
+			'conditions' => array(
+				'MateriasprimasProveedor.materiasprima_id' => $h_id,
+				'MateriasprimasProveedor.proveedor_id' => $id,
+			)
+		));
+		$this->MateriasprimasProveedor->delete($materias_proveedores['MateriasprimasProveedor']['id']);
+		$this->Session->setFlash("El insumo se eliminó con éxito");
+		$this->redirect(array('action' => 'admin_agregar_materiasprima',$id));
 	}
 }
 

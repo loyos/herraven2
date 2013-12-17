@@ -4,7 +4,7 @@ class MateriasprimasController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	public $uses = array('Materiasprima','MateriasprimasPrecio','Precio','Division','Departamento','Unidad');
+	public $uses = array('Materiasprima','MateriasprimasPrecio','Precio','Division','Departamento','Unidad','MateriasprimasProveedor');
 	
     function admin_index() {
 		$materias = $this->Materiasprima->find('all');
@@ -62,6 +62,9 @@ class MateriasprimasController extends AppController {
 	function admin_eliminar($id) {
 		$this->Materiasprima->delete($id);
 		$this->MateriasprimasPrecio->deleteAll(array(
+			'materiasprima_id' => $id
+		));
+		$this->MateriasprimasProveedor->deleteAll(array(
 			'materiasprima_id' => $id
 		));
 		$this->Session->setFlash("La materia prima se eliminó con éxito");

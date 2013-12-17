@@ -4,7 +4,7 @@ echo $this->Html->link('Regresar',array('action' => 'admin_index_lotes'),array('
 ?>
 <h1><?php echo $titulo ?></h1>
 <?php 
-	echo $this->Form->create('Lotesherramienta');
+	echo $this->Form->create('Lote');
 	echo '<table>';
 	echo '<tr>';
 	echo '<td>Lote</td>';
@@ -78,8 +78,8 @@ function division_change(){
 	if (division > 0) {
 		$.ajax({
 			type: "POST",
-			url: '<?php echo FULL_BASE_URL.'/herramientas/buscar_departamentos.json' ?>',
-			//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/herramientas/buscar_departamentos.json' ?>',
+			url: '<?php echo FULL_BASE_URL.'/insumos/buscar_departamentos.json' ?>',
+			//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/insumos/buscar_departamentos.json' ?>',
 			data: { division: division},
 			dataType: "json"
 		}).done(function( msg ) {
@@ -101,8 +101,8 @@ function departamento_change(){
 	if (departamento > 0) {
 		$.ajax({
 			type: "POST",
-			url: '<?php echo FULL_BASE_URL.'/herramientas/buscar_departamentos.json' ?>',
-			//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/herramientas/buscar_unidades.json' ?>',
+			url: '<?php echo FULL_BASE_URL.'/insumos/buscar_departamentos.json' ?>',
+			//url: '<?php echo FULL_BASE_URL.'/'.basename(dirname(APP)).'/insumos/buscar_unidades.json' ?>',
 			data: { departamento: departamento},
 			dataType: "json"
 		}).done(function( msg ) {
