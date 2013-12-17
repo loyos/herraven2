@@ -24,6 +24,7 @@ class UnidadsController extends AppController {
 		if (!empty($this->data)) {
 			//var_dump($this->data);die();
 			$data = $this->data;
+			
 			if (empty($data['Unidad']['id'])) {
 				$data['Unidad']['departamento_id'] = 1;
 			}
@@ -64,6 +65,19 @@ class UnidadsController extends AppController {
 							'unidad_id' => 1
 						));
 						$this->Miembro->save($update);
+					}
+					//Buscar si el jefe de unidad es un miembro y en ese caso asignarle unidad_id
+					if (!empty($this->data['Unidad']['user_id'])) {
+						$es_miembro = $this->Miembro->find('first',array(
+							'conditions' => array('Miembro.user_id'=>$this->data['Unidad']['user_id'])
+						)); 
+						if (!empty($es_miembro)) {
+							$update = array('Miembro' => array(
+								'id' => $es_miembro['Miembro']['id'],
+								'unidad_id' => $data['Unidad']['id']
+							));
+							$this->Miembro->save($update);
+						}
 					}
 					
 					if (!empty($this->data['miembro1'])) {

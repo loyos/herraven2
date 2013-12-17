@@ -4,7 +4,7 @@ class MiembrosController extends AppController {
     
 	public $helpers = array ('Html','Form');
 	public $components = array('Session','JqImgcrop','RequestHandler');
-	var $uses = array('User','Miembro','Config');
+	var $uses = array('User','Miembro','Config','Unidad');
 	
 	 public function beforeFilter() {
 		parent::beforeFilter();
