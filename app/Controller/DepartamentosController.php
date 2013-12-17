@@ -104,10 +104,27 @@ class DepartamentosController extends AppController {
 		} else {
 			$titulo = 'Agrega un departamento';
 		}
-		
+		//Busco los jefes que ya estan asignados
+		if (!empty($id)) {
+			$jefe_actual = $this->Departamento->findById($id);
+			$jefe_actual = $jefe_actual['Departamento']['user_id'];
+		}
+		$buscar_jefes_asignados = $this->Departamento->find('all',array(
+			'fields' => array('Departamento.id','Departamento.user_id'),
+			'conditions' => array('Departamento.user_id <>' => $jefe_actual)
+		));
+		$jefes_asignados[] = 0;
+		foreach($buscar_jefes_asignados as $j) {
+			$jefes_asignados[] = $j['Departamento']['user_id']; 
+		}
 		$users_busqueda = $this->User->find('all',array(
 			'fields' => array('User.id','User.nombre ','User.apellido'),
-			'conditions' => array('User.rol' => 'jefe_departamento')
+			'conditions' => array(
+				'User.rol' => 'jefe_departamento',
+				'NOT' => array( 
+				  'User.id' => $jefes_asignados
+				)
+			)
 		));
 		$unidads = $this->Unidad->find('list',array(
 			'fields' => array('Unidad.id','Unidad.nombre'), 
@@ -121,7 +138,7 @@ class DepartamentosController extends AppController {
 			// $miembros[$u['Miembro']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
 		// }
 		if (empty($users_busqueda)) {
-			$users[0] = 'No existen jefes de departamento';
+			$users[0] = 'No existen jefes de departamento disponibles';
 		} else {
 			$users[0] = 'Sin Jefe departamental';
 		}

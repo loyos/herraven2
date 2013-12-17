@@ -147,8 +147,8 @@ class UnidadsController extends AppController {
 			$miembros[$u['Miembro']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
 		}
 		if (empty($users_busqueda)) {
-			$users[0] = 'No existen jefes de unidad';
-		}
+			$users[0] = 'No existen jefes de unidad disponibles';
+		} 
 		foreach ($users_busqueda as $u) {
 			$users[$u['User']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];
 		}
