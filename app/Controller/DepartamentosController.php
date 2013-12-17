@@ -122,6 +122,8 @@ class DepartamentosController extends AppController {
 		// }
 		if (empty($users_busqueda)) {
 			$users[0] = 'No existen jefes de departamento';
+		} else {
+			$users[0] = 'Sin Jefe departamental';
 		}
 		foreach ($users_busqueda as $u) {
 			$users[$u['User']['id']] =  $u['User']['nombre'].' '.$u['User']['apellido'];

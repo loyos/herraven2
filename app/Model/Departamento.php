@@ -21,12 +21,6 @@ class Departamento extends AppModel {
     );
 	
 	var $validate = array( 
-		'user_id' => array(
-			'required' => array(
-				'rule' => array('no_empty_jefe'),
-				'message' => 'Este campo no puede quedar vacío.g'
-			)
-		),
 		
 		'nombre' => array(
 			'not_empty' => array(
